@@ -1,4 +1,4 @@
-# CPSC 490 — Group 〈N〉 neuroprosthetic
+# CPSC 490 — Group 16 neuroprosthetic
 
 **Project title:** Phenoscope
 **Sponsor:** 〈RTX-3 / EL-1 / SNX-2 / independent〉

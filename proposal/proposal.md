@@ -3,7 +3,7 @@
 **Department of Computer Science**
 **CPSC 490 Undergraduate Seminar in Computer Science — Proposal for Capstone Project**
 
-**Group 〈N〉 — neuroprosthetic** · Sponsor: 〈RTX-3 / EL-1 / SNX-n / independent〉
+**Group 16 — neuroprosthetic** · Sponsor: 〈RTX-3 / EL-1 / SNX-n / independent〉
 Authors: Samuel, Gary Bennet (garybs16); Bowen, Jake (JakeBowen2005);
 Jaglan, Avni (Avnijaglan19); Acuna, Isaac (1600isad)
 Date: 〈YYYY-MM-DD〉
