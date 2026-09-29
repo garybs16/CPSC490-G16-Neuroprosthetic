@@ -29,3 +29,8 @@ build/
 # Converted submissions (keep the Markdown source of truth in git;
 # commit a .docx deliberately if your team writes in Word)
 proposal/*.docx
+
+# BridgeWatch live-mode database (prototype/bridgewatch.db and its WAL files)
+prototype/bridgewatch.db*
+*.db-wal
+*.db-shm

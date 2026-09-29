@@ -1,0 +1,26 @@
+{
+  "_about": "Bridges and tokens BridgeWatch monitors live on Ethereum mainnet. Every address was checked against the source listed and on-chain (token symbol()/decimals(); Chainlink description()) on 2026-09-28. Re-check before relying on it.",
+  "chain": "ethereum",
+  "explorer_tx": "https://etherscan.io/tx/",
+  "tokens": [
+    {"symbol": "USDT", "address": "0xdac17f958d2ee523a2206206994597c13d831ec7", "decimals": 6, "price": {"fixed": 1.0}},
+    {"symbol": "USDC", "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", "decimals": 6, "price": {"fixed": 1.0}},
+    {"symbol": "DAI", "address": "0x6b175474e89094c44da98b954eedeac495271d0f", "decimals": 18, "price": {"fixed": 1.0}},
+    {"symbol": "WBTC", "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599", "decimals": 8,
+     "price": {"chainlink": "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c", "expect": "BTC / USD"}}
+  ],
+  "bridges": [
+    {"id": "optimism", "name": "OP Mainnet bridge", "chains": ["Ethereum", "OP Mainnet"],
+     "vault": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+     "contract": "L1StandardBridgeProxy",
+     "source": "https://raw.githubusercontent.com/ethereum-optimism/superchain-registry/main/superchain/extra/addresses/addresses.json (chain 10)"},
+    {"id": "base", "name": "Base bridge", "chains": ["Ethereum", "Base"],
+     "vault": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+     "contract": "L1StandardBridge",
+     "source": "https://docs.base.org/base-chain/network-information/base-contracts"},
+    {"id": "arbitrum", "name": "Arbitrum One bridge", "chains": ["Ethereum", "Arbitrum One"],
+     "vault": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+     "contract": "L1 ERC20 Gateway",
+     "source": "https://docs.arbitrum.io/build-decentralized-apps/reference/contract-addresses"}
+  ]
+}

@@ -1,0 +1,386 @@
+<title>BridgeWatch</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F2F4F8; --surface:#FFFFFF; --surface-2:#F7F8FB; --ink:#14203A; --muted:#5B6679; --faint:#8A94A7;
+  --line:#DDE2EB; --grid:#E9ECF2; --accent:#2F5BEA; --accent-soft:#E6ECFD; --on-accent:#FFFFFF;
+  --pass:#1D7F55; --pass-soft:#E1F3EA; --warn:#A96A10; --warn-soft:#FBF0DC; --fail:#C0362C; --fail-soft:#FBE6E3;
+  --unk:#6B7385; --unk-soft:#ECEEF2; --band:rgba(107,115,133,.12); --on-fail:#FFFFFF;
+  --series:#2F5BEA; --alert-mark:#C0362C;  /* chart marks; validated with the dataviz palette checker */
+  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body:"Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#0D1320; --surface:#151D2E; --surface-2:#1A2337; --ink:#E6EBF4; --muted:#9AA6BC; --faint:#6F7B92;
+    --line:#26314A; --grid:#1F2940; --accent:#7D9BFF; --accent-soft:#1E2A4C; --on-accent:#0D1320;
+    --pass:#4CC08A; --pass-soft:#12301F; --warn:#E3A948; --warn-soft:#342510; --fail:#F0766B; --fail-soft:#3A1A18;
+    --unk:#9AA3B5; --unk-soft:#222B3D; --band:rgba(154,163,181,.14); --on-fail:#0D1320; --series:#6A88F2; --alert-mark:#E4655A;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0D1320; --surface:#151D2E; --surface-2:#1A2337; --ink:#E6EBF4; --muted:#9AA6BC; --faint:#6F7B92;
+  --line:#26314A; --grid:#1F2940; --accent:#7D9BFF; --accent-soft:#1E2A4C; --on-accent:#0D1320;
+  --pass:#4CC08A; --pass-soft:#12301F; --warn:#E3A948; --warn-soft:#342510; --fail:#F0766B; --fail-soft:#3A1A18;
+  --unk:#9AA3B5; --unk-soft:#222B3D; --band:rgba(154,163,181,.14); --on-fail:#0D1320; --series:#6A88F2; --alert-mark:#E4655A;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;padding:24px 16px 48px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.mark{width:38px;height:38px;border-radius:10px;background:var(--ink);display:grid;place-items:center}
+.brand h1{font-family:var(--display);font-weight:700;font-size:24px;margin:0;line-height:1}
+.brand p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.clock{font-family:var(--mono);font-size:13px;color:var(--muted);text-align:right}
+.clock b{color:var(--ink);font-weight:500}
+.banner{background:var(--warn-soft);color:var(--ink);border:1px solid color-mix(in srgb,var(--warn) 40%,var(--line));border-radius:12px;padding:10px 14px;font-size:13px}
+.banner b{color:var(--warn)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+h2{font-family:var(--display);font-weight:700;font-size:18px;margin:0}
+.sub{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:left;font:inherit;color:inherit;cursor:pointer;display:flex;flex-direction:column;gap:6px}
+.card:hover{border-color:var(--accent)}
+.card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.card .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card h3{margin:0;font-size:15px;font-weight:600}
+.card .chains{font-size:12px;color:var(--faint)}
+.card .kv{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.card .kv b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.pill svg{width:12px;height:12px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:18px}
+@media (max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.chart-head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.keys{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.keys span{display:inline-flex;align-items:center;gap:6px}
+.sw-line{width:16px;height:2px;border-radius:2px;display:inline-block}
+.sw-band{width:14px;height:10px;border-radius:3px;background:var(--band);display:inline-block}
+.sw-dot{width:9px;height:9px;border-radius:50%;background:var(--alert-mark);display:inline-block}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto}
+.chart text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;box-shadow:0 4px 16px rgba(0,0,0,.12);min-width:180px;display:none;z-index:2}
+.tip .t{font-family:var(--mono);color:var(--muted);margin-bottom:4px}
+.tip .r{display:flex;justify-content:space-between;gap:12px}
+.tip .r b{font-variant-numeric:tabular-nums;font-weight:600}
+details{margin-top:10px;font-size:13px}
+summary{cursor:pointer;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:600;color:var(--muted);font-size:12px}
+.feed{display:flex;flex-direction:column;gap:8px;max-height:460px;overflow-y:auto}
+.alert{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface-2);display:flex;flex-direction:column;gap:4px}
+.alert .row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.alert .when{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.alert p{margin:0;font-size:13px}
+.alert.acked{opacity:.6}
+.btn{height:36px;padding:0 14px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--fail);border-color:var(--fail);color:var(--on-fail)}
+.btn.small{height:28px;padding:0 10px;font-size:12px}
+select{height:36px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:9px;padding:0 10px;font:inherit;font-size:13px}
+button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sim{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.msg{font-size:13px;color:var(--muted);margin:8px 0 0}
+.empty{font-size:13px;color:var(--faint);padding:8px 0}
+.eval-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+@media (max-width:640px){.eval-kpis{grid-template-columns:minmax(0,1fr)}}
+.kpi{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi .l{font-size:12px;color:var(--muted)}
+.kpi .v{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.1}
+.kpi .n{font-size:12px;color:var(--faint)}
+footer{font-size:12px;color:var(--faint);max-width:90ch}
+.sr{position:absolute;left:-9999px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--ground)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c3-6 15-6 18 0"/><path d="M3 17h18"/><path d="M7 13v4M12 11.5V17M17 13v4"/></svg>
+      </div>
+      <div><h1>BridgeWatch</h1><p>Cross-chain bridge exploit detection</p></div>
+    </div>
+    <div class="clock" aria-live="off"><span id="clock-label">Clock</span> <b id="clock">—</b><br><span id="speed"></span></div>
+  </header>
+
+  <div class="banner" id="banner"><b>Synthetic data.</b> The four bridges, their transfers and the simulated exploits in the live view are generated to develop and test the detector. None of them describes a real bridge. The <a href="#replay-panel" style="color:inherit">real hack replay</a> further down uses real on-chain data.</div>
+
+  <section class="cards" id="cards" aria-label="Bridges"></section>
+
+  <section class="grid2">
+    <div class="panel">
+      <div class="chart-head">
+        <div><h2 id="chart-title">Outflow</h2><p class="sub">Funds released per 10 minutes, last 24 hours · log scale<span id="vault-line"></span></p></div>
+        <div class="keys" aria-hidden="true">
+          <span><i class="sw-line" style="background:var(--series)"></i>Outflow</span>
+          <span><i class="sw-band"></i>Normal range for the hour</span>
+          <span><i class="sw-dot"></i>Alert</span>
+        </div>
+      </div>
+      <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
+      <details><summary>Show data table</summary><div id="table"></div></details>
+      <div class="sim" id="sim-box">
+        <label class="sr" for="sim-kind">Exploit type</label>
+        <select id="sim-kind">
+          <option value="mass_drain">Mass drain (many releases, ~2 h)</option>
+          <option value="key_compromise">Key compromise (two huge releases)</option>
+          <option value="slow_bleed">Slow bleed (12 h of small releases)</option>
+        </select>
+        <button class="btn primary" id="sim-go" type="button">Simulate exploit on this bridge</button>
+      </div>
+      <p class="msg" id="sim-msg" role="status"></p>
+    </div>
+
+    <div class="panel">
+      <h2>Alerts</h2><p class="sub">Newest first. Acknowledge once a person has looked.</p>
+      <div class="feed" id="feed" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="replay-panel">
+    <h2>Real hack replay: Orbit Chain bridge, 31 Dec 2023</h2>
+    <p class="sub">Real on-chain transfers of the bridge's Ethereum vault, read from public Ethereum nodes: 14 days of ordinary traffic, then the hack, fed through the same detector as if live.</p>
+    <div id="replay"><p class="empty">Loading…</p></div>
+  </section>
+
+  <section class="panel">
+    <h2>How well does it catch exploits?</h2>
+    <p class="sub">Scored on simulated exploits injected into synthetic traffic after a 7-day baseline, and on 14 days of clean traffic, where every alert is a false alarm.</p>
+    <div id="eval"><p class="empty">Running the evaluation (about a minute after the server starts)…</p></div>
+  </section>
+
+  <footer>Draft prototype for SonarX project SNX-3 (CPSC 490). Detection rules and all numbers are for the synthetic data above and say nothing yet about real bridges.</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ICON={
+  ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>',
+  warning:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 6v8"/><path d="M12 18h.01"/></svg>',
+  critical:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>',
+  learning:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 7v5l3 2"/></svg>'
+};
+const STATUS={ok:["Normal","pass","ok"],learning:["Learning","unk","learning"],warning:["Warning","warn","warning"],critical:["Critical","fail","critical"]};
+const RULE={outflow_spike:"Outflow spike",withdrawal_burst:"Release burst",escrow_drain:"Escrow drain",unbacked_release:"Unbacked release"};
+const KIND={mass_drain:"Mass drain",key_compromise:"Key compromise",slow_bleed:"Slow bleed"};
+function pill(key){const [label,tone,icon]=STATUS[key];return `<span class="pill" style="background:var(--${tone}-soft);color:var(--${tone})">${ICON[icon]}${label}</span>`;}
+function usd(x){if(x==null)return "—";const a=Math.abs(x);
+  if(a>=1e9)return "$"+(x/1e9).toFixed(1)+"B";if(a>=1e6)return "$"+(x/1e6).toFixed(1)+"M";if(a>=1e3)return "$"+(x/1e3).toFixed(0)+"K";return "$"+x.toFixed(0);}
+const fmtTime=t=>new Date(t*1000).toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit",timeZone:"UTC"})+" UTC";
+const fmtHM=t=>new Date(t*1000).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",timeZone:"UTC"});
+
+let selected="alpha", STATE=null;
+
+function renderCards(st){
+  if(!st.bridges.length){
+    $("cards").innerHTML=`<div class="card" style="grid-column:1/-1;cursor:default"><h3>${st.mode==="live"?"Reading the last 7 days of bridge activity from Ethereum…":"Starting…"}</h3><p class="sub">${st.mode==="live"?"This first start takes a minute. After that, BridgeWatch keeps up with every new block.":""}</p></div>`;
+    return;
+  }
+  if(!st.bridges.some(b=>b.id===selected)) selected=st.bridges[0].id;
+  $("cards").innerHTML=st.bridges.map(b=>{
+    const key=b.status==="alert"?b.worst_severity:b.status;
+    const ratio=b.normal_hour_usd?b.outflow_last_hour_usd/b.normal_hour_usd:null;
+    return `<button class="card" type="button" data-id="${esc(b.id)}" aria-pressed="${b.id===selected}">
+      <div class="top"><h3>${esc(b.name)}</h3>${pill(key)}</div>
+      <div class="chains">${b.chains.map(esc).join(" ↔ ")}</div>
+      <div class="kv"><span>Escrow</span><b>${usd(b.escrow_usd)}</b></div>
+      <div class="kv"><span>Outflow, last hour</span><b>${usd(b.outflow_last_hour_usd)}</b></div>
+      <div class="kv"><span>Normal for this hour</span><b>${b.normal_hour_usd==null?"learning":usd(b.normal_hour_usd)}${ratio&&ratio>=2?` <span style="color:var(--muted);font-weight:500">(${ratio.toFixed(ratio>=10?0:1)}×)</span>`:""}</b></div>
+    </button>`;}).join("");
+}
+$("cards").addEventListener("click",e=>{const c=e.target.closest(".card");if(!c)return;selected=c.dataset.id;renderCards(STATE);refreshSeries();});
+
+// ---- chart -------------------------------------------------------------
+const W=720,H=300,M={l:56,r:16,t:12,b:28};
+let SERIES=null;
+function logScale(lo,hi){const a=Math.log10(lo),b=Math.log10(hi);return v=>M.t+(H-M.t-M.b)*(1-(Math.log10(Math.max(v,lo))-a)/(b-a));}
+function renderChart(d){
+  SERIES=d;const bs=d.buckets;const box=$("chart");
+  const name=(STATE?.bridges.find(b=>b.id===d.bridge)||{}).name||d.bridge;
+  $("chart-title").textContent=`${name} outflow`;
+  if(!bs.length){box.querySelector("svg")?.remove();return;}
+  const vals=bs.flatMap(b=>[b.out_usd,b.alert_line_usd||0]).filter(v=>v>0);
+  const lo=Math.pow(10,Math.floor(Math.log10(Math.max(1e3,Math.min(...vals)/2))));
+  const hi=Math.pow(10,Math.ceil(Math.log10(Math.max(...vals,lo*10))));
+  const y=logScale(lo,hi), t0=bs[0].t, t1=bs[bs.length-1].t+d.bucket_seconds;
+  const x=t=>M.l+(W-M.l-M.r)*(t-t0)/(t1-t0);
+  const mid=b=>b.t+d.bucket_seconds/2;
+  let g="";
+  for(let p=Math.log10(lo);p<=Math.log10(hi);p++){const v=Math.pow(10,p),yy=y(v);
+    g+=`<line x1="${M.l}" x2="${W-M.r}" y1="${yy}" y2="${yy}" stroke="var(--grid)" stroke-width="1"/><text x="${M.l-8}" y="${yy+4}" text-anchor="end">${usd(v)}</text>`;}
+  const step=4*3600;for(let t=Math.ceil(t0/step)*step;t<=t1;t+=step){const tx=x(t);if(tx<M.l+24||tx>W-M.r-24)continue;g+=`<text x="${tx}" y="${H-8}" text-anchor="middle">${fmtHM(t)}</text>`;}
+  const withBand=bs.filter(b=>b.alert_line_usd!=null);
+  let band="";
+  if(withBand.length){
+    const top=withBand.map(b=>`${x(mid(b)).toFixed(1)},${y(b.alert_line_usd).toFixed(1)}`);
+    const bot=withBand.slice().reverse().map(b=>`${x(mid(b)).toFixed(1)},${y(Math.max(b.normal_usd||lo,lo)).toFixed(1)}`);
+    band=`<polygon points="${top.concat(bot).join(" ")}" fill="var(--band)"/>`;
+  }
+  const line=bs.map((b,i)=>`${i?"L":"M"}${x(mid(b)).toFixed(1)},${y(Math.max(b.out_usd,lo)).toFixed(1)}`).join("");
+  const dots=d.alerts.filter(a=>a.started>=t0).map(a=>{
+    const b=bs.find(k=>a.started>=k.t&&a.started<k.t+d.bucket_seconds)||bs[bs.length-1];
+    return `<circle cx="${x(mid(b))}" cy="${y(Math.max(b.out_usd,lo))}" r="5" fill="var(--alert-mark)" stroke="var(--surface)" stroke-width="2"/>`;}).join("");
+  const svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(name)} outflow per 10 minutes, last 24 hours, with the normal range and alerts">
+    ${g}${band}<path d="${line}" fill="none" stroke="var(--series)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>${dots}
+    <line id="xh" y1="${M.t}" y2="${H-M.b}" stroke="var(--faint)" stroke-width="1" visibility="hidden"/>
+    <rect x="${M.l}" y="${M.t}" width="${W-M.l-M.r}" height="${H-M.t-M.b}" fill="transparent" id="hit"/></svg>`;
+  box.querySelector("svg")?.remove();box.insertAdjacentHTML("afterbegin",svg);
+  const hit=box.querySelector("#hit"),xh=box.querySelector("#xh"),tip=$("tip"),svgEl=box.querySelector("svg");
+  const show=ev=>{
+    const r=svgEl.getBoundingClientRect(),sx=(ev.clientX-r.left)*W/r.width;
+    const t=t0+(sx-M.l)/(W-M.l-M.r)*(t1-t0);
+    const b=bs.reduce((best,k)=>Math.abs(mid(k)-t)<Math.abs(mid(best)-t)?k:best,bs[0]);
+    const px=x(mid(b));xh.setAttribute("x1",px);xh.setAttribute("x2",px);xh.setAttribute("visibility","visible");
+    const al=d.alerts.filter(a=>a.started>=b.t&&a.started<b.t+d.bucket_seconds);
+    tip.innerHTML=`<div class="t">${fmtTime(b.t)}</div>
+      <div class="r"><span>Outflow</span><b>${usd(b.out_usd)}</b></div>
+      <div class="r"><span>Releases</span><b>${b.releases}</b></div>
+      <div class="r"><span>Normal</span><b>${b.normal_usd==null?"learning":usd(b.normal_usd)}</b></div>
+      <div class="r"><span>Alert above</span><b>${b.alert_line_usd==null?"—":usd(b.alert_line_usd)}</b></div>
+      ${al.map(a=>`<div class="r" style="margin-top:4px"><span>${ICON[a.severity]?`<span style="color:var(--${a.severity==="critical"?"fail":"warn"});display:inline-flex;width:12px;vertical-align:-2px">${ICON[a.severity]}</span>`:""} ${esc(RULE[a.rule]||a.rule)}</span></div>`).join("")}`;
+    tip.style.display="block";
+    const bx=box.getBoundingClientRect(),left=(px/W)*r.width+(r.left-bx.left);
+    tip.style.left=Math.min(Math.max(left+12,0),bx.width-tip.offsetWidth)+"px";tip.style.top="8px";
+  };
+  hit.addEventListener("pointermove",show);hit.addEventListener("pointerdown",show);
+  hit.addEventListener("pointerleave",()=>{tip.style.display="none";xh.setAttribute("visibility","hidden");});
+  const last=bs.slice(-18).reverse();
+  $("table").innerHTML=`<table><thead><tr><th>10 min from (UTC)</th><th>Outflow</th><th>Releases</th><th>Normal</th><th>Alert above</th></tr></thead><tbody>${
+    last.map(b=>`<tr><td>${fmtTime(b.t)}</td><td>${usd(b.out_usd)}</td><td>${b.releases}</td><td>${b.normal_usd==null?"—":usd(b.normal_usd)}</td><td>${b.alert_line_usd==null?"—":usd(b.alert_line_usd)}</td></tr>`).join("")}</tbody></table>`;
+}
+
+// ---- alerts -------------------------------------------------------------
+function renderFeed(list){
+  const names=Object.fromEntries((STATE?.bridges||[]).map(b=>[b.id,b.name]));
+  $("feed").innerHTML=list.length?list.map(a=>`<div class="alert${a.acknowledged?" acked":""}">
+    <div class="row">${pill(a.severity)}<span class="when">${fmtTime(a.started)}</span></div>
+    <div class="row"><b style="font-size:14px">${esc(names[a.bridge]||a.bridge)} · ${esc(RULE[a.rule]||a.rule)}</b>
+      ${a.acknowledged?'<span class="when">acknowledged</span>':`<button class="btn small" type="button" data-ack="${a.id}">Acknowledge</button>`}</div>
+    <p>${esc(a.message)}</p>${a.worst?`<p style="color:var(--muted)">Worst so far: ${esc(a.worst)}</p>`:""}</div>`).join(""):`<p class="empty">No alerts yet.</p>`;
+}
+function getToken(){try{return sessionStorage.getItem("bw-token")||"";}catch{return "";}}
+function setToken(t){try{sessionStorage.setItem("bw-token",t);}catch{}}
+async function ack(id){
+  const send=t=>fetch(`api/alerts/${id}/ack`,{method:"POST",headers:t?{authorization:`Bearer ${t}`}:{}});
+  let r=await send(getToken());
+  if(r.status===401){const t=prompt("Acknowledging alerts needs the BridgeWatch API token:");if(!t)return;setToken(t);r=await send(t);
+    if(r.status===401){alert("That token was not accepted.");setToken("");}}
+}
+$("feed").addEventListener("click",async e=>{const b=e.target.closest("[data-ack]");if(!b)return;
+  b.disabled=true;await ack(b.dataset.ack);refresh();});
+
+// ---- simulate -----------------------------------------------------------
+$("sim-go").addEventListener("click",async()=>{
+  const kind=$("sim-kind").value;$("sim-go").disabled=true;
+  try{
+    const r=await fetch("api/simulate",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({bridge:selected,kind})});
+    const body=await r.json();
+    $("sim-msg").textContent=r.ok?`${KIND[kind]} started on ${(STATE.bridges.find(b=>b.id===selected)||{}).name}: ${usd(body.stolen_usd)} over ${body.releases} releases. Watch the chart and the alert feed.`:(body.detail||"Couldn't start the simulation.");
+  }catch{$("sim-msg").textContent="Couldn't reach the BridgeWatch server.";}
+  finally{$("sim-go").disabled=false;}
+});
+
+// ---- real replay ----------------------------------------------------------
+const short=a=>a.slice(0,6)+"…"+a.slice(-4);
+const hms=t=>new Date(t*1000).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit",timeZone:"UTC"});
+function renderReplay(r){
+  const warn=r.minutes_of_warning_for_later_thefts;
+  const rows=[...r.thefts.map(x=>({ts:x.ts,kind:"theft",x})),...r.alerts.map(a=>({ts:a.started,kind:"alert",a}))]
+    .sort((p,q)=>p.ts-q.ts||(p.kind==="theft"?-1:1));
+  // cumulative stolen, step line, with the first alert as a marker
+  const t0=r.thefts[0].ts-120, t1=r.thefts[r.thefts.length-1].ts+120, total=r.stolen_usd_tracked;
+  const W=1100,H=220,L=60,R=16,T=12,B=26, x=t=>L+(W-L-R)*(t-t0)/(t1-t0), y=v=>T+(H-T-B)*(1-v/total);
+  let cum=0,d=`M${x(t0)},${y(0)}`;
+  r.thefts.forEach(tf=>{d+=` L${x(tf.ts).toFixed(1)},${y(cum).toFixed(1)}`;cum+=tf.usd;d+=` L${x(tf.ts).toFixed(1)},${y(cum).toFixed(1)}`;});
+  d+=` L${x(t1)},${y(cum)}`;
+  let grid="";[0,.5,1].forEach(f=>{grid+=`<line x1="${L}" x2="${W-R}" y1="${y(total*f)}" y2="${y(total*f)}" stroke="var(--grid)"/><text x="${L-8}" y="${y(total*f)+4}" text-anchor="end">${usd(total*f)}</text>`;});
+  for(let t=Math.ceil(t0/300)*300;t<=t1;t+=300){grid+=`<text x="${x(t)}" y="${H-6}" text-anchor="middle">${fmtHM(t)}</text>`;}
+  const ax=r.first_alert_ts?x(r.first_alert_ts):null;
+  const alertMark=ax?`<line x1="${ax}" x2="${ax}" y1="${T}" y2="${H-B}" stroke="var(--alert-mark)" stroke-width="2"/><text x="${ax+6}" y="${T+12}" style="fill:var(--ink)">First alert ${hms(r.first_alert_ts)}</text>`:"";
+  $("replay").innerHTML=`<div class="eval-kpis">
+      <div class="kpi"><div class="l">First alert</div><div class="v">${r.seconds_from_first_theft_to_alert===0?"On the 1st theft":Math.round(r.seconds_from_first_theft_to_alert/60)+" min in"}</div><div class="n">critical, at ${hms(r.first_alert_ts)} UTC</div></div>
+      <div class="kpi"><div class="l">Stolen after the alert</div><div class="v">${usd(r.stolen_after_alert_usd)}</div><div class="n">of ${usd(r.stolen_usd_tracked)} tracked · ${warn.length?`${warn[0]}–${warn[warn.length-1]} min of warning`:"no later thefts"}</div></div>
+      <div class="kpi"><div class="l">False alarms before the hack</div><div class="v">${r.false_alarms_during_baseline}</div><div class="n">in ${r.baseline_days} days, ${r.ordinary_transfers} ordinary transfers</div></div>
+    </div>
+    <div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Cumulative value stolen from the Orbit vault over time, with the first alert marked">
+      ${grid}<path d="${d}" fill="none" stroke="var(--series)" stroke-width="2" stroke-linejoin="round"/>${alertMark}</svg></div>
+    <table style="margin-top:10px"><thead><tr><th>Time (UTC)</th><th style="text-align:left">Event</th><th>Value</th></tr></thead><tbody>
+    ${rows.map(e=>e.kind==="theft"
+      ?`<tr><td>${hms(e.ts)}</td><td style="text-align:left">Release of ${e.x.amount.toLocaleString("en-US",{maximumFractionDigits:2})} ${esc(e.x.token)} to ${short(esc(e.x.to))}${r.first_alert_ts&&e.ts>r.first_alert_ts?` <span class="pill" style="background:var(--warn-soft);color:var(--warn)">after alert</span>`:""}</td><td>${usd(e.x.usd)}</td></tr>`
+      :`<tr><td>${hms(e.ts)}</td><td style="text-align:left">${pill(e.a.severity)} ${esc(e.a.message)}</td><td></td></tr>`).join("")}
+    </tbody></table>
+    <p class="msg">${esc(r.price_note)} Vault ${esc(r.vault)}; identified from the on-chain record, which matches public reports of the Orbit hack. Source: ${esc(r.source)}.</p>`;
+}
+async function loadReplay(){try{const r=await fetch("api/replay");if(r.ok)renderReplay(await r.json());else $("replay").innerHTML='<p class="empty">Replay data not available.</p>';}catch{}}
+loadReplay();
+
+// ---- evaluation ---------------------------------------------------------
+function renderEval(e){
+  const k=e.by_kind, kinds=Object.keys(k);
+  const det=kinds.reduce((a,x)=>a+k[x].detected,0), runs=kinds.reduce((a,x)=>a+k[x].runs,0);
+  const perDay=e.false_alarms_per_bridge_day;
+  $("eval").innerHTML=`<div class="eval-kpis">
+      <div class="kpi"><div class="l">Simulated exploits caught</div><div class="v">${det} of ${runs}</div><div class="n">${kinds.length} exploit types × 4 bridges × 3 runs</div></div>
+      <div class="kpi"><div class="l">False alarms per bridge per day</div><div class="v">${perDay.toFixed(2)}</div><div class="n">about ${(perDay*4*7).toFixed(0)} a week across the 4 bridges</div></div>
+      <div class="kpi"><div class="l">Alert threshold</div><div class="v">${e.config.z_threshold} spreads</div><div class="n">above the hour's normal outflow</div></div>
+    </div>
+    <table><thead><tr><th>Exploit type</th><th>Caught</th><th>Median time to first alert</th><th>Median share stolen before alert</th></tr></thead><tbody>
+    ${kinds.map(x=>`<tr><td>${esc(KIND[x]||x)}</td><td>${k[x].detected} / ${k[x].runs}</td><td>${k[x].median_minutes_to_alert==null?"—":k[x].median_minutes_to_alert+" min"}</td><td>${k[x].median_lost_before_alert==null?"—":(k[x].median_lost_before_alert*100).toFixed(1)+"%"}</td></tr>`).join("")}
+    </tbody></table>
+    <details><summary>Threshold trade-off: catching more vs. fewer false alarms</summary>
+    <table><thead><tr><th>Threshold (spreads)</th><th>Caught (1 run each)</th><th>False alarms per bridge-day</th></tr></thead><tbody>
+    ${e.sweep.map(s=>`<tr><td>${s.z_threshold}</td><td>${s.detected} / ${s.runs}</td><td>${s.false_alarms_per_bridge_day.toFixed(2)}</td></tr>`).join("")}
+    </tbody></table></details>
+    <p class="msg">${esc(e.note)}</p>`;
+}
+
+// ---- polling ------------------------------------------------------------
+async function refreshSeries(){try{const r=await fetch(`api/series/${selected}?hours=24`);if(r.ok)renderChart(await r.json());}catch{}}
+let evalDone=false;
+let lastEvalTry=0, bannerMode=null;
+function renderBanner(st){
+  const b=$("banner");
+  if(st.mode==="live"){
+    const tone=st.health==="ok"?"pass":st.health==="starting"?"unk":"fail";
+    const label=st.health==="ok"?"Live":st.health==="starting"?"Starting":"Degraded";
+    b.style.background=`var(--${tone}-soft)`;b.style.borderColor=`color-mix(in srgb,var(--${tone}) 40%,var(--line))`;
+    b.innerHTML=`<b style="color:var(--${tone})">${label}.</b> Real Ethereum mainnet data: USDT, USDC, DAI and WBTC moving through the official bridge contracts of OP Mainnet, Base and Arbitrum One, counted once 6 blocks deep. Native ETH is not covered yet.${st.health!=="ok"&&st.health!=="starting"?" Data may be stale: check /api/health.":""}`;
+    $("sim-box").hidden=true;$("sim-msg").hidden=true;
+  }else if(bannerMode!=="demo"){
+    $("sim-box").hidden=false;$("sim-msg").hidden=false;
+  }
+  bannerMode=st.mode;
+}
+async function refresh(){
+  try{
+    const st=await (await fetch("api/state")).json();STATE=st;
+    renderBanner(st);
+    if(st.mode==="live"){
+      $("clock-label").textContent="Chain time";$("clock").textContent=st.clock?fmtTime(st.clock):"—";
+      $("speed").textContent=st.cursor?`block ${st.cursor.toLocaleString()} · ${st.lag_blocks??"?"} behind head · ${st.transfers_stored.toLocaleString()} transfers stored`:st.phase;
+    }else{
+      $("clock-label").textContent="Simulated clock";$("clock").textContent=fmtTime(st.clock);
+      $("speed").textContent=`×${st.speed} speed · ${st.events_processed.toLocaleString()} transfers processed`;
+    }
+    renderCards(st);
+    const sel=st.bridges.find(b=>b.id===selected);
+    $("vault-line").innerHTML=sel&&sel.vault?` · <a href="https://etherscan.io/address/${esc(sel.vault)}" target="_blank" rel="noopener" style="color:inherit">${esc(sel.contract||"vault")} ${short(esc(sel.vault))} ↗</a>`:"";
+    renderFeed(await (await fetch("api/alerts?limit=30")).json());
+    if(st.bridges.length) await refreshSeries();
+    if(!evalDone&&Date.now()-lastEvalTry>10000){lastEvalTry=Date.now();const r=await fetch("api/evaluation");if(r.status===200){renderEval(await r.json());evalDone=true;}}
+  }catch{$("clock").textContent="server not reachable";}
+}
+refresh();setInterval(refresh,2000);
+</script>
