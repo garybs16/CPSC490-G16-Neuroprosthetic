@@ -32,5 +32,6 @@ proposal/*.docx
 
 # BridgeWatch live-mode database (prototype/bridgewatch.db and its WAL files)
 prototype/bridgewatch.db*
+prototype/bridgewatch-datasets.db*
 *.db-wal
 *.db-shm

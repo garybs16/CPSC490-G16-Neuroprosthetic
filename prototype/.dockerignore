@@ -4,10 +4,10 @@ __pycache__/
 tests/
 run.py
 run_report.txt
-login.py
 .env
 .env.*
 bridgewatch.db*
 *.db-wal
 *.db-shm
 Dockerfile*
+results/

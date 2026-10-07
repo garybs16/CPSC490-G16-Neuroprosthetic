@@ -8,7 +8,9 @@ Baseline of normal
   hour over the past 7 days, and its spread is the median absolute deviation
   (MAD). Median/MAD rather than mean/standard deviation, so one whale or one
   past incident doesn't drag the baseline around. Comparing like hours keeps
-  the daily cycle from reading as an anomaly.
+  the daily cycle from reading as an anomaly. The spread never goes below
+  min_spread_usd, so an hour where usually nothing leaves (MAD = 0) doesn't
+  turn every ordinary release into a 50-sigma event.
 
 Rules, checked on every release
   outflow_spike      last-10-minute outflow is z_threshold spreads above normal
@@ -17,19 +19,26 @@ Rules, checked on every release
                      normal AND at least burst_min_count releases
   escrow_drain       net outflow over the last hour exceeds drain_share of the
                      escrow (no baseline needed: losing 5% in an hour is never normal)
+  large_withdrawal   one release of at least large_withdrawal_share of the escrow
+                     and at least large_withdrawal_min_usd (no baseline needed)
   unbacked_release   a release with no matching deposit (only when the data can
                      tell, i.e. use_message_matching and backed is False)
 
 Alarm fatigue
   One alert per bridge and rule per cooldown: while an alert is live, new
   triggers update it (peak value, last seen) instead of raising another.
-  No alerts during the warm-up, before the baseline has enough history.
+  Alerts on one bridge within the cooldown of each other form one incident,
+  and the notifier sends one message per incident.
+  No baseline-based alerts during the warm-up, before there is enough history.
+
+Per-bridge settings: Detector(..., overrides={"bridge-id": {"min_spread_usd": 250000}}).
 """
 
 from __future__ import annotations
 import statistics
 from collections import deque
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, fields, replace
+from typing import Callable
 
 from .models import Alert, Bridge, FlowEvent
 
@@ -40,12 +49,24 @@ BUCKET = 600.0   # 10 minutes
 class DetectorConfig:
     z_threshold: float = 6.0
     min_escrow_share: float = 0.005
+    min_spread_usd: float = 100_000          # floor on the outflow spread (proposal: absolute minimum spread)
     burst_min_count: int = 12
     drain_share: float = 0.05
+    large_withdrawal_share: float = 0.02     # one release this share of escrow ...
+    large_withdrawal_min_usd: float = 1_000_000   # ... and at least this much
     warmup: float = 3 * 86_400
     cooldown: float = 3_600
-    history_days: int = 7
+    history_days: float = 7
     use_message_matching: bool = False
+    max_alerts_in_memory: int = 5_000
+
+
+def with_overrides(cfg: DetectorConfig, overrides: dict | None) -> DetectorConfig:
+    """cfg with one bridge's overrides applied (unknown keys are ignored)."""
+    if not overrides:
+        return cfg
+    known = {f.name for f in fields(cfg)}
+    return replace(cfg, **{k: v for k, v in overrides.items() if k in known})
 
 
 def _fmt_usd(x: float) -> str:
@@ -72,7 +93,7 @@ class BridgeMonitor:
         self.bridge, self.cfg = bridge, cfg
         self.escrow = bridge.escrow_usd
         self.first_ts = first_ts
-        per_hour = cfg.history_days * int(3_600 // BUCKET)
+        per_hour = int(cfg.history_days * 3_600 // BUCKET)
         self.hist_usd = {h: deque(maxlen=per_hour) for h in range(24)}
         self.hist_cnt = {h: deque(maxlen=per_hour) for h in range(24)}
         self.recent_out: deque[tuple[float, float]] = deque()   # releases, last 10 min
@@ -80,8 +101,13 @@ class BridgeMonitor:
         self.win_usd = 0.0
         self.net_hour = 0.0
         self.bucket: Bucket | None = None
-        self.buckets: deque[Bucket] = deque(maxlen=cfg.history_days * 24 * int(3_600 // BUCKET))
+        self.buckets: deque[Bucket] = deque(maxlen=int(cfg.history_days * 24 * 3_600 // BUCKET))
         self.live: dict[str, Alert] = {}
+        self.incident: str = ""
+        self.incident_last = float("-inf")
+        self.late_events = 0                 # events older than the bucket being filled (see observe)
+        self._closed = 0                     # buckets closed so far; the baseline cache key
+        self._base_cache: dict[int, tuple[int, tuple | None]] = {}
 
     # --- baseline -----------------------------------------------------------
     @staticmethod
@@ -99,13 +125,16 @@ class BridgeMonitor:
         h = self._hour(ts)
         if len(self.hist_usd[h]) < 6 or self.first_ts is None or ts - self.first_ts < self.cfg.warmup:
             return None
+        cached = self._base_cache.get(h)
+        if cached and cached[0] == self._closed:     # history unchanged since last time: reuse
+            return cached[1]
         med_u, mad_u = self._robust(self.hist_usd[h])
         med_c, mad_c = self._robust(self.hist_cnt[h])
         # Spread floors: a quiet hour with MAD ~0 must not turn every release into a 50-sigma event
-        return med_u, max(1.4826 * mad_u, 0.5 * med_u, 1.0), med_c, max(1.4826 * mad_c, 0.5 * med_c, 1.0)
-
-    def learning(self, ts: float) -> bool:
-        return self.baseline(ts) is None
+        base = (med_u, max(1.4826 * mad_u, 0.5 * med_u, self.cfg.min_spread_usd),
+                med_c, max(1.4826 * mad_c, 0.5 * med_c, 1.0))
+        self._base_cache[h] = (self._closed, base)
+        return base
 
     def _roll(self, ts: float) -> None:
         start = ts - ts % BUCKET
@@ -116,6 +145,7 @@ class BridgeMonitor:
             self.hist_usd[self._hour(b.start)].append(b.out_usd)
             self.hist_cnt[self._hour(b.start)].append(b.out_count)
             self.buckets.append(b)
+            self._closed += 1
             self.bucket = Bucket(b.start + BUCKET)
         if self.bucket.expected_usd is None:
             base = self.baseline(self.bucket.start)
@@ -135,10 +165,20 @@ class BridgeMonitor:
             self.win_usd -= self.recent_out.popleft()[1]
         while self.hour_flows and self.hour_flows[0][0] <= ts - 3_600:
             self.net_hour -= self.hour_flows.popleft()[1]
+        # Running sums drift with float rounding; an empty window is exactly zero.
+        if not self.recent_out:
+            self.win_usd = 0.0
+        if not self.hour_flows:
+            self.net_hour = 0.0
 
     # --- events -------------------------------------------------------------
-    def observe(self, e: FlowEvent, next_id) -> list[Alert]:
-        """Update state with one event; return alerts that were newly raised."""
+    def observe(self, e: FlowEvent, next_id, now: float) -> list[Alert]:
+        """Update state with one event; return alerts that were newly raised.
+        `now` is when the detector sees it (stored as the alert's detected_at)."""
+        if self.bucket is not None and e.ts < self.bucket.start:
+            # Older than the bucket being filled (sources sort within a batch, so this
+            # only happens across sources). It is counted in the current bucket.
+            self.late_events += 1
         self.advance(e.ts)
         b = self.bucket
         if e.direction == "in":
@@ -161,6 +201,9 @@ class BridgeMonitor:
         name = self.bridge.name
 
         def fire(rule, severity, observed, expected, message):
+            if e.ts - self.incident_last >= cfg.cooldown:
+                self.incident = f"{self.bridge.id}-{int(e.ts)}"   # a new incident on this bridge
+            self.incident_last = e.ts
             a = self.live.get(rule)
             if a and e.ts - a.last_seen < cfg.cooldown:
                 a.last_seen = e.ts
@@ -169,7 +212,9 @@ class BridgeMonitor:
                 if severity == "critical":
                     a.severity = "critical"
                 return
-            a = Alert(next_id(), self.bridge.id, rule, severity, e.ts, e.ts, observed, expected, message)
+            a = Alert(next_id(), self.bridge.id, rule, severity, e.ts, e.ts, observed, expected, message,
+                      confirmed_at=e.confirmed_at if e.confirmed_at is not None else e.ts,
+                      detected_at=now, incident=self.incident)
             self.live[rule] = a
             raised.append(a)
 
@@ -198,17 +243,32 @@ class BridgeMonitor:
             if z_c >= cfg.z_threshold and count >= cfg.burst_min_count:
                 fire("withdrawal_burst", "warning", count, med_c,
                      f"{count} releases from {name} in the last 10 minutes; about {med_c:.0f} is normal at this hour.")
+
+        escrow_before = max(self.escrow + e.amount_usd, 1.0)
+        if e.amount_usd >= max(cfg.large_withdrawal_share * escrow_before, cfg.large_withdrawal_min_usd):
+            share = e.amount_usd / escrow_before
+            fire("large_withdrawal", "critical" if share >= cfg.drain_share else "warning", e.amount_usd,
+                 cfg.large_withdrawal_share * escrow_before,
+                 f"One release of {_fmt_usd(e.amount_usd)} left {name}: {share:.1%} of its "
+                 f"{_fmt_usd(escrow_before)} escrow.")
         return raised
 
 
 @dataclass
 class Detector:
-    """Runs one BridgeMonitor per bridge and keeps the alert log."""
+    """Runs one BridgeMonitor per bridge and keeps the recent alert log.
+
+    overrides  per-bridge DetectorConfig fields, e.g. {"base": {"min_spread_usd": 250_000}}
+    clock      returns "now" for an alert's detected_at (wall clock live, simulated clock
+               in replay); without one, detected_at = the event's confirmed_at."""
     bridges: tuple[Bridge, ...]
     cfg: DetectorConfig = field(default_factory=DetectorConfig)
+    overrides: dict[str, dict] = field(default_factory=dict)
+    clock: Callable[[], float] | None = None
 
     def __post_init__(self):
-        self.monitors = {b.id: BridgeMonitor(b, self.cfg) for b in self.bridges}
+        self.monitors = {b.id: BridgeMonitor(b, with_overrides(self.cfg, self.overrides.get(b.id)))
+                         for b in self.bridges}
         self.alerts: list[Alert] = []
         self._next = 0
 
@@ -220,8 +280,11 @@ class Detector:
         m = self.monitors.get(e.bridge)
         if m is None:
             return []
-        raised = m.observe(e, self._id)
+        now = self.clock() if self.clock else (e.confirmed_at if e.confirmed_at is not None else e.ts)
+        raised = m.observe(e, self._id, now)
         self.alerts.extend(raised)
+        if len(self.alerts) > self.cfg.max_alerts_in_memory:
+            del self.alerts[:len(self.alerts) - self.cfg.max_alerts_in_memory]
         return raised
 
     def advance(self, ts: float) -> None:

@@ -8,15 +8,17 @@ deposit), so it sees what left the bridge but not why. Limits:
   - Native ETH moves in transactions, not logs, so it is not covered here.
   - Free public RPCs cap block ranges and rate; requests are chunked and
     retried, and fall back to a second endpoint.
-  - USD values use the prices passed in (fixed per replay), not a price feed
-    per transfer.
+  - Endpoint URLs can contain API keys, so logs show only scheme://host (redact()).
+
+scripts/fetch_datasets.py imports Rpc, RpcError, TRANSFER_TOPIC and _topic, and
+uses Rpc.call/head/block_time/balance_of/chainlink_price and Rpc._ts: keep them.
 """
 
 from __future__ import annotations
-import json
 import logging
 import time
-from dataclasses import dataclass
+from collections import OrderedDict
+from urllib.parse import urlsplit
 
 import httpx
 
@@ -36,12 +38,29 @@ def _topic(address: str) -> str:
     return "0x" + "0" * 24 + address.lower()[2:]
 
 
-@dataclass(frozen=True)
-class Token:
-    address: str
-    symbol: str
-    decimals: int
-    price_usd: float
+def redact(url: str) -> str:
+    """scheme://host only: paths and query strings often carry API keys."""
+    parts = urlsplit(url)
+    return f"{parts.scheme}://{parts.hostname}" if parts.hostname else "<rpc>"
+
+
+class LruDict(OrderedDict):
+    """A dict that forgets its least recently used entries beyond maxsize (block timestamps)."""
+
+    def __init__(self, maxsize: int):
+        super().__init__()
+        self.maxsize = maxsize
+
+    def __getitem__(self, key):
+        value = super().__getitem__(key)
+        self.move_to_end(key)
+        return value
+
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        self.move_to_end(key)
+        while len(self) > self.maxsize:
+            self.popitem(last=False)
 
 
 class Refused(RpcError):
@@ -62,10 +81,11 @@ class Rpc:
     with backoff; refusals move straight to the next endpoint. The endpoint that
     last answered is tried first next time."""
 
-    def __init__(self, urls: tuple[str, ...] = PUBLIC_RPCS, timeout: float = 90, retries: int = 3, pause: float = 0.3):
+    def __init__(self, urls: tuple[str, ...] = PUBLIC_RPCS, timeout: float = 90, retries: int = 3, pause: float = 0.3,
+                 ts_cache_size: int = 200_000):
         self.urls, self.retries, self.pause = urls, retries, pause
         self.http = httpx.Client(timeout=timeout, headers={"User-Agent": "BridgeWatch/0.1"})
-        self._ts: dict[int, int] = {}
+        self._ts: LruDict = LruDict(ts_cache_size)   # block number -> timestamp
         self._preferred = 0
         self.calls = 0
         self.errors = 0
@@ -96,12 +116,12 @@ class Rpc:
                 except Refused as e:
                     last = e
                     self.errors += 1
-                    log.info("%s refused %s (%s); trying the next endpoint", url, method, e)
+                    log.info("%s refused %s (%s); trying the next endpoint", redact(url), method, e)
                     break
                 except (httpx.TransportError, RpcError) as e:
                     last = e
                     self.errors += 1
-                    log.warning("%s %s failed (%s), attempt %d", url, method, e, attempt + 1)
+                    log.warning("%s %s failed (%s), attempt %d", redact(url), method, e, attempt + 1)
                     time.sleep(2 ** attempt)
         raise RpcError(f"All RPC endpoints failed for {method}: {last}")
 
@@ -133,43 +153,16 @@ class Rpc:
 
     def chainlink_price(self, feed: str, block: int | str = "latest") -> tuple[str, float]:
         """(description, price) from a Chainlink aggregator at a block."""
+        desc, price, _ = self.chainlink_round(feed, block)
+        return desc, price
+
+    def chainlink_round(self, feed: str, block: int | str = "latest") -> tuple[str, float, int]:
+        """(description, price, updatedAt unix seconds) from a Chainlink aggregator at a block."""
         tag = hex(block) if isinstance(block, int) else block
         raw = bytes.fromhex(self.call("eth_call", [{"to": feed, "data": "0x7284e416"}, tag])[2:])
         desc = raw[64:64 + int.from_bytes(raw[32:64], "big")].decode()
         dec = int(self.call("eth_call", [{"to": feed, "data": "0x313ce567"}, tag]), 16)
         r = self.call("eth_call", [{"to": feed, "data": "0xfeaf968c"}, tag])   # latestRoundData()
-        answer = int(r[2 + 64:2 + 128], 16)
-        return desc, answer / 10 ** dec
-
-    def transfers(self, token: str, vault: str, start: int, end: int, direction: str, chunk: int = 5_000) -> list[dict]:
-        """Transfer logs of `token` out of (direction='out') or into ('in') `vault`, blocks start..end."""
-        topics = [TRANSFER_TOPIC, _topic(vault)] if direction == "out" else [TRANSFER_TOPIC, None, _topic(vault)]
-        logs, b = [], start
-        while b <= end:
-            e = min(b + chunk - 1, end)
-            logs += self.call("eth_getLogs", [{"address": token, "fromBlock": hex(b), "toBlock": hex(e), "topics": topics}])
-            b = e + 1
-        return logs
-
-
-def fetch_vault_flows(rpc: Rpc, vault: str, tokens: list[Token], start: int, end: int) -> list[dict]:
-    """Every in/out transfer of the given tokens for the vault, as plain dicts (for caching)."""
-    rows = []
-    for tok in tokens:
-        for direction in ("out", "in"):
-            for lg in rpc.transfers(tok.address, vault, start, end, direction):
-                block = int(lg["blockNumber"], 16)
-                amount = int(lg["data"], 16) / 10 ** tok.decimals
-                counterparty = "0x" + lg["topics"][2 if direction == "out" else 1][-40:]
-                rows.append({"ts": rpc.block_time(block), "block": block, "token": tok.symbol,
-                             "direction": direction, "amount": amount, "usd": amount * tok.price_usd,
-                             "tx": lg["transactionHash"], "log_index": int(lg["logIndex"], 16),
-                             "counterparty": counterparty})
-            log.info("%s %s: %d transfers so far", tok.symbol, direction, len(rows))
-    rows.sort(key=lambda r: (r["block"], r["log_index"]))
-    return rows
-
-
-def save(path, data: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
+        # five words: roundId, answer, startedAt, updatedAt, answeredInRound
+        answer, updated_at = int(r[2 + 64:2 + 128], 16), int(r[2 + 192:2 + 256], 16)
+        return desc, answer / 10 ** dec, updated_at

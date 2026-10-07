@@ -49,11 +49,13 @@ def test_injected_exploit_matches_its_ground_truth():
     assert abs(sum(e.amount_usd for e in released) - inc.stolen_usd) < 1
 
 
-def test_no_alerts_while_learning():
+def test_no_baseline_alerts_while_learning():
     det = Detector((BRIDGE,), FAST)
     t = steady(det, 1)
-    det.observe(FlowEvent(t, "t", "out", 3e6, "big"))   # 3% of escrow, but no baseline yet
+    det.observe(FlowEvent(t, "t", "out", 1.5e6, "big"))   # 1.5% of escrow, but no baseline yet
     assert [a.rule for a in det.alerts] == []
+    det.observe(FlowEvent(t + 60, "t", "out", 3e6, "bigger"))   # one 3% release: needs no baseline
+    assert [a.rule for a in det.alerts] == ["large_withdrawal"]
 
 
 def test_normal_traffic_raises_nothing_and_a_spike_is_caught():
@@ -69,7 +71,8 @@ def test_normal_traffic_raises_nothing_and_a_spike_is_caught():
 def test_drain_rule_needs_no_baseline_and_is_critical():
     det = Detector((BRIDGE,), FAST)
     det.observe(FlowEvent(T0, "t", "out", 6e6, "x"))       # 6% of escrow on the first event
-    assert [(a.rule, a.severity) for a in det.alerts] == [("escrow_drain", "critical")]
+    assert [(a.rule, a.severity) for a in det.alerts] == [("escrow_drain", "critical"), ("large_withdrawal", "critical")]
+    assert len({a.incident for a in det.alerts}) == 1        # one incident -> one notification
 
 
 def test_cooldown_merges_repeat_triggers_into_one_alert():
@@ -80,6 +83,49 @@ def test_cooldown_merges_repeat_triggers_into_one_alert():
     assert len(drains) == 1 and drains[0].last_seen == T0 + 540
     assert "6% of its" in drains[0].message                 # message: the moment it fired
     assert drains[0].observed > 0.4 and "net in the last hour" in drains[0].worst   # worst point kept separately
+
+
+def quiet(det, days, start=T0):
+    """Deposits only: the usual outflow is $0 every hour (MAD = 0)."""
+    t = start
+    while t < start + days * DAY:
+        det.observe(FlowEvent(t, "t", "in", 10_000.0, "d"))
+        t += BUCKET
+    return t
+
+
+def test_min_spread_stops_small_releases_from_alerting_in_quiet_hours():
+    det = Detector((BRIDGE,), FAST)                       # min_spread_usd defaults to $100K
+    t = quiet(det, 3)
+    det.observe(FlowEvent(t + 5, "t", "out", 550_000.0, "a"))   # > 0.5% of escrow but only 5.5 spreads
+    assert det.alerts == []
+    old_floor = Detector((BRIDGE,), DetectorConfig(warmup=2 * DAY, min_spread_usd=1.0))
+    quiet(old_floor, 3)
+    old_floor.observe(FlowEvent(t + 5, "t", "out", 550_000.0, "a"))
+    assert [a.rule for a in old_floor.alerts] == ["outflow_spike"]   # what the $1 floor used to do
+    det.observe(FlowEvent(t + 65, "t", "out", 200_000.0, "b"))  # $750K in 10 min = 7.5 spreads
+    assert [a.rule for a in det.alerts] == ["outflow_spike"]
+
+
+def test_large_single_withdrawal_rule_and_per_bridge_override():
+    det = Detector((BRIDGE,), FAST)
+    det.observe(FlowEvent(T0, "t", "out", 2.5e6, "x"))       # 2.5% of a $100M escrow in one release
+    assert [(a.rule, a.severity) for a in det.alerts] == [("large_withdrawal", "warning")]
+    assert "One release of $2.5M" in det.alerts[0].message
+    relaxed = Detector((BRIDGE,), FAST, overrides={"t": {"large_withdrawal_share": 0.03}})
+    relaxed.observe(FlowEvent(T0, "t", "out", 2.5e6, "x"))
+    assert relaxed.alerts == [] and relaxed.monitors["t"].cfg.large_withdrawal_share == 0.03
+    small = Detector((Bridge("s", "Small", ("A",), 10e6),), FAST)
+    small.observe(FlowEvent(T0, "s", "out", 900_000.0, "y"))  # 9% of escrow but under the $1M floor
+    assert [a.rule for a in small.alerts] == ["escrow_drain"]
+
+
+def test_alerts_carry_confirmation_and_detection_times():
+    clock = {"now": T0 + 100}
+    det = Detector((BRIDGE,), FAST, clock=lambda: clock["now"])
+    det.observe(FlowEvent(T0, "t", "out", 6e6, "x", confirmed_at=T0 + 72))
+    a = det.alerts[0]
+    assert a.started == T0 and a.confirmed_at == T0 + 72 and a.detected_at == T0 + 100
 
 
 def test_unbacked_rule_only_with_message_matching():
@@ -117,7 +163,6 @@ def api():
     sim = bw.Sim(seed=3, speed=60)
     sim.warm_up()
     bw.service = bw.DemoService(sim)
-    bw.scorecard = {"note": "stub"}
     return TestClient(bw.app), bw
 
 
@@ -160,22 +205,27 @@ def test_dashboard_is_served(api):
 # --- Real on-chain replay (saved data, offline) ------------------------------
 
 def test_orbit_replay_alerts_on_first_theft_with_no_false_alarms():
-    from bridgewatch.replay import ORBIT, load, run
-    data = load(ORBIT)
-    assert data["transfers"] and data["prices_usd"]["USDT"] == 1.0
-    r = run(ORBIT, data)
+    from bridgewatch.replay import ORBIT_PATH, run
+    from bridgewatch.source import FileSource
+    src = FileSource(ORBIT_PATH)
+    assert src.kind == "hack" and src.prices["USDT"] == 1.0
+    r = run(src, DetectorConfig())
     assert r["false_alarms_during_baseline"] == 0 and r["baseline_days"] >= 13
     assert len(r["thefts"]) == 4 and 59e6 < r["stolen_usd_tracked"] < 61e6
-    assert r["seconds_from_first_theft_to_alert"] == 0
+    assert r["seconds_from_first_theft_to_alert"] == 0                     # the first theft trips it
+    assert 0 <= r["detection_latency_s"] <= 60                              # proposal: within 1 min of 6 confirmations
+    assert r["first_alert_detected_at"] >= r["first_theft_ts"] + 72        # never before the 6th confirmation
     assert r["stolen_after_alert_usd"] > 0.8 * r["stolen_usd_tracked"]
     assert any(a["severity"] == "critical" for a in r["alerts"])
 
 
-def test_evaluation_reports_running_then_result(api, monkeypatch):
-    client, bw = api
-    monkeypatch.setattr(bw, "scorecard", None)
-    monkeypatch.setattr(bw, "_scoring", True)          # pretend it is already computing
-    r = client.get("/api/evaluation")
-    assert r.status_code == 202 and r.json()["status"] == "running"
-    monkeypatch.setattr(bw, "scorecard", {"note": "done"})
+def test_saved_results_are_served_and_missing_ones_are_404(api, tmp_path, monkeypatch):
+    client, _ = api
+    monkeypatch.setenv("BRIDGEWATCH_RESULTS_DIR", str(tmp_path))
+    assert client.get("/api/evaluation").status_code == 404
+    assert "python -m bridgewatch.replay" in client.get("/api/replay").json()["detail"]
+    (tmp_path / "evaluation.json").write_text('{"note": "done"}')
+    (tmp_path / "replay.json").write_text('{"cases": [{"key": "orbit-2023", "thefts": []}]}')
     assert client.get("/api/evaluation").json() == {"note": "done"}
+    assert client.get("/api/replay/orbit-2023").json()["key"] == "orbit-2023"
+    assert client.get("/api/replay/nope").status_code == 404
