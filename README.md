@@ -9,7 +9,7 @@
 | Name | GitHub | Role | Leader |
 |---|---|---|---|
 | Samuel, Gary Bennet | @garybs16 | 〈e.g. backend, docs lead〉 | ✅ |
-| Bowen, Jake | @JakeBowen2005 | 〈role〉 | |
+| Bowen, Jake | @JakeBowen2005 | Detection rules and testing | |
 | Jaglan, Avni | @Avnijaglan19 | front end, database | |
 | Acuna, Isaac | @1600isad | 〈role〉 | |
 
