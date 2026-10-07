@@ -1,169 +1,188 @@
 """
-Replay a real bridge hack through the detector, using real on-chain data.
+Replay real bridge hacks through the detector, using saved on-chain data.
 
-Case: the Orbit Chain bridge vault on Ethereum, 31 Dec 2023 (1 Jan 2024 in
-Korea). The vault address was identified from the on-chain record itself: on
-that evening it released 10M DAI, 230.88 WBTC, 30M USDT and 10M USDC to four
-fresh addresses within 18 minutes, after small test transfers to some of the
-same addresses. That matches public reports of the Orbit hack, but check it
-against a published incident report before citing it.
+Each hack case is a dataset file under bridgewatch/data/ (orbit-2023.json and
+whatever scripts/fetch_datasets.py has added): about 14 days of the vault's
+ordinary traffic (the baseline), then the hack, transfer by transfer, exactly
+as live mode would have seen it.
 
-The detector sees 14 days of the vault's ordinary traffic first (its
-baseline), then the hack, exactly as it would have live.
+Simulated clock. Live mode reads a block once it has 6 confirmations and polls
+every 15 s, so here a transfer at block time t is seen at the first 15-second
+poll after t + 6 x 12 s. That poll time is the alert's detected_at.
 
-  python -m bridgewatch.replay            # score from the saved data (offline)
-  python -m bridgewatch.replay --fetch    # re-download from public RPCs (a few minutes)
+Reported per case
+  first theft time       block time of the first theft (releases >= the case's
+                         theft_min_usd inside its hack_window)
+  first alert time       when the first alert would have been raised (detected_at)
+  detection latency      first alert detected_at - first theft confirmed_at
+                         (proposal: "evaluated within 1 minute after 6 confirmations")
+  stolen before / after  USD of thefts whose block time is before / after the first
+                         alert was raised (only "after" could have been acted on)
+  false alarms           alerts more than an hour before the first theft
+
+  python -m bridgewatch.replay                          # every hack case found, saved to results/replay.json
+  python -m bridgewatch.replay bridgewatch/data/orbit-2023.json
+  python -m bridgewatch.replay --no-save
+
+Re-downloading a dataset: scripts/fetch_datasets.py.
 """
 
 from __future__ import annotations
 import argparse
 import datetime as dt
 import json
-from dataclasses import asdict, dataclass
+import math
+import time
+from dataclasses import asdict
 from pathlib import Path
 
+from .config import DATA_DIR, detector_config, settings_from_env
 from .detector import Detector, DetectorConfig
-from .models import Bridge, FlowEvent
+from .models import Bridge
+from .source import FileSource, find_datasets, to_flow_event
 
-DATA_DIR = Path(__file__).resolve().parent / "data"
-
-
-@dataclass(frozen=True)
-class Case:
-    key: str
-    title: str
-    vault: str
-    tokens: tuple[tuple[str, str, int], ...]   # (address, symbol, decimals)
-    start_block: int                            # baseline starts here (~14 days before)
-    end_block: int                              # a few hours after the hack
-    btc_usd_feed: str                           # Chainlink aggregator used to price WBTC
-    price_block: int
-    theft_min_usd: float                        # releases at least this large in the hack window count as stolen
-    hack_window: tuple[int, int]                # blocks bracketing the theft
+CONFIRMATIONS = 6
+BLOCK_TIME_S = 12.0
+POLL_SECONDS = 15.0
+ORBIT_PATH = DATA_DIR / "orbit-2023.json"
 
 
-ORBIT = Case(
-    key="orbit-2023",
-    title="Orbit Chain bridge, Ethereum vault, 31 Dec 2023",
-    vault="0x1bf68a9d1eaee7826b3593c20a0ca93293cb489a",
-    tokens=(("0xdac17f958d2ee523a2206206994597c13d831ec7", "USDT", 6),
-            ("0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", "USDC", 6),
-            ("0x6b175474e89094c44da98b954eedeac495271d0f", "DAI", 18),
-            ("0x2260fac5e5542a773aa44fbcfedf7c193bc2c599", "WBTC", 8)),
-    start_block=18_808_000,
-    end_block=18_912_443,
-    btc_usd_feed="0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
-    price_block=18_908_000,
-    theft_min_usd=1_000_000,
-    hack_window=(18_907_104, 18_912_443),
-)
-CASES = {ORBIT.key: ORBIT}
+def hack_cases(root: Path = DATA_DIR) -> list[FileSource]:
+    """Every dataset under root that marks a hack window."""
+    out = []
+    for path in find_datasets(root):
+        src = FileSource(path)
+        if src.kind == "hack":
+            out.append(src)
+    return out
 
 
-def fetch(case: Case) -> dict:
-    """Download the case's data from public RPCs and save it next to this module."""
-    from .onchain import Rpc, Token, fetch_vault_flows, save
-    rpc = Rpc()
-    desc, btc = rpc.chainlink_price(case.btc_usd_feed, case.price_block)
-    if desc != "BTC / USD":
-        raise RuntimeError(f"Price feed describes itself as '{desc}', expected 'BTC / USD'.")
-    prices = {"USDT": 1.0, "USDC": 1.0, "DAI": 1.0, "WBTC": btc}
-    tokens = [Token(a, s, d, prices[s]) for a, s, d in case.tokens]
-    balances = {t.symbol: rpc.balance_of(t.address, case.vault, case.start_block) / 10 ** t.decimals for t in tokens}
-    rows = fetch_vault_flows(rpc, case.vault, tokens, case.start_block, case.end_block)
-    data = {
-        "case": asdict(case),
-        "fetched": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat(),
-        "source": "Ethereum mainnet via public JSON-RPC (" + ", ".join(rpc.urls) + ")",
-        "prices_usd": prices,
-        "price_note": "Stablecoins at $1; WBTC at the Chainlink BTC/USD answer at block "
-                      f"{case.price_block}. Native ETH is not included (not visible in token logs).",
-        "start_ts": rpc.block_time(case.start_block),
-        "end_ts": rpc.block_time(case.end_block),
-        "balances_at_start": balances,
-        "transfers": rows,
-    }
-    save(DATA_DIR / f"{case.key}.json", data)
-    return data
+def detect(src: FileSource, cfg: DetectorConfig, confirmations: int = CONFIRMATIONS,
+           block_time_s: float = BLOCK_TIME_S, poll_seconds: float = POLL_SECONDS) -> Detector:
+    """Feed a dataset through a fresh detector on the simulated poll clock."""
+    clock = {"now": src.start_ts}
+    bridge = Bridge(src.key, src.title, (src.chain,), src.escrow_usd_at_start)
+    det = Detector((bridge,), cfg, clock=lambda: clock["now"])
+    det.monitors[src.key].first_ts = src.start_ts
+    confirm_s = confirmations * block_time_s
+    for t in src.transfers():
+        e = to_flow_event(t, confirm_s)
+        if e is None:
+            continue
+        clock["now"] = math.ceil(e.confirmed_at / poll_seconds) * poll_seconds
+        det.observe(e)
+    det.advance(src.end_ts)
+    return det
 
 
-def load(case: Case) -> dict:
-    return json.loads((DATA_DIR / f"{case.key}.json").read_text(encoding="utf-8"))
+def run(src: FileSource, cfg: DetectorConfig | None = None, confirmations: int = CONFIRMATIONS,
+        block_time_s: float = BLOCK_TIME_S, poll_seconds: float = POLL_SECONDS) -> dict:
+    """Replay one hack case and score the detector against its thefts."""
+    cfg = cfg or detector_config()
+    case = src.case
+    lo, hi = case["hack_window"]
+    theft_min = case.get("theft_min_usd", 1_000_000)
+    transfers = src.transfers()
+    thefts = [t for t in transfers if t.direction == "out" and lo <= t.block_number <= hi
+              and t.amount_usd is not None and t.amount_usd >= theft_min]
+    det = detect(src, cfg, confirmations, block_time_s, poll_seconds)
+    confirm_s = confirmations * block_time_s
 
-
-def run(case: Case, data: dict | None = None, cfg: DetectorConfig | None = None) -> dict:
-    """Feed the saved transfers through the detector and score it against the theft."""
-    data = data or load(case)
-    prices = data["prices_usd"]
-    escrow = sum(bal * prices[sym] for sym, bal in data["balances_at_start"].items())
-    bridge = Bridge("orbit", "Orbit bridge vault", ("Ethereum",), escrow)
-    cfg = cfg or DetectorConfig()
-    det = Detector((bridge,), cfg)
-    det.monitors["orbit"].first_ts = data["start_ts"]
-    lo, hi = case.hack_window
-    thefts = [r for r in data["transfers"]
-              if r["direction"] == "out" and lo <= r["block"] <= hi and r["usd"] >= case.theft_min_usd]
-    theft_txs = {r["tx"] for r in thefts}
-    for r in data["transfers"]:
-        det.observe(FlowEvent(r["ts"], "orbit", r["direction"], r["usd"], r["tx"],
-                              backed=(False if r["tx"] in theft_txs else None)))
-    det.advance(data["end_ts"])
-
-    stolen = sum(r["usd"] for r in thefts)
-    first_theft = min((r["ts"] for r in thefts), default=None)
-    hack_alerts = [a for a in det.alerts if first_theft is not None and a.started >= first_theft - 3_600]
-    false_alarms = [a for a in det.alerts if first_theft is None or a.started < first_theft - 3_600]
-    first_alert = min(hack_alerts, key=lambda a: a.started) if hack_alerts else None
-    # Funds that left in the same transaction as the alert were already gone; anything later could have been stopped
-    after = [r for r in thefts if first_alert and r["ts"] > first_alert.started]
-    baseline_days = (first_theft - data["start_ts"]) / 86_400 if first_theft else None
+    first_theft = min((t.block_time for t in thefts), default=None)
+    last_theft = max((t.block_time for t in thefts), default=None)
+    if first_theft is None:
+        hack_alerts, false_alarms = [], list(det.alerts)
+    else:
+        hack_alerts = [a for a in det.alerts if first_theft - 3_600 <= a.started <= last_theft + 3_600]
+        false_alarms = [a for a in det.alerts if a.started < first_theft - 3_600]
+    first_alert = min(hack_alerts, key=lambda a: (a.detected_at, a.id)) if hack_alerts else None
+    stolen = sum(t.amount_usd for t in thefts)
+    # A theft is "after" the alert only if it happened after the alert was raised
+    after = [t for t in thefts if first_alert and t.block_time > first_alert.detected_at]
+    latency = (first_alert.detected_at - (first_theft + confirm_s)) if first_alert else None
     return {
-        "case": case.title,
-        "vault": case.vault,
-        "escrow_usd_at_start": round(escrow, 2),
-        "baseline_days": round(baseline_days, 1) if baseline_days else None,
-        "ordinary_transfers": sum(1 for r in data["transfers"] if r["tx"] not in theft_txs),
+        "key": src.key,
+        "case": src.title,
+        "dataset": src.path.name,
+        "vault": src.vault,
+        "escrow_usd_at_start": round(src.escrow_usd_at_start, 2),
+        "baseline_days": round((first_theft - src.start_ts) / 86_400, 1) if first_theft else None,
+        "ordinary_transfers": len(transfers) - len(thefts),
         "stolen_usd_tracked": round(stolen, 2),
-        "thefts": [{"ts": r["ts"], "token": r["token"], "amount": r["amount"], "usd": round(r["usd"], 2),
-                    "to": r["counterparty"], "tx": r["tx"]} for r in sorted(thefts, key=lambda r: r["ts"])],
+        "thefts": [{"ts": t.block_time, "token": t.token, "amount": t.amount, "usd": round(t.amount_usd, 2),
+                    "to": t.counterparty, "tx": t.tx_hash} for t in thefts],
         "alerts": [asdict(a) for a in hack_alerts],
-        "first_alert_ts": first_alert.started if first_alert else None,
+        "first_theft_ts": first_theft,
+        "first_alert_ts": first_alert.started if first_alert else None,          # block time of the triggering transfer
+        "first_alert_detected_at": first_alert.detected_at if first_alert else None,
+        "first_alert_rule": first_alert.rule if first_alert else None,
         "seconds_from_first_theft_to_alert": (first_alert.started - first_theft) if first_alert else None,
-        "stolen_before_alert_usd": round(stolen - sum(r["usd"] for r in after), 2) if first_alert else None,
-        "stolen_after_alert_usd": round(sum(r["usd"] for r in after), 2) if first_alert else None,
-        "minutes_of_warning_for_later_thefts": [round((r["ts"] - first_alert.started) / 60, 1) for r in after] if first_alert else [],
+        "detection_latency_s": round(latency, 1) if latency is not None else None,
+        "latency_target_s": 60,
+        "stolen_before_alert_usd": round(stolen - sum(t.amount_usd for t in after), 2) if first_alert else None,
+        "stolen_after_alert_usd": round(sum(t.amount_usd for t in after), 2) if first_alert else None,
+        "minutes_of_warning_for_later_thefts": [round((t.block_time - first_alert.detected_at) / 60, 1) for t in after],
         "false_alarms_during_baseline": len(false_alarms),
-        "source": data["source"],
-        "fetched": data["fetched"],
-        "price_note": data["price_note"],
+        "false_alarms": [{"started": a.started, "rule": a.rule, "severity": a.severity, "message": a.message}
+                         for a in false_alarms],
+        "source": src.data.get("source", ""),
+        "fetched": src.data.get("fetched", ""),
+        "price_note": src.data.get("price_note", ""),
     }
 
 
-def _print(result: dict) -> None:
-    t = lambda ts: dt.datetime.fromtimestamp(ts, dt.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-    print(f"\n{result['case']}\nVault {result['vault']}, tracked escrow at start ${result['escrow_usd_at_start']:,.0f}")
-    print(f"Baseline: {result['baseline_days']} days, {result['ordinary_transfers']} ordinary transfers, "
-          f"{result['false_alarms_during_baseline']} false alarms\n")
-    print("Thefts (releases >= $1M in the hack window):")
-    for r in result["thefts"]:
-        print(f"  {t(r['ts'])}  {r['amount']:>16,.2f} {r['token']:<5} ${r['usd']:>14,.0f}  -> {r['to']}")
-    print("\nAlerts:")
-    for a in result["alerts"]:
-        print(f"  {t(a['started'])}  {a['severity'].upper():8} {a['rule']:<17} {a['message']}")
-    if result["first_alert_ts"]:
-        print(f"\nFirst alert {result['seconds_from_first_theft_to_alert']:.0f} s after the first theft. "
-              f"Stolen before it: ${result['stolen_before_alert_usd']:,.0f}; after it: ${result['stolen_after_alert_usd']:,.0f} "
-              f"(warning of {result['minutes_of_warning_for_later_thefts']} minutes).")
-    print(f"\n{result['price_note']}\nSource: {result['source']}, fetched {result['fetched']}.")
+def run_all(sources: list[FileSource], cfg: DetectorConfig | None = None) -> dict:
+    cfg = cfg or detector_config()
+    return {"generated_at": time.time(),
+            "config": asdict(cfg),
+            "simulated_pipeline": {"confirmations": CONFIRMATIONS, "block_time_s": BLOCK_TIME_S,
+                                   "poll_seconds": POLL_SECONDS},
+            "cases": [run(s, cfg) for s in sources]}
+
+
+def _t(ts: float | None) -> str:
+    return dt.datetime.fromtimestamp(ts, dt.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC") if ts else "-"
+
+
+def _print(r: dict) -> None:
+    print(f"\n== {r['case']} ({r['key']})")
+    print(f"   vault {r['vault']}, tracked escrow at start ${r['escrow_usd_at_start']:,.0f}; "
+          f"{r['baseline_days']} days of baseline, {r['ordinary_transfers']} ordinary transfers")
+    print(f"   thefts: {len(r['thefts'])}, ${r['stolen_usd_tracked']:,.0f} tracked")
+    print(f"   first theft      {_t(r['first_theft_ts'])}")
+    if r["first_alert_detected_at"]:
+        print(f"   first alert      {_t(r['first_alert_detected_at'])}  ({r['first_alert_rule']}, "
+              f"on the transfer at {_t(r['first_alert_ts'])})")
+        print(f"   detection latency {r['detection_latency_s']:.0f} s after the first theft was confirmed "
+              f"(target <= {r['latency_target_s']} s)")
+        print(f"   stolen before the alert ${r['stolen_before_alert_usd']:,.0f}; after it ${r['stolen_after_alert_usd']:,.0f}")
+    else:
+        print("   first alert      NONE: the detector missed this hack")
+    print(f"   false alarms before the hack: {r['false_alarms_during_baseline']}")
+    for a in r["false_alarms"][:5]:
+        print(f"     {_t(a['started'])} {a['severity']:8} {a['rule']}: {a['message']}")
+
+
+def main(argv: list[str] | None = None) -> dict:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("files", nargs="*", help="dataset files to replay (default: every hack case under bridgewatch/data)")
+    ap.add_argument("--out", help="where to save the JSON result (default: results/replay.json)")
+    ap.add_argument("--no-save", action="store_true")
+    args = ap.parse_args(argv)
+    sources = [FileSource(f) for f in args.files] if args.files else hack_cases()
+    sources = [s for s in sources if s.kind == "hack"]
+    if not sources:
+        raise SystemExit("No hack cases found (a case needs a hack_window).")
+    result = run_all(sources)
+    for r in result["cases"]:
+        _print(r)
+    if not args.no_save:
+        out = Path(args.out) if args.out else settings_from_env().results_dir / "replay.json"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8")
+        print(f"\nSaved {out}")
+    return result
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--fetch", action="store_true", help="re-download the on-chain data first")
-    ap.add_argument("--case", default=ORBIT.key, choices=list(CASES))
-    args = ap.parse_args()
-    case = CASES[args.case]
-    import logging
-    logging.basicConfig(level=logging.INFO, format="%(message)s")
-    data = fetch(case) if args.fetch or not (DATA_DIR / f"{case.key}.json").exists() else None
-    _print(run(case, data))
+    main()

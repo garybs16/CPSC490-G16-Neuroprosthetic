@@ -1,0 +1,201 @@
+{
+ "generated_at": 1791411997.108712,
+ "config": {
+  "z_threshold": 6.0,
+  "min_escrow_share": 0.005,
+  "min_spread_usd": 100000.0,
+  "burst_min_count": 12,
+  "drain_share": 0.05,
+  "large_withdrawal_share": 0.02,
+  "large_withdrawal_min_usd": 1000000,
+  "warmup": 259200,
+  "cooldown": 3600,
+  "history_days": 7.0,
+  "use_message_matching": false,
+  "max_alerts_in_memory": 5000
+ },
+ "target_per_bridge_week": 1.0,
+ "datasets": [
+  {
+   "key": "arbitrum-30d",
+   "title": "Arbitrum One bridge (L1 ERC20 Gateway), 30 believed-normal days",
+   "vault": "0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+   "dataset": "arbitrum-30d.json",
+   "days": 30.0,
+   "weeks_counted": 3.86,
+   "transfers": 493,
+   "escrow_usd_at_start": 606444568.74,
+   "false_alarms": 0,
+   "per_week": 0.0,
+   "meets_target": true,
+   "by_rule": {},
+   "alerts_during_warmup": 0,
+   "alerts": []
+  },
+  {
+   "key": "base-30d",
+   "title": "Base bridge (L1StandardBridge), 30 believed-normal days",
+   "vault": "0x3154cf16ccdb4c6d922629664174b904d80f2c35",
+   "dataset": "base-30d.json",
+   "days": 30.0,
+   "weeks_counted": 3.86,
+   "transfers": 813,
+   "escrow_usd_at_start": 34172600.69,
+   "false_alarms": 0,
+   "per_week": 0.0,
+   "meets_target": true,
+   "by_rule": {},
+   "alerts_during_warmup": 0,
+   "alerts": []
+  },
+  {
+   "key": "multichain-2023-normal-30d",
+   "title": "Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain)",
+   "vault": "0xc564ee9f21ed8a2d8e7e76c085740d5e4c5fafbe",
+   "dataset": "multichain-2023-normal-30d.json",
+   "days": 30.0,
+   "weeks_counted": 3.86,
+   "transfers": 2233,
+   "escrow_usd_at_start": 226019843.98,
+   "false_alarms": 13,
+   "per_week": 3.37,
+   "meets_target": false,
+   "by_rule": {
+    "outflow_spike": 10,
+    "large_withdrawal": 2,
+    "escrow_drain": 1
+   },
+   "alerts_during_warmup": 0,
+   "alerts": [
+    {
+     "started": 1678497059,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$2.0M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1678507595,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$1.4M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1678512731,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$1.4M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1678529831,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$3.6M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1678530611,
+     "rule": "large_withdrawal",
+     "severity": "warning",
+     "message": "One release of $5.2M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain): 2.4% of its $211.3M escrow."
+    },
+    {
+     "started": 1678535291,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$1.9M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1678570175,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$1.3M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1678579403,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$8.1M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1678579403,
+     "rule": "large_withdrawal",
+     "severity": "warning",
+     "message": "One release of $8.1M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain): 4.0% of its $200.5M escrow."
+    },
+    {
+     "started": 1678582451,
+     "rule": "escrow_drain",
+     "severity": "critical",
+     "message": "Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) lost $10.0M net in the last hour: 5% of its $200.5M escrow."
+    },
+    {
+     "started": 1678697771,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$1.0M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1678735319,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$1.1M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1679812283,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$2.7M left Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain) in the last 10 minutes; normally nothing leaves at this hour."
+    }
+   ]
+  },
+  {
+   "key": "optimism-30d",
+   "title": "OP Mainnet bridge (L1StandardBridgeProxy), 30 believed-normal days",
+   "vault": "0x99c9fc46f92e8a1c0dec1b1747d010903e884be1",
+   "dataset": "optimism-30d.json",
+   "days": 30.0,
+   "weeks_counted": 3.86,
+   "transfers": 3475,
+   "escrow_usd_at_start": 309974831.0,
+   "false_alarms": 0,
+   "per_week": 0.0,
+   "meets_target": true,
+   "by_rule": {},
+   "alerts_during_warmup": 0,
+   "alerts": []
+  },
+  {
+   "key": "orbit-2023-normal-30d",
+   "title": "Orbit Chain bridge vault, 30 believed-normal days (Oct 2023, before the Dec 2023 hack)",
+   "vault": "0x1bf68a9d1eaee7826b3593c20a0ca93293cb489a",
+   "dataset": "orbit-2023-normal-30d.json",
+   "days": 30.0,
+   "weeks_counted": 3.86,
+   "transfers": 306,
+   "escrow_usd_at_start": 69961904.27,
+   "false_alarms": 1,
+   "per_week": 0.259,
+   "meets_target": true,
+   "by_rule": {
+    "outflow_spike": 1
+   },
+   "alerts_during_warmup": 0,
+   "alerts": [
+    {
+     "started": 1697584031,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$658.2K left Orbit Chain bridge vault, 30 believed-normal days (Oct 2023, before the Dec 2023 hack) in the last 10 minutes; normally nothing leaves at this hour."
+    }
+   ]
+  }
+ ],
+ "overall": {
+  "datasets": 5,
+  "bridge_weeks": 19.3,
+  "false_alarms": 14,
+  "per_bridge_week": 0.725,
+  "worst_per_week": 3.37,
+  "all_meet_target": false
+ },
+ "note": "Real Ethereum data from believed-normal windows (no known incident). Every alert after the warm-up counts as a false alarm; an alert on a real but unreported incident would be counted too."
+}
