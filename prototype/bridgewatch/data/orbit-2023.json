@@ -33,7 +33,16 @@
   "hack_window": [
    18907104,
    18912443
-  ]
+  ],
+  "coverage": "Tokens only (USDT, USDC, DAI, WBTC). Native ETH (~9,500 ETH stolen) is not tracked, so $59.8M of the reported ~$81.5M is covered.",
+  "first_theft_tx": "0xafdc36278fcef8d54824b09ec019147cfe2afd995abf6754e52d273a2c1b07ca",
+  "first_theft_block": 18908035,
+  "references": [
+   "https://www.halborn.com/blog/post/explained-the-orbit-bridge-hack-december-2023",
+   "https://www.coindesk.com/business/2024/01/02/orbit-chain-loses-81m-in-cross-chain-bridge-exploit"
+  ],
+  "notes": "Compromised multisig keys (7 of 10). First theft: 10M DAI at 2023-12-31 21:07:59 UTC.",
+  "period": "hack"
  },
  "fetched": "2026-09-28T23:01:58+00:00",
  "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co/public/mainnet)",
