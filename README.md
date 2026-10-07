@@ -2,7 +2,7 @@
 
 **Project title:** BridgeWatch: Real-Time Detection of Cross-Chain Bridge Exploits
 **Sponsor:** SNX-3 (SonarX)
-**Section:** 〈01 (Tue) | 05 (Thu)〉
+**Section:** 05 (Thu)
 
 ## Team
 
@@ -18,7 +18,7 @@
 ## Links
 
 - **Proposal:** [`proposal/proposal.md`](proposal/proposal.md)
-- **Project board:** 〈paste your Projects board URL〉
+- **Issue board:** <https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues>
 - **Goals (epics):** [#11](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/11) learn normal bridge activity ·
   [#12](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/12) catch hacks early with few false alarms ·
   [#13](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/13) operator dashboard
@@ -44,7 +44,7 @@ on SonarX data, tested on past hacks, with a measured false-alarm rate.
 ## How we work
 
 - Sprints: four 2-week sprints (`Sprint 1`–`Sprint 4` milestones).
-  Sprint boundary ritual every other 〈day〉.
+  Sprint boundary ritual every other Thursday.
 - Every change lands by pull request; **the author never approves their own PR**.
 - Every issue carries: assignee (owner), milestone (sprint), `priority:`,
   and a `sp:` story-point label.
