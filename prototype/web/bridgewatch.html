@@ -1,255 +1,413 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
 <title>BridgeWatch</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
 :root{
-  --ground:#F2F4F8; --surface:#FFFFFF; --surface-2:#F7F8FB; --ink:#14203A; --muted:#5B6679; --faint:#8A94A7;
-  --line:#DDE2EB; --grid:#E9ECF2; --accent:#2F5BEA; --accent-soft:#E6ECFD; --on-accent:#FFFFFF;
-  --pass:#1D7F55; --pass-soft:#E1F3EA; --warn:#A96A10; --warn-soft:#FBF0DC; --fail:#C0362C; --fail-soft:#FBE6E3;
-  --unk:#6B7385; --unk-soft:#ECEEF2; --band:rgba(107,115,133,.12); --on-fail:#FFFFFF;
-  --series:#2F5BEA; --alert-mark:#C0362C;  /* chart marks; validated with the dataviz palette checker */
-  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
-  --body:"Instrument Sans", "Segoe UI", system-ui, sans-serif;
-  --mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme:light;
+  --bg:#F3F5F8; --surface:#FFFFFF; --surface-2:#F6F7FA; --ink:#14203A; --muted:#56627A; --faint:#687388;
+  --line:#DDE2EB; --grid:#E8EBF1; --accent:#2F5BEA; --accent-soft:#E8EDFD;
+  --ok:#1D7F55; --warn:#8A5A00; --warn-soft:#FBF1DC; --crit:#B42318; --crit-soft:#FDECEA;
+  --band:rgba(86,98,122,.13); --series:#2F5BEA;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --ground:#0D1320; --surface:#151D2E; --surface-2:#1A2337; --ink:#E6EBF4; --muted:#9AA6BC; --faint:#6F7B92;
-    --line:#26314A; --grid:#1F2940; --accent:#7D9BFF; --accent-soft:#1E2A4C; --on-accent:#0D1320;
-    --pass:#4CC08A; --pass-soft:#12301F; --warn:#E3A948; --warn-soft:#342510; --fail:#F0766B; --fail-soft:#3A1A18;
-    --unk:#9AA3B5; --unk-soft:#222B3D; --band:rgba(154,163,181,.14); --on-fail:#0D1320; --series:#6A88F2; --alert-mark:#E4655A;
+    --bg:#0D1320; --surface:#151D2E; --surface-2:#1A2337; --ink:#E6EBF4; --muted:#A3AEC2; --faint:#8C97AC;
+    --line:#29344C; --grid:#212B42; --accent:#8AA5FF; --accent-soft:#1F2A49;
+    --ok:#5CCB95; --warn:#E8B04F; --warn-soft:#33260F; --crit:#FF8A7F; --crit-soft:#3B1B19;
+    --band:rgba(163,174,194,.14); --series:#7F9CF5;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --ground:#0D1320; --surface:#151D2E; --surface-2:#1A2337; --ink:#E6EBF4; --muted:#9AA6BC; --faint:#6F7B92;
-  --line:#26314A; --grid:#1F2940; --accent:#7D9BFF; --accent-soft:#1E2A4C; --on-accent:#0D1320;
-  --pass:#4CC08A; --pass-soft:#12301F; --warn:#E3A948; --warn-soft:#342510; --fail:#F0766B; --fail-soft:#3A1A18;
-  --unk:#9AA3B5; --unk-soft:#222B3D; --band:rgba(154,163,181,.14); --on-fail:#0D1320; --series:#6A88F2; --alert-mark:#E4655A;
+  --bg:#0D1320; --surface:#151D2E; --surface-2:#1A2337; --ink:#E6EBF4; --muted:#A3AEC2; --faint:#8C97AC;
+  --line:#29344C; --grid:#212B42; --accent:#8AA5FF; --accent-soft:#1F2A49;
+  --ok:#5CCB95; --warn:#E8B04F; --warn-soft:#33260F; --crit:#FF8A7F; --crit-soft:#3B1B19;
+  --band:rgba(163,174,194,.14); --series:#7F9CF5;
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;padding:24px 16px 48px}
-.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:12px}
-.mark{width:38px;height:38px;border-radius:10px;background:var(--ink);display:grid;place-items:center}
-.brand h1{font-family:var(--display);font-weight:700;font-size:24px;margin:0;line-height:1}
-.brand p{margin:3px 0 0;color:var(--muted);font-size:13px}
-.clock{font-family:var(--mono);font-size:13px;color:var(--muted);text-align:right}
-.clock b{color:var(--ink);font-weight:500}
-.banner{background:var(--warn-soft);color:var(--ink);border:1px solid color-mix(in srgb,var(--warn) 40%,var(--line));border-radius:12px;padding:10px 14px;font-size:13px}
-.banner b{color:var(--warn)}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
-h2{font-family:var(--display);font-weight:700;font-size:18px;margin:0}
+html{accent-color:var(--accent);scrollbar-color:var(--line) transparent}
+::selection{background:var(--accent-soft);color:var(--ink)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;padding:20px 16px 48px;font-variant-numeric:tabular-nums}
+a{color:inherit;text-underline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1{font-size:20px;font-weight:700;margin:0;letter-spacing:-.01em}
+h2{font-size:16px;font-weight:650;margin:0}
 .sub{margin:2px 0 0;font-size:13px;color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:left;font:inherit;color:inherit;cursor:pointer;display:flex;flex-direction:column;gap:6px}
-.card:hover{border-color:var(--accent)}
-.card[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
-.card .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.card h3{margin:0;font-size:15px;font-weight:600}
-.card .chains{font-size:12px;color:var(--faint)}
-.card .kv{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
-.card .kv b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
-.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
-.pill svg{width:12px;height:12px}
-.grid2{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:18px}
-@media (max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
-.chart-head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.num{text-align:right;white-space:nowrap}
+.muted{color:var(--muted)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px;background:currentColor}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* header */
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:8px 24px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line)}
+header .mode{margin:2px 0 0;font-size:13px;color:var(--muted)}
+header .mode b{color:var(--ink);font-weight:600}
+.status-line{display:flex;gap:6px 18px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.status-line b{color:var(--ink);font-weight:600}
+.notice{margin:-14px 0 0;font-size:13px;color:var(--muted);max-width:80ch}
+.notice.warn{color:var(--ink);background:var(--warn-soft);border-radius:8px;padding:8px 12px;max-width:none}
+.notice.warn b{color:var(--warn)}
+
+/* bridges */
+.bridges{list-style:none;margin:10px 0 0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.b-row,.b-head{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(0,.8fr) repeat(3,minmax(0,1fr));gap:12px;align-items:center;padding:10px 16px}
+.b-head{font-size:12px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.bridges li+li+li .b-row{border-top:1px solid var(--line)}
+.b-row{width:100%;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.b-row:hover{background:var(--surface-2)}
+.b-row[aria-pressed="true"]{background:var(--accent-soft)}
+.b-row:focus-visible{outline-offset:-2px}
+.b-row.is-alert{background:var(--crit-soft)}
+.b-row.is-alert[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--crit)}
+.b-name{font-weight:600}
+.b-chains{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.b-status{font-size:13px;font-weight:600}
+.b-row.is-alert .b-status{font-size:14px;font-weight:700}
+.b-row.is-alert .b-name{font-weight:700}
+.st-ok{color:var(--ok)} .st-learning{color:var(--muted)} .st-warning{color:var(--warn)} .st-critical{color:var(--crit)}
+.b-val{text-align:right;white-space:nowrap}
+.b-head span{white-space:nowrap}
+.b-val small{display:none}
+.ratio{color:var(--muted);font-size:12px}
+.is-alert .ratio{color:var(--crit);font-weight:700}
+@media (max-width:720px){
+  .b-head{display:none}
+  .b-row{grid-template-columns:1fr auto;gap:4px 12px;padding:12px 14px}
+  .b-val{grid-column:1/-1;text-align:left;display:flex;justify-content:space-between;font-size:13px}
+  .b-val small{display:inline;color:var(--muted);font-size:13px}
+}
+
+/* main */
+.main{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:28px}
+@media (max-width:920px){.main{grid-template-columns:minmax(0,1fr)}}
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:8px 16px;flex-wrap:wrap}
 .keys{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
 .keys span{display:inline-flex;align-items:center;gap:6px}
-.sw-line{width:16px;height:2px;border-radius:2px;display:inline-block}
-.sw-band{width:14px;height:10px;border-radius:3px;background:var(--band);display:inline-block}
-.sw-dot{width:9px;height:9px;border-radius:50%;background:var(--alert-mark);display:inline-block}
-.chart{position:relative}
+.sw-line{width:16px;height:2px;background:var(--series)}
+.sw-band{width:14px;height:10px;background:var(--band)}
+.sw-dot{width:9px;height:9px;border-radius:50%;background:var(--crit)}
+.chart{position:relative;margin-top:10px;min-height:240px}
 .chart svg{display:block;width:100%;height:auto}
-.chart text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
-.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;box-shadow:0 4px 16px rgba(0,0,0,.12);min-width:180px;display:none;z-index:2}
-.tip .t{font-family:var(--mono);color:var(--muted);margin-bottom:4px}
+.chart text{font-size:11px;fill:var(--muted)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:12px;box-shadow:0 4px 14px rgba(0,0,0,.12);min-width:170px;display:none;z-index:2}
+.tip .t{color:var(--muted);margin-bottom:4px}
 .tip .r{display:flex;justify-content:space-between;gap:12px}
-.tip .r b{font-variant-numeric:tabular-nums;font-weight:600}
+.empty{font-size:13px;color:var(--muted);padding:6px 0;margin:0}
 details{margin-top:10px;font-size:13px}
-summary{cursor:pointer;color:var(--muted)}
+summary{cursor:pointer;color:var(--muted);width:max-content;max-width:100%}
+summary:hover{color:var(--ink)}
+.sim{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.msg{font-size:13px;color:var(--muted);margin:6px 0 0}
+
+/* controls */
+.btn{min-height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.btn:hover{border-color:var(--muted)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.small{min-height:28px;padding:0 10px;font-size:12px}
+.link{border:0;background:none;padding:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;text-align:left}
+.link:hover{text-decoration:underline}
+select,input[type=password]{min-height:32px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:0 10px;font:inherit;font-size:13px;max-width:100%}
+
+/* alerts */
+.feed{list-style:none;margin:10px 0 0;padding:0;border-top:1px solid var(--line);max-height:560px;overflow-y:auto}
+.alert{padding:12px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:2px 12px}
+.alert .sev{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.alert .when{font-size:12px;color:var(--muted);text-align:right}
+.alert .what{grid-column:1/-1;font-weight:600;font-size:14px}
+.alert p{grid-column:1/-1;margin:0;font-size:13px}
+.alert .worst{color:var(--muted)}
+.alert .act{grid-column:1/-1;margin-top:6px;font-size:12px;color:var(--muted)}
+.alert.acked .sev,.alert.acked .what,.alert.acked p{color:var(--muted)}
+.token{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font-size:13px}
+.token form{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.more{margin-top:10px}
+
+/* tables */
+section.block{display:flex;flex-direction:column;gap:10px}
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
-th:first-child,td:first-child{text-align:left}
-th{font-weight:600;color:var(--muted);font-size:12px}
-.feed{display:flex;flex-direction:column;gap:8px;max-height:460px;overflow-y:auto}
-.alert{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface-2);display:flex;flex-direction:column;gap:4px}
-.alert .row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.alert .when{font-family:var(--mono);font-size:12px;color:var(--faint)}
-.alert p{margin:0;font-size:13px}
-.alert.acked{opacity:.6}
-.btn{height:36px;padding:0 14px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
-.btn:hover{border-color:var(--accent)}
-.btn.primary{background:var(--fail);border-color:var(--fail);color:var(--on-fail)}
-.btn.small{height:28px;padding:0 10px;font-size:12px}
-select{height:36px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:9px;padding:0 10px;font:inherit;font-size:13px}
-button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.sim{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
-.msg{font-size:13px;color:var(--muted);margin:8px 0 0}
-.empty{font-size:13px;color:var(--faint);padding:8px 0}
-.eval-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
-@media (max-width:640px){.eval-kpis{grid-template-columns:minmax(0,1fr)}}
-.kpi{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px}
-.kpi .l{font-size:12px;color:var(--muted)}
-.kpi .v{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.1}
-.kpi .n{font-size:12px;color:var(--faint)}
-footer{font-size:12px;color:var(--faint);max-width:90ch}
-.sr{position:absolute;left:-9999px}
+th,td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;text-align:left;background:var(--surface-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tfoot td{border-top:1px solid var(--line);border-bottom:0;font-weight:600}
+.wide{min-width:900px}
+.wide td:first-child{min-width:230px}
+.wide td:nth-child(4){white-space:nowrap}
+.mid{min-width:620px}
+.mid td:first-child{min-width:200px}
+.miss{color:var(--crit);font-weight:600}
+.meet{color:var(--ok);font-weight:600}
+tr.open td{background:var(--accent-soft)}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.case h3{font-size:15px;margin:0}
+.case p{margin:0;font-size:13px;max-width:90ch}
+.case table{border:1px solid var(--line);border-radius:8px}
+.tag{font-size:12px;font-weight:600;color:var(--warn)}
+/* tabs */
+.tabs{display:flex;gap:4px;margin:-14px 0 0;border-bottom:1px solid var(--line)}
+.tab{border:0;background:none;color:var(--muted);font:inherit;font-size:14px;font-weight:600;padding:10px 12px;margin-bottom:-1px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .count{color:var(--crit);font-weight:700}
+.panel{display:flex;flex-direction:column;gap:28px}
+#clock{font-variant-numeric:tabular-nums}
+@media (max-width:520px){.tab{padding:10px 8px;font-size:13px}}
+footer{font-size:12px;color:var(--muted);max-width:90ch;border-top:1px solid var(--line);padding-top:12px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 
 <div class="wrap">
   <header>
-    <div class="brand">
-      <div class="mark" aria-hidden="true">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--ground)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c3-6 15-6 18 0"/><path d="M3 17h18"/><path d="M7 13v4M12 11.5V17M17 13v4"/></svg>
-      </div>
-      <div><h1>BridgeWatch</h1><p>Cross-chain bridge exploit detection</p></div>
+    <div>
+      <h1>BridgeWatch</h1>
+      <p class="mode" id="mode-line">Connecting…</p>
     </div>
-    <div class="clock" aria-live="off"><span id="clock-label">Clock</span> <b id="clock">—</b><br><span id="speed"></span></div>
+    <div class="status-line" aria-live="off">
+      <span><span id="clock-label">Clock</span> <b id="clock">—</b></span>
+      <span id="chain-time" hidden></span>
+      <span id="fresh"></span>
+      <span id="health"></span>
+    </div>
   </header>
+  <p class="notice" id="notice">Synthetic data: the four demo bridges, their transfers and the simulated exploits are generated for testing. None of them is a real bridge.</p>
 
-  <div class="banner" id="banner"><b>Synthetic data.</b> The four bridges, their transfers and the simulated exploits in the live view are generated to develop and test the detector. None of them describes a real bridge. The <a href="#replay-panel" style="color:inherit">real hack replay</a> further down uses real on-chain data.</div>
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button class="tab" role="tab" id="tab-monitor" aria-controls="panel-monitor" aria-selected="true" data-tab="monitor" type="button">Monitor<span class="count" id="tab-count"></span></button>
+    <button class="tab" role="tab" id="tab-hacks" aria-controls="panel-hacks" aria-selected="false" data-tab="hacks" tabindex="-1" type="button">Past hacks</button>
+    <button class="tab" role="tab" id="tab-alarms" aria-controls="panel-alarms" aria-selected="false" data-tab="alarms" tabindex="-1" type="button">False alarms</button>
+  </nav>
 
-  <section class="cards" id="cards" aria-label="Bridges"></section>
+  <div class="panel" role="tabpanel" id="panel-monitor" aria-labelledby="tab-monitor">
+  <section aria-labelledby="bridges-h">
+    <h2 id="bridges-h">Bridges</h2>
+    <ul class="bridges" id="bridges"></ul>
+  </section>
 
-  <section class="grid2">
-    <div class="panel">
-      <div class="chart-head">
-        <div><h2 id="chart-title">Outflow</h2><p class="sub">Funds released per 10 minutes, last 24 hours · log scale<span id="vault-line"></span></p></div>
+  <div class="main">
+    <section aria-labelledby="chart-title">
+      <div class="head-row">
+        <div><h2 id="chart-title">Outflow</h2><p class="sub">Released per 10 minutes, last 24 hours (UTC), log scale<span id="vault-line"></span></p></div>
         <div class="keys" aria-hidden="true">
-          <span><i class="sw-line" style="background:var(--series)"></i>Outflow</span>
-          <span><i class="sw-band"></i>Normal range for the hour</span>
+          <span><i class="sw-line"></i>Outflow</span>
+          <span><i class="sw-band"></i>Normal range</span>
           <span><i class="sw-dot"></i>Alert</span>
         </div>
       </div>
       <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
-      <details><summary>Show data table</summary><div id="table"></div></details>
-      <div class="sim" id="sim-box">
+      <details><summary>Show as table</summary><div class="scroll" style="margin-top:8px"><div id="table"></div></div></details>
+      <div class="sim" id="sim-box" hidden>
+        <span>Demo:</span>
         <label class="sr" for="sim-kind">Exploit type</label>
         <select id="sim-kind">
-          <option value="mass_drain">Mass drain (many releases, ~2 h)</option>
+          <option value="mass_drain">Mass drain (many releases, about 2 h)</option>
           <option value="key_compromise">Key compromise (two huge releases)</option>
           <option value="slow_bleed">Slow bleed (12 h of small releases)</option>
         </select>
-        <button class="btn primary" id="sim-go" type="button">Simulate exploit on this bridge</button>
+        <button class="btn" id="sim-go" type="button">Simulate exploit on this bridge</button>
       </div>
       <p class="msg" id="sim-msg" role="status"></p>
-    </div>
+    </section>
 
-    <div class="panel">
-      <h2>Alerts</h2><p class="sub">Newest first. Acknowledge once a person has looked.</p>
-      <div class="feed" id="feed" style="margin-top:10px"></div>
-    </div>
-  </section>
+    <section aria-labelledby="alerts-h">
+      <h2 id="alerts-h">Alerts</h2>
+      <p class="sub">Newest first. Acknowledge once someone has looked into it.</p>
+      <div class="token" id="token-box" hidden role="status"></div>
+      <ul class="feed" id="feed" tabindex="0" aria-label="Alerts, newest first"></ul>
+      <button class="btn small more" id="older" type="button" hidden>Show older alerts</button>
+    </section>
+  </div>
+  </div>
 
-  <section class="panel" id="replay-panel">
-    <h2>Real hack replay: Orbit Chain bridge, 31 Dec 2023</h2>
-    <p class="sub">Real on-chain transfers of the bridge's Ethereum vault, read from public Ethereum nodes: 14 days of ordinary traffic, then the hack, fed through the same detector as if live.</p>
+  <div class="panel" role="tabpanel" id="panel-hacks" aria-labelledby="tab-hacks" hidden>
+
+  <section class="block" aria-labelledby="hacks-h" id="hacks">
+    <div>
+      <h2 id="hacks-h">Past hacks, replayed</h2>
+      <p class="sub">Real Ethereum transfers from each bridge's vault: 14 days of ordinary traffic, then the hack, run through the same detector as if live. Latency is from the first theft being 6 blocks deep to the alert; the target is 60 s or less.</p>
+    </div>
     <div id="replay"><p class="empty">Loading…</p></div>
+    <div id="case" hidden></div>
   </section>
+  </div>
 
-  <section class="panel">
-    <h2>How well does it catch exploits?</h2>
-    <p class="sub">Scored on simulated exploits injected into synthetic traffic after a 7-day baseline, and on 14 days of clean traffic, where every alert is a false alarm.</p>
-    <div id="eval"><p class="empty">Running the evaluation (about a minute after the server starts)…</p></div>
+  <div class="panel" role="tabpanel" id="panel-alarms" aria-labelledby="tab-alarms" hidden>
+
+  <section class="block" aria-labelledby="fa-h">
+    <div>
+      <h2 id="fa-h">False alarms on real normal data</h2>
+      <p class="sub">30-day windows of real traffic with no known incident. Every alert after the warm-up counts as a false alarm. Target: at most 1 per bridge per week.</p>
+    </div>
+    <div id="eval-real"><p class="empty">Loading…</p></div>
+    <details id="eval-box"><summary>Synthetic test scorecard (simulated exploits)</summary><div id="eval" style="margin-top:8px"><p class="empty">Loading…</p></div></details>
   </section>
+  </div>
 
-  <footer>Draft prototype for SonarX project SNX-3 (CPSC 490). Detection rules and all numbers are for the synthetic data above and say nothing yet about real bridges.</footer>
+  <footer>Prototype for SonarX project SNX-3 (CSUF CPSC 490). Replayed hacks and false-alarm results use real on-chain data; the demo bridges and simulated exploits are synthetic.</footer>
 </div>
 
 <script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const ICON={
-  ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>',
-  warning:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 6v8"/><path d="M12 18h.01"/></svg>',
-  critical:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>',
-  learning:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 7v5l3 2"/></svg>'
-};
-const STATUS={ok:["Normal","pass","ok"],learning:["Learning","unk","learning"],warning:["Warning","warn","warning"],critical:["Critical","fail","critical"]};
-const RULE={outflow_spike:"Outflow spike",withdrawal_burst:"Release burst",escrow_drain:"Escrow drain",unbacked_release:"Unbacked release"};
+const STATUS={ok:"OK",learning:"Learning",warning:"Warning",critical:"Critical",alert:"Alert"};
+const RULE={outflow_spike:"Outflow spike",withdrawal_burst:"Release burst",escrow_drain:"Escrow drain",large_withdrawal:"Large withdrawal",unbacked_release:"Unbacked release"};
 const KIND={mass_drain:"Mass drain",key_compromise:"Key compromise",slow_bleed:"Slow bleed"};
-function pill(key){const [label,tone,icon]=STATUS[key];return `<span class="pill" style="background:var(--${tone}-soft);color:var(--${tone})">${ICON[icon]}${label}</span>`;}
+const rule=r=>RULE[r]||r;
 function usd(x){if(x==null)return "—";const a=Math.abs(x);
   if(a>=1e9)return "$"+(x/1e9).toFixed(1)+"B";if(a>=1e6)return "$"+(x/1e6).toFixed(1)+"M";if(a>=1e3)return "$"+(x/1e3).toFixed(0)+"K";return "$"+x.toFixed(0);}
-const fmtTime=t=>new Date(t*1000).toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit",timeZone:"UTC"})+" UTC";
-const fmtHM=t=>new Date(t*1000).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",timeZone:"UTC"});
+const fmtTime=t=>new Date(t*1000).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",timeZone:"UTC"})+" UTC";
+const fmtHM=t=>new Date(t*1000).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",timeZone:"UTC"});
+const hms=t=>new Date(t*1000).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit",timeZone:"UTC"});
+const fmtFull=t=>new Date(t*1000).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",second:"2-digit",timeZone:"UTC"})+" UTC";
+const fmtDate=t=>new Date(t*1000).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});
+const short=a=>a?a.slice(0,6)+"…"+a.slice(-4):"";
+// Replace a region's HTML only when it changed, and keep keyboard focus on the same control.
+function setHTML(el,html,focusAttr){
+  if(el.__html===html)return;
+  const f=document.activeElement, key=f&&el.contains(f)&&focusAttr?f.getAttribute(focusAttr):null;
+  el.innerHTML=html;el.__html=html;
+  if(key!=null){const n=el.querySelector(`[${focusAttr}="${CSS.escape(key)}"]`);if(n)n.focus();}
+}
+async function getJSON(url,opt){const r=await fetch(url,opt);let body=null;try{body=await r.json();}catch{}return {ok:r.ok,status:r.status,body};}
 
-let selected="alpha", STATE=null;
+let STATE=null, selected=null, firstLoad=true, CLK=null;
+function tick(){
+  if(!CLK)return;
+  const t=CLK.base==null?Date.now()/1000:CLK.base+CLK.rate*(performance.now()-CLK.at)/1000;
+  $("clock").textContent=fmtFull(t);
+}
+setInterval(tick,1000);
 
-function renderCards(st){
+// ---- tabs --------------------------------------------------------------------
+const TABS=["monitor","hacks","alarms"];
+function showTab(name,focus){
+  if(!TABS.includes(name))name="monitor";
+  for(const t of TABS){
+    const on=t===name, b=$("tab-"+t);
+    b.setAttribute("aria-selected",on);b.tabIndex=on?0:-1;$("panel-"+t).hidden=!on;
+    if(on&&focus)b.focus();
+  }
+  if(location.hash.slice(1)!==name)history.replaceState(null,"",name==="monitor"?location.pathname+location.search:"#"+name);
+  if(name==="monitor")refreshSeries();   // the chart sizes itself to its container, which is 0 wide while hidden
+}
+document.querySelector(".tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(b)showTab(b.dataset.tab);});
+document.querySelector(".tabs").addEventListener("keydown",e=>{
+  const i=TABS.indexOf(document.activeElement?.dataset?.tab);if(i<0)return;
+  const j=e.key==="ArrowRight"?(i+1)%TABS.length:e.key==="ArrowLeft"?(i+TABS.length-1)%TABS.length:e.key==="Home"?0:e.key==="End"?TABS.length-1:-1;
+  if(j>=0){e.preventDefault();showTab(TABS[j],true);}
+});
+window.addEventListener("hashchange",()=>showTab(location.hash.slice(1)));
+
+// ---- header ----------------------------------------------------------------
+function renderHeader(st,health){
+  const live=st.mode==="live";
+  $("mode-line").innerHTML=live?"<b>Live</b> · Ethereum mainnet":"<b>Demo</b> · synthetic data";
+  // The clock ticks every second between polls (see tick()): live shows real UTC time,
+  // demo advances the simulated clock at its speed.
+  CLK={base:live?null:st.clock,at:performance.now(),rate:live?1:(st.speed||1)};
+  $("clock-label").textContent=live?"Now":"Simulated clock";
+  const ct=$("chain-time");
+  if(live){
+    ct.hidden=!st.clock;ct.innerHTML=st.clock?`Data to <b>${esc(hms(st.clock))}</b>`:"";
+    $("fresh").textContent=st.phase==="live"&&st.lag_blocks!=null?`${st.lag_blocks} blocks behind head`:(st.phase||"");
+  }else{
+    ct.hidden=true;
+    $("fresh").textContent=`${st.speed}× speed`;
+  }
+  tick();
+  const h=(health&&health.status)||st.health||"ok";
+  const [label,cls]=h==="ok"?["Healthy","st-ok"]:h==="starting"?["Starting","st-learning"]:["Degraded","st-critical"];
+  $("health").innerHTML=`<span class="${cls}"><i class="dot" aria-hidden="true"></i>${label}</span>`;
+  const n=$("notice");
+  const warns=[];
+  if(live&&h==="degraded")warns.push("<b>Data may be stale.</b> No successful poll recently, or ingestion is far behind the chain head.");
+  if(live&&health&&health.prices_stale)warns.push("<b>Prices may be stale.</b> A price feed failed or is over 2 hours old; USD values use the last good price.");
+  if(warns.length){n.className="notice warn";n.innerHTML=warns.join(" ");n.hidden=false;}
+  else if(!live){n.className="notice";n.textContent="Synthetic data: the four demo bridges, their transfers and the simulated exploits are generated for testing. None of them is a real bridge.";n.hidden=false;}
+  else{n.className="notice";n.textContent="USDT, USDC, DAI and WBTC through the official OP Mainnet, Base and Arbitrum One bridge contracts, counted once 6 blocks deep. Native ETH is not covered yet.";n.hidden=false;}
+  $("sim-box").hidden=live;
+}
+
+// ---- bridges ---------------------------------------------------------------
+function statusKey(b){return b.status==="alert"?(b.worst_severity||"alert"):b.status;}
+function renderBridges(st){
   if(!st.bridges.length){
-    $("cards").innerHTML=`<div class="card" style="grid-column:1/-1;cursor:default"><h3>${st.mode==="live"?"Reading the last 7 days of bridge activity from Ethereum…":"Starting…"}</h3><p class="sub">${st.mode==="live"?"This first start takes a minute. After that, BridgeWatch keeps up with every new block.":""}</p></div>`;
+    $("bridges").__html=null;$("bridges").innerHTML=`<li><p class="empty" style="padding:12px 16px">${st.mode==="live"?"Reading the last 7 days of bridge activity from Ethereum. The first start takes about a minute.":"Starting…"}</p></li>`;
     return;
   }
-  if(!st.bridges.some(b=>b.id===selected)) selected=st.bridges[0].id;
-  $("cards").innerHTML=st.bridges.map(b=>{
-    const key=b.status==="alert"?b.worst_severity:b.status;
+  setHTML($("bridges"),`<li class="b-head" aria-hidden="true"><span>Bridge</span><span>Status</span><span class="b-val">Escrow</span><span class="b-val">Out, last hour</span><span class="b-val">Normal, 1 h</span></li>`+st.bridges.map(b=>{
+    const k=statusKey(b), alert=b.status==="alert";
     const ratio=b.normal_hour_usd?b.outflow_last_hour_usd/b.normal_hour_usd:null;
-    return `<button class="card" type="button" data-id="${esc(b.id)}" aria-pressed="${b.id===selected}">
-      <div class="top"><h3>${esc(b.name)}</h3>${pill(key)}</div>
-      <div class="chains">${b.chains.map(esc).join(" ↔ ")}</div>
-      <div class="kv"><span>Escrow</span><b>${usd(b.escrow_usd)}</b></div>
-      <div class="kv"><span>Outflow, last hour</span><b>${usd(b.outflow_last_hour_usd)}</b></div>
-      <div class="kv"><span>Normal for this hour</span><b>${b.normal_hour_usd==null?"learning":usd(b.normal_hour_usd)}${ratio&&ratio>=2?` <span style="color:var(--muted);font-weight:500">(${ratio.toFixed(ratio>=10?0:1)}×)</span>`:""}</b></div>
-    </button>`;}).join("");
+    return `<li><button class="b-row${alert?" is-alert":""}" type="button" data-id="${esc(b.id)}" aria-pressed="${b.id===selected}">
+      <span class="b-name">${esc(b.name)}<span class="b-chains">${b.chains.map(esc).join(" to ")}</span></span>
+      <span class="b-status st-${k}">${STATUS[k]||k}</span>
+      <span class="b-val"><small>Escrow</small>${usd(b.escrow_usd)}</span>
+      <span class="b-val"><small>Outflow, last hour</small><span>${usd(b.outflow_last_hour_usd)}${ratio!=null&&ratio>=2?` <span class="ratio">${ratio.toFixed(ratio>=10?0:1)}×</span>`:""}</span></span>
+      <span class="b-val"><small>Normal for the hour</small>${b.normal_hour_usd==null?'<span class="muted">Learning</span>':usd(b.normal_hour_usd)}</span>
+    </button></li>`;}).join(""),"data-id");
 }
-$("cards").addEventListener("click",e=>{const c=e.target.closest(".card");if(!c)return;selected=c.dataset.id;renderCards(STATE);refreshSeries();});
+$("bridges").addEventListener("click",e=>{const c=e.target.closest(".b-row");if(!c)return;selected=c.dataset.id;renderBridges(STATE);renderVault();refreshSeries();});
+function renderVault(){
+  const sel=STATE&&STATE.bridges.find(b=>b.id===selected);
+  $("vault-line").innerHTML=sel&&sel.vault?` · <a href="https://etherscan.io/address/${esc(sel.vault)}" target="_blank" rel="noopener">${esc(sel.contract||"vault")} ${esc(short(sel.vault))}</a>`:"";
+}
 
-// ---- chart -------------------------------------------------------------
-const W=720,H=300,M={l:56,r:16,t:12,b:28};
+// ---- chart -----------------------------------------------------------------
 let SERIES=null;
-function logScale(lo,hi){const a=Math.log10(lo),b=Math.log10(hi);return v=>M.t+(H-M.t-M.b)*(1-(Math.log10(Math.max(v,lo))-a)/(b-a));}
 function renderChart(d){
-  SERIES=d;const bs=d.buckets;const box=$("chart");
+  SERIES=d;const bs=d.buckets, box=$("chart");
   const name=(STATE?.bridges.find(b=>b.id===d.bridge)||{}).name||d.bridge;
-  $("chart-title").textContent=`${name} outflow`;
-  if(!bs.length){box.querySelector("svg")?.remove();return;}
+  $("chart-title").textContent=`Outflow: ${name}`;
+  box.querySelector("svg")?.remove();box.querySelector(".empty")?.remove();
+  if(!bs.length){box.insertAdjacentHTML("afterbegin",'<p class="empty">No transfers in the last 24 hours yet.</p>');$("table").innerHTML="";return;}
+  const W=Math.max(300,Math.round(box.clientWidth||700)), narrow=W<520, H=narrow?220:280;
+  const M={l:52,r:10,t:10,b:26};
   const vals=bs.flatMap(b=>[b.out_usd,b.alert_line_usd||0]).filter(v=>v>0);
-  const lo=Math.pow(10,Math.floor(Math.log10(Math.max(1e3,Math.min(...vals)/2))));
+  const lo=Math.pow(10,Math.floor(Math.log10(Math.max(1e3,(vals.length?Math.min(...vals):1e3)/2))));
   const hi=Math.pow(10,Math.ceil(Math.log10(Math.max(...vals,lo*10))));
-  const y=logScale(lo,hi), t0=bs[0].t, t1=bs[bs.length-1].t+d.bucket_seconds;
-  const x=t=>M.l+(W-M.l-M.r)*(t-t0)/(t1-t0);
-  const mid=b=>b.t+d.bucket_seconds/2;
+  const la=Math.log10(lo),lb=Math.log10(hi);
+  const y=v=>M.t+(H-M.t-M.b)*(1-(Math.log10(Math.max(v,lo))-la)/(lb-la));
+  const t0=bs[0].t, t1=bs[bs.length-1].t+d.bucket_seconds;
+  const x=t=>M.l+(W-M.l-M.r)*(t-t0)/(t1-t0), mid=b=>b.t+d.bucket_seconds/2;
   let g="";
-  for(let p=Math.log10(lo);p<=Math.log10(hi);p++){const v=Math.pow(10,p),yy=y(v);
-    g+=`<line x1="${M.l}" x2="${W-M.r}" y1="${yy}" y2="${yy}" stroke="var(--grid)" stroke-width="1"/><text x="${M.l-8}" y="${yy+4}" text-anchor="end">${usd(v)}</text>`;}
-  const step=4*3600;for(let t=Math.ceil(t0/step)*step;t<=t1;t+=step){const tx=x(t);if(tx<M.l+24||tx>W-M.r-24)continue;g+=`<text x="${tx}" y="${H-8}" text-anchor="middle">${fmtHM(t)}</text>`;}
-  const withBand=bs.filter(b=>b.alert_line_usd!=null);
+  const decades=lb-la, every=decades>5?2:1;
+  for(let p=la;p<=lb;p+=every){const v=Math.pow(10,p),yy=y(v).toFixed(1);
+    g+=`<line x1="${M.l}" x2="${W-M.r}" y1="${yy}" y2="${yy}" stroke="var(--grid)"/><text x="${M.l-8}" y="${+yy+4}" text-anchor="end">${usd(v)}</text>`;}
+  const step=(narrow?6:4)*3600;
+  for(let t=Math.ceil(t0/step)*step;t<=t1;t+=step){const tx=x(t);if(tx<M.l+20||tx>W-M.r-20)continue;g+=`<text x="${tx.toFixed(1)}" y="${H-8}" text-anchor="middle">${fmtHM(t)}</text>`;}
+  const wb=bs.filter(b=>b.alert_line_usd!=null);
   let band="";
-  if(withBand.length){
-    const top=withBand.map(b=>`${x(mid(b)).toFixed(1)},${y(b.alert_line_usd).toFixed(1)}`);
-    const bot=withBand.slice().reverse().map(b=>`${x(mid(b)).toFixed(1)},${y(Math.max(b.normal_usd||lo,lo)).toFixed(1)}`);
+  if(wb.length){
+    const top=wb.map(b=>`${x(mid(b)).toFixed(1)},${y(b.alert_line_usd).toFixed(1)}`);
+    const bot=wb.slice().reverse().map(b=>`${x(mid(b)).toFixed(1)},${y(Math.max(b.normal_usd||lo,lo)).toFixed(1)}`);
     band=`<polygon points="${top.concat(bot).join(" ")}" fill="var(--band)"/>`;
   }
-  const line=bs.map((b,i)=>`${i?"L":"M"}${x(mid(b)).toFixed(1)},${y(Math.max(b.out_usd,lo)).toFixed(1)}`).join("");
+  const line=bs.map((b,i)=>`${i?"L":"M"}${x(mid(b)).toFixed(1)},${y(b.out_usd).toFixed(1)}`).join("");
+  const inBucket=(a,b)=>a.started>=b.t&&a.started<b.t+d.bucket_seconds;
   const dots=d.alerts.filter(a=>a.started>=t0).map(a=>{
-    const b=bs.find(k=>a.started>=k.t&&a.started<k.t+d.bucket_seconds)||bs[bs.length-1];
-    return `<circle cx="${x(mid(b))}" cy="${y(Math.max(b.out_usd,lo))}" r="5" fill="var(--alert-mark)" stroke="var(--surface)" stroke-width="2"/>`;}).join("");
-  const svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(name)} outflow per 10 minutes, last 24 hours, with the normal range and alerts">
+    const b=bs.find(k=>inBucket(a,k))||bs[bs.length-1];
+    return `<circle cx="${x(mid(b)).toFixed(1)}" cy="${y(b.out_usd).toFixed(1)}" r="5" fill="var(--${a.severity==="critical"?"crit":"warn"})" stroke="var(--bg)" stroke-width="2"/>`;}).join("");
+  box.insertAdjacentHTML("afterbegin",`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(name)} outflow per 10 minutes over the last 24 hours, with the normal range and ${d.alerts.length} alerts. Use the table below for exact values.">
     ${g}${band}<path d="${line}" fill="none" stroke="var(--series)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>${dots}
-    <line id="xh" y1="${M.t}" y2="${H-M.b}" stroke="var(--faint)" stroke-width="1" visibility="hidden"/>
-    <rect x="${M.l}" y="${M.t}" width="${W-M.l-M.r}" height="${H-M.t-M.b}" fill="transparent" id="hit"/></svg>`;
-  box.querySelector("svg")?.remove();box.insertAdjacentHTML("afterbegin",svg);
-  const hit=box.querySelector("#hit"),xh=box.querySelector("#xh"),tip=$("tip"),svgEl=box.querySelector("svg");
+    <line id="xh" y1="${M.t}" y2="${H-M.b}" stroke="var(--faint)" visibility="hidden"/>
+    <rect x="${M.l}" y="${M.t}" width="${W-M.l-M.r}" height="${H-M.t-M.b}" fill="transparent" id="hit"/></svg>`);
+  const svg=box.querySelector("svg"),hit=svg.querySelector("#hit"),xh=svg.querySelector("#xh"),tip=$("tip");
   const show=ev=>{
-    const r=svgEl.getBoundingClientRect(),sx=(ev.clientX-r.left)*W/r.width;
+    const r=svg.getBoundingClientRect(),sx=(ev.clientX-r.left)*W/r.width;
     const t=t0+(sx-M.l)/(W-M.l-M.r)*(t1-t0);
     const b=bs.reduce((best,k)=>Math.abs(mid(k)-t)<Math.abs(mid(best)-t)?k:best,bs[0]);
     const px=x(mid(b));xh.setAttribute("x1",px);xh.setAttribute("x2",px);xh.setAttribute("visibility","visible");
-    const al=d.alerts.filter(a=>a.started>=b.t&&a.started<b.t+d.bucket_seconds);
+    const al=d.alerts.filter(a=>inBucket(a,b));
     tip.innerHTML=`<div class="t">${fmtTime(b.t)}</div>
       <div class="r"><span>Outflow</span><b>${usd(b.out_usd)}</b></div>
       <div class="r"><span>Releases</span><b>${b.releases}</b></div>
       <div class="r"><span>Normal</span><b>${b.normal_usd==null?"learning":usd(b.normal_usd)}</b></div>
       <div class="r"><span>Alert above</span><b>${b.alert_line_usd==null?"—":usd(b.alert_line_usd)}</b></div>
-      ${al.map(a=>`<div class="r" style="margin-top:4px"><span>${ICON[a.severity]?`<span style="color:var(--${a.severity==="critical"?"fail":"warn"});display:inline-flex;width:12px;vertical-align:-2px">${ICON[a.severity]}</span>`:""} ${esc(RULE[a.rule]||a.rule)}</span></div>`).join("")}`;
+      ${al.map(a=>`<div class="r" style="margin-top:4px"><span class="st-${a.severity}">${STATUS[a.severity]}: ${esc(rule(a.rule))}</span></div>`).join("")}`;
     tip.style.display="block";
     const bx=box.getBoundingClientRect(),left=(px/W)*r.width+(r.left-bx.left);
     tip.style.left=Math.min(Math.max(left+12,0),bx.width-tip.offsetWidth)+"px";tip.style.top="8px";
@@ -257,130 +415,174 @@ function renderChart(d){
   hit.addEventListener("pointermove",show);hit.addEventListener("pointerdown",show);
   hit.addEventListener("pointerleave",()=>{tip.style.display="none";xh.setAttribute("visibility","hidden");});
   const last=bs.slice(-18).reverse();
-  $("table").innerHTML=`<table><thead><tr><th>10 min from (UTC)</th><th>Outflow</th><th>Releases</th><th>Normal</th><th>Alert above</th></tr></thead><tbody>${
-    last.map(b=>`<tr><td>${fmtTime(b.t)}</td><td>${usd(b.out_usd)}</td><td>${b.releases}</td><td>${b.normal_usd==null?"—":usd(b.normal_usd)}</td><td>${b.alert_line_usd==null?"—":usd(b.alert_line_usd)}</td></tr>`).join("")}</tbody></table>`;
+  $("table").innerHTML=`<table class="mid"><thead><tr><th>10 min from (UTC)</th><th class="num">Outflow</th><th class="num">Releases</th><th class="num">Normal</th><th class="num">Alert above</th></tr></thead><tbody>${
+    last.map(b=>`<tr><td>${fmtTime(b.t)}</td><td class="num">${usd(b.out_usd)}</td><td class="num">${b.releases}</td><td class="num">${b.normal_usd==null?"—":usd(b.normal_usd)}</td><td class="num">${b.alert_line_usd==null?"—":usd(b.alert_line_usd)}</td></tr>`).join("")}</tbody></table>`;
 }
+let rzT;new ResizeObserver(()=>{clearTimeout(rzT);rzT=setTimeout(()=>{if(SERIES)renderChart(SERIES);},120);}).observe($("chart"));
 
-// ---- alerts -------------------------------------------------------------
-function renderFeed(list){
+// ---- alerts ----------------------------------------------------------------
+let TOP=[], OLDER=[], noMore=false;
+function renderFeed(){
   const names=Object.fromEntries((STATE?.bridges||[]).map(b=>[b.id,b.name]));
-  $("feed").innerHTML=list.length?list.map(a=>`<div class="alert${a.acknowledged?" acked":""}">
-    <div class="row">${pill(a.severity)}<span class="when">${fmtTime(a.started)}</span></div>
-    <div class="row"><b style="font-size:14px">${esc(names[a.bridge]||a.bridge)} · ${esc(RULE[a.rule]||a.rule)}</b>
-      ${a.acknowledged?'<span class="when">acknowledged</span>':`<button class="btn small" type="button" data-ack="${a.id}">Acknowledge</button>`}</div>
-    <p>${esc(a.message)}</p>${a.worst?`<p style="color:var(--muted)">Worst so far: ${esc(a.worst)}</p>`:""}</div>`).join(""):`<p class="empty">No alerts yet.</p>`;
+  const minTop=TOP.length?TOP[TOP.length-1].id:Infinity;
+  const list=TOP.concat(OLDER.filter(a=>a.id<minTop));
+  setHTML($("feed"),list.length?list.map(a=>`<li class="alert${a.acknowledged?" acked":""}">
+    <span class="sev st-${a.severity}">${STATUS[a.severity]||a.severity}</span><span class="when">${fmtTime(a.started)}</span>
+    <span class="what">${esc(names[a.bridge]||a.bridge)}: ${esc(rule(a.rule))}</span>
+    <p>${esc(a.message)}</p>${a.worst?`<p class="worst">Worst so far: ${esc(a.worst)}</p>`:""}
+    <div class="act">${a.acknowledged?"Acknowledged":`<button class="btn small" type="button" data-ack="${a.id}">Acknowledge</button>`}</div></li>`).join("")
+    :`<li><p class="empty" style="padding:12px 0">No alerts. Bridges are within their normal range.</p></li>`,"data-ack");
+  $("older").hidden=noMore||TOP.length<30;
 }
+$("older").addEventListener("click",async()=>{
+  const all=TOP.concat(OLDER);if(!all.length)return;
+  const last=Math.min(...all.map(a=>a.id));$("older").disabled=true;
+  try{const r=await getJSON(`api/alerts?limit=30&before_id=${last}`);if(r.ok){OLDER=OLDER.concat(r.body);if(r.body.length<30)noMore=true;renderFeed();}}
+  finally{$("older").disabled=false;}
+});
 function getToken(){try{return sessionStorage.getItem("bw-token")||"";}catch{return "";}}
-function setToken(t){try{sessionStorage.setItem("bw-token",t);}catch{}}
-async function ack(id){
-  const send=t=>fetch(`api/alerts/${id}/ack`,{method:"POST",headers:t?{authorization:`Bearer ${t}`}:{}});
-  let r=await send(getToken());
-  if(r.status===401){const t=prompt("Acknowledging alerts needs the BridgeWatch API token:");if(!t)return;setToken(t);r=await send(t);
-    if(r.status===401){alert("That token was not accepted.");setToken("");}}
+function setToken(t){try{t?sessionStorage.setItem("bw-token",t):sessionStorage.removeItem("bw-token");}catch{}}
+let pendingAck=null;
+function showToken(kind,detail){
+  const box=$("token-box");box.hidden=false;
+  if(kind==="disabled"){box.innerHTML=`<b>Acknowledging is turned off on this server.</b> ${esc(detail||"")} An operator has to set <code>BRIDGEWATCH_API_TOKEN</code> and restart BridgeWatch.`;return;}
+  box.innerHTML=`<b>${kind==="wrong"?"That token was not accepted.":"Acknowledging needs the BridgeWatch API token."}</b> It is kept in this browser tab only.
+    <form id="token-form"><label for="token-in">API token</label><input type="password" id="token-in" autocomplete="off" required><button class="btn small" type="submit">Save and acknowledge</button><button class="btn small" type="button" id="token-cancel">Cancel</button></form>`;
+  $("token-in").focus();
+  $("token-form").addEventListener("submit",async e=>{e.preventDefault();setToken($("token-in").value.trim());box.hidden=true;if(pendingAck)await ack(pendingAck);});
+  $("token-cancel").addEventListener("click",()=>{box.hidden=true;pendingAck=null;});
 }
-$("feed").addEventListener("click",async e=>{const b=e.target.closest("[data-ack]");if(!b)return;
-  b.disabled=true;await ack(b.dataset.ack);refresh();});
+async function ack(id){
+  const t=getToken();
+  const r=await getJSON(`api/alerts/${id}/ack`,{method:"POST",headers:t?{authorization:`Bearer ${t}`}:{}});
+  if(r.ok){pendingAck=null;$("token-box").hidden=true;await refresh();return;}
+  pendingAck=id;
+  if(r.status===403)showToken("disabled",r.body&&r.body.detail);
+  else if(r.status===401){const had=!!t;setToken("");showToken(had?"wrong":"needed");}
+  else{$("token-box").hidden=false;$("token-box").textContent=`Couldn't acknowledge alert ${id}: ${(r.body&&r.body.detail)||"server error "+r.status}.`;}
+  $("feed").__html=null;renderFeed();
+}
+$("feed").addEventListener("click",async e=>{const b=e.target.closest("[data-ack]");if(!b)return;b.disabled=true;b.textContent="Acknowledging…";
+  try{await ack(+b.dataset.ack);}catch{$("token-box").hidden=false;$("token-box").textContent="Couldn't reach the BridgeWatch server.";$("feed").__html=null;renderFeed();}});
 
-// ---- simulate -----------------------------------------------------------
+// ---- simulate (demo) -------------------------------------------------------
 $("sim-go").addEventListener("click",async()=>{
   const kind=$("sim-kind").value;$("sim-go").disabled=true;
   try{
-    const r=await fetch("api/simulate",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({bridge:selected,kind})});
-    const body=await r.json();
-    $("sim-msg").textContent=r.ok?`${KIND[kind]} started on ${(STATE.bridges.find(b=>b.id===selected)||{}).name}: ${usd(body.stolen_usd)} over ${body.releases} releases. Watch the chart and the alert feed.`:(body.detail||"Couldn't start the simulation.");
+    const r=await getJSON("api/simulate",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({bridge:selected,kind})});
+    const name=(STATE.bridges.find(b=>b.id===selected)||{}).name||selected;
+    $("sim-msg").textContent=r.ok?`${KIND[kind]} started on ${name}: ${usd(r.body.stolen_usd)} over ${r.body.releases} releases. Alerts appear as the simulated clock advances.`:((r.body&&r.body.detail)||"Couldn't start the simulation.");
+    if(r.ok)setTimeout(refresh,1500);
   }catch{$("sim-msg").textContent="Couldn't reach the BridgeWatch server.";}
   finally{$("sim-go").disabled=false;}
 });
 
-// ---- real replay ----------------------------------------------------------
-const short=a=>a.slice(0,6)+"…"+a.slice(-4);
-const hms=t=>new Date(t*1000).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit",second:"2-digit",timeZone:"UTC"});
-function renderReplay(r){
-  const warn=r.minutes_of_warning_for_later_thefts;
-  const rows=[...r.thefts.map(x=>({ts:x.ts,kind:"theft",x})),...r.alerts.map(a=>({ts:a.started,kind:"alert",a}))]
-    .sort((p,q)=>p.ts-q.ts||(p.kind==="theft"?-1:1));
-  // cumulative stolen, step line, with the first alert as a marker
-  const t0=r.thefts[0].ts-120, t1=r.thefts[r.thefts.length-1].ts+120, total=r.stolen_usd_tracked;
-  const W=1100,H=220,L=60,R=16,T=12,B=26, x=t=>L+(W-L-R)*(t-t0)/(t1-t0), y=v=>T+(H-T-B)*(1-v/total);
-  let cum=0,d=`M${x(t0)},${y(0)}`;
-  r.thefts.forEach(tf=>{d+=` L${x(tf.ts).toFixed(1)},${y(cum).toFixed(1)}`;cum+=tf.usd;d+=` L${x(tf.ts).toFixed(1)},${y(cum).toFixed(1)}`;});
-  d+=` L${x(t1)},${y(cum)}`;
-  let grid="";[0,.5,1].forEach(f=>{grid+=`<line x1="${L}" x2="${W-R}" y1="${y(total*f)}" y2="${y(total*f)}" stroke="var(--grid)"/><text x="${L-8}" y="${y(total*f)+4}" text-anchor="end">${usd(total*f)}</text>`;});
-  for(let t=Math.ceil(t0/300)*300;t<=t1;t+=300){grid+=`<text x="${x(t)}" y="${H-6}" text-anchor="middle">${fmtHM(t)}</text>`;}
-  const ax=r.first_alert_ts?x(r.first_alert_ts):null;
-  const alertMark=ax?`<line x1="${ax}" x2="${ax}" y1="${T}" y2="${H-B}" stroke="var(--alert-mark)" stroke-width="2"/><text x="${ax+6}" y="${T+12}" style="fill:var(--ink)">First alert ${hms(r.first_alert_ts)}</text>`:"";
-  $("replay").innerHTML=`<div class="eval-kpis">
-      <div class="kpi"><div class="l">First alert</div><div class="v">${r.seconds_from_first_theft_to_alert===0?"On the 1st theft":Math.round(r.seconds_from_first_theft_to_alert/60)+" min in"}</div><div class="n">critical, at ${hms(r.first_alert_ts)} UTC</div></div>
-      <div class="kpi"><div class="l">Stolen after the alert</div><div class="v">${usd(r.stolen_after_alert_usd)}</div><div class="n">of ${usd(r.stolen_usd_tracked)} tracked · ${warn.length?`${warn[0]}–${warn[warn.length-1]} min of warning`:"no later thefts"}</div></div>
-      <div class="kpi"><div class="l">False alarms before the hack</div><div class="v">${r.false_alarms_during_baseline}</div><div class="n">in ${r.baseline_days} days, ${r.ordinary_transfers} ordinary transfers</div></div>
-    </div>
-    <div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Cumulative value stolen from the Orbit vault over time, with the first alert marked">
-      ${grid}<path d="${d}" fill="none" stroke="var(--series)" stroke-width="2" stroke-linejoin="round"/>${alertMark}</svg></div>
-    <table style="margin-top:10px"><thead><tr><th>Time (UTC)</th><th style="text-align:left">Event</th><th>Value</th></tr></thead><tbody>
-    ${rows.map(e=>e.kind==="theft"
-      ?`<tr><td>${hms(e.ts)}</td><td style="text-align:left">Release of ${e.x.amount.toLocaleString("en-US",{maximumFractionDigits:2})} ${esc(e.x.token)} to ${short(esc(e.x.to))}${r.first_alert_ts&&e.ts>r.first_alert_ts?` <span class="pill" style="background:var(--warn-soft);color:var(--warn)">after alert</span>`:""}</td><td>${usd(e.x.usd)}</td></tr>`
-      :`<tr><td>${hms(e.ts)}</td><td style="text-align:left">${pill(e.a.severity)} ${esc(e.a.message)}</td><td></td></tr>`).join("")}
-    </tbody></table>
-    <p class="msg">${esc(r.price_note)} Vault ${esc(r.vault)}; identified from the on-chain record, which matches public reports of the Orbit hack. Source: ${esc(r.source)}.</p>`;
+// ---- past hacks ------------------------------------------------------------
+const missing=r=>`<p class="empty">${esc((r.body&&r.body.detail)||"Results not available.")}</p>`;
+let CASES={}, openCase=null;
+function caseName(c){const parts=c.case.split(", ");return {name:parts[0],date:parts[parts.length-1],where:parts.slice(1,-1).join(", ")};}
+function renderReplay(rep){
+  const cases=rep.cases.slice().sort((a,b)=>b.first_theft_ts-a.first_theft_ts);
+  const target=cases[0]?cases[0].latency_target_s:60;
+  $("replay").innerHTML=`<div class="scroll" tabindex="0" role="region" aria-label="Replayed hacks table"><table class="wide">
+    <thead><tr><th>Case</th><th>Date</th><th class="num">Stolen (tracked)</th><th>First alert</th><th class="num">Latency</th><th class="num">Stolen before alert</th><th class="num">Stolen after alert</th><th class="num">False alarms, 14-day baseline</th></tr></thead>
+    <tbody>${cases.map(c=>{const n=caseName(c);return `<tr data-row="${esc(c.key)}">
+      <td><button class="link" type="button" data-case="${esc(c.key)}" aria-expanded="false" aria-controls="case">${esc(n.name)}</button><div class="muted" style="font-size:12px">${esc(n.where)}</div></td>
+      <td style="white-space:nowrap">${esc(n.date)}</td>
+      <td class="num">${usd(c.stolen_usd_tracked)}</td>
+      <td>${c.first_alert_rule?esc(rule(c.first_alert_rule)):'<span class="miss">None</span>'}</td>
+      <td class="num">${c.detection_latency_s==null?"—":`<span class="${c.detection_latency_s<=target?"":"miss"}">${c.detection_latency_s} s</span>`}</td>
+      <td class="num">${usd(c.stolen_before_alert_usd)}</td>
+      <td class="num">${usd(c.stolen_after_alert_usd)}</td>
+      <td class="num">${c.false_alarms_during_baseline?`<b>${c.false_alarms_during_baseline}</b>`:"0"}</td></tr>`;}).join("")}</tbody></table></div>
+    <p class="msg">"Stolen after alert" is what an operator could still have tried to stop. Native ETH is not tracked except as WETH. Select a case to see its thefts and alerts.</p>`;
 }
-async function loadReplay(){try{const r=await fetch("api/replay");if(r.ok)renderReplay(await r.json());else $("replay").innerHTML='<p class="empty">Replay data not available.</p>';}catch{}}
-loadReplay();
+$("replay").addEventListener("click",async e=>{
+  const b=e.target.closest("[data-case]");if(!b)return;
+  const key=b.dataset.case;
+  document.querySelectorAll("[data-case]").forEach(x=>x.setAttribute("aria-expanded","false"));
+  document.querySelectorAll("tr[data-row]").forEach(x=>x.classList.remove("open"));
+  if(openCase===key){openCase=null;$("case").hidden=true;return;}
+  openCase=key;b.setAttribute("aria-expanded","true");b.closest("tr").classList.add("open");
+  $("case").hidden=false;$("case").innerHTML='<div class="case"><p class="empty">Loading case…</p></div>';
+  if(!CASES[key]){const r=await getJSON(`api/replay/${encodeURIComponent(key)}`);if(!r.ok){$("case").innerHTML=`<div class="case">${missing(r)}</div>`;return;}CASES[key]=r.body;}
+  if(openCase===key){renderCase(CASES[key]);$("case").scrollIntoView({block:"nearest"});}
+});
+function renderCase(c){
+  const n=caseName(c), fa=c.first_alert_ts;
+  const after=fa?c.thefts.filter(t=>t.ts>fa).length:0;
+  const warn=c.minutes_of_warning_for_later_thefts||[];
+  const thefts=c.thefts.slice().sort((a,b)=>a.ts-b.ts), CAP=25, shown=thefts.slice(0,CAP);
+  const rest=thefts.slice(CAP), restUsd=rest.reduce((s,t)=>s+t.usd,0);
+  const fals=c.false_alarms||[];
+  $("case").innerHTML=`<div class="case">
+    <h3>${esc(n.name)}, ${esc(n.date)}</h3>
+    <p>First theft at ${hms(c.first_theft_ts)} UTC. ${fa?`The first alert (${esc(rule(c.first_alert_rule))}) was tripped by ${c.seconds_from_first_theft_to_alert===0?"that same transfer":`a transfer ${Math.round(c.seconds_from_first_theft_to_alert/60)} min later`} and raised ${c.detection_latency_s} s after it was 6 blocks deep. ${after?`${after} of ${thefts.length} thefts came after the alert, with ${warn[0]}–${warn[warn.length-1]} min of warning.`:"No thefts came after the alert."}`:"No alert was raised."}</p>
+    <div class="scroll" tabindex="0" role="region" aria-label="Alerts during the hack"><table class="mid"><thead><tr><th>Alert (UTC)</th><th>Severity</th><th>What happened</th></tr></thead><tbody>
+      ${c.alerts.map(a=>`<tr><td style="white-space:nowrap">${hms(a.started)}</td><td class="st-${a.severity}" style="font-weight:600">${STATUS[a.severity]}</td><td>${esc(rule(a.rule))}: ${esc(a.message)}${a.worst?`<div class="muted">Worst: ${esc(a.worst)}</div>`:""}</td></tr>`).join("")||'<tr><td colspan="3">No alerts.</td></tr>'}
+    </tbody></table></div>
+    <div class="scroll" tabindex="0" role="region" aria-label="Thefts"><table class="mid"><thead><tr><th>Theft (UTC)</th><th class="num">Amount</th><th class="num">USD</th><th>To</th><th></th></tr></thead><tbody>
+      ${shown.map(t=>`<tr><td>${hms(t.ts)}</td><td class="num">${t.amount.toLocaleString("en-US",{maximumFractionDigits:2})} ${esc(t.token)}</td><td class="num">${usd(t.usd)}</td><td>${esc(short(t.to))}</td><td>${fa&&t.ts>fa?'<span class="tag">After alert</span>':""}</td></tr>`).join("")}
+      ${rest.length?`<tr><td colspan="5" class="muted">and ${rest.length} more thefts totalling ${usd(restUsd)}</td></tr>`:""}
+    </tbody></table></div>
+    ${fals.length?`<details><summary>${fals.length} false alarm${fals.length>1?"s":""} in the 14-day baseline</summary><ul style="margin:6px 0 0;padding-left:18px">${fals.slice(0,20).map(a=>`<li>${fmtTime(a.started)}: ${esc(rule(a.rule))}, ${esc(a.message)}</li>`).join("")}${fals.length>20?`<li>and ${fals.length-20} more</li>`:""}</ul></details>`:""}
+    <p class="muted">${esc(c.price_note)} Vault <a href="https://etherscan.io/address/${esc(c.vault)}" target="_blank" rel="noopener">${esc(short(c.vault))}</a>. Source: ${esc(c.source)}.</p>
+  </div>`;
+}
+async function loadReplay(){try{const r=await getJSON("api/replay");$("replay").innerHTML=r.ok?"":missing(r);if(r.ok)renderReplay(r.body);}catch{$("replay").innerHTML='<p class="empty">Couldn\'t reach the BridgeWatch server.</p>';}}
 
-// ---- evaluation ---------------------------------------------------------
+// ---- false alarms (real) and synthetic scorecard --------------------------
+function renderEvalReal(e){
+  const tgt=e.target_per_bridge_week, ds=e.datasets, o=e.overall;
+  const misses=ds.filter(d=>!d.meets_target);
+  const split=t=>{const i=t.indexOf(", ");return i<0?[t,""]:[t.slice(0,i),t.slice(i+2)];};
+  const sum=misses.length
+    ?`${ds.length-misses.length} of ${ds.length} datasets meet the target. ${misses.map(d=>`<span class="miss">${esc(split(d.title)[0])} misses it</span> at ${d.per_week.toFixed(2)} per week (${d.false_alarms} alarms)`).join("; ")}.`
+    :`All ${ds.length} datasets meet the target.`;
+  $("eval-real").innerHTML=`<p style="margin:0 0 10px;font-size:14px">${sum}</p>
+    <div class="scroll" tabindex="0" role="region" aria-label="False alarms per dataset"><table class="mid">
+    <thead><tr><th>Dataset</th><th class="num">Per week</th><th>Target ≤ ${tgt}/week</th><th class="num">False alarms</th><th class="num">Weeks</th><th class="num">Transfers</th></tr></thead>
+    <tbody>${ds.map(d=>{const [a,b]=split(d.title);return `<tr><td><b style="font-weight:600">${esc(a)}</b><div class="muted" style="font-size:12px">${esc(b)}</div></td>
+      <td class="num">${d.per_week.toFixed(2)}</td><td>${d.meets_target?'<span class="meet">Meets</span>':'<span class="miss">Misses</span>'}</td>
+      <td class="num">${d.false_alarms}</td><td class="num">${d.weeks_counted}</td><td class="num">${d.transfers.toLocaleString("en-US")}</td></tr>`;}).join("")}</tbody>
+    <tfoot><tr><td>Overall, ${o.datasets} datasets</td><td class="num">${o.per_bridge_week.toFixed(2)}</td><td>${o.all_meet_target?'<span class="meet">All meet</span>':'<span class="miss">Not all meet</span>'}</td><td class="num">${o.false_alarms}</td><td class="num">${o.bridge_weeks}</td><td></td></tr></tfoot>
+    </table></div><p class="msg">${esc(e.note)}</p>`;
+}
 function renderEval(e){
   const k=e.by_kind, kinds=Object.keys(k);
   const det=kinds.reduce((a,x)=>a+k[x].detected,0), runs=kinds.reduce((a,x)=>a+k[x].runs,0);
-  const perDay=e.false_alarms_per_bridge_day;
-  $("eval").innerHTML=`<div class="eval-kpis">
-      <div class="kpi"><div class="l">Simulated exploits caught</div><div class="v">${det} of ${runs}</div><div class="n">${kinds.length} exploit types × 4 bridges × 3 runs</div></div>
-      <div class="kpi"><div class="l">False alarms per bridge per day</div><div class="v">${perDay.toFixed(2)}</div><div class="n">about ${(perDay*4*7).toFixed(0)} a week across the 4 bridges</div></div>
-      <div class="kpi"><div class="l">Alert threshold</div><div class="v">${e.config.z_threshold} spreads</div><div class="n">above the hour's normal outflow</div></div>
-    </div>
-    <table><thead><tr><th>Exploit type</th><th>Caught</th><th>Median time to first alert</th><th>Median share stolen before alert</th></tr></thead><tbody>
-    ${kinds.map(x=>`<tr><td>${esc(KIND[x]||x)}</td><td>${k[x].detected} / ${k[x].runs}</td><td>${k[x].median_minutes_to_alert==null?"—":k[x].median_minutes_to_alert+" min"}</td><td>${k[x].median_lost_before_alert==null?"—":(k[x].median_lost_before_alert*100).toFixed(1)+"%"}</td></tr>`).join("")}
-    </tbody></table>
-    <details><summary>Threshold trade-off: catching more vs. fewer false alarms</summary>
-    <table><thead><tr><th>Threshold (spreads)</th><th>Caught (1 run each)</th><th>False alarms per bridge-day</th></tr></thead><tbody>
-    ${e.sweep.map(s=>`<tr><td>${s.z_threshold}</td><td>${s.detected} / ${s.runs}</td><td>${s.false_alarms_per_bridge_day.toFixed(2)}</td></tr>`).join("")}
-    </tbody></table></details>
-    <p class="msg">${esc(e.note)}</p>`;
+  $("eval").innerHTML=`<p style="margin:0 0 8px">${det} of ${runs} simulated exploits caught; ${e.false_alarms_per_bridge_week??(e.false_alarms_per_bridge_day*7).toFixed(2)} false alarms per bridge per week on ${e.clean_bridge_days} clean synthetic bridge-days, at an alert threshold of ${e.config.z_threshold} spreads.</p>
+    <div class="scroll" tabindex="0" role="region" aria-label="Synthetic scorecard"><table class="mid"><thead><tr><th>Exploit type</th><th class="num">Caught</th><th class="num">Median time to first alert</th><th class="num">Median share stolen before alert</th></tr></thead><tbody>
+    ${kinds.map(x=>`<tr><td>${esc(KIND[x]||x)}</td><td class="num">${k[x].detected} / ${k[x].runs}</td><td class="num">${k[x].median_minutes_to_alert==null?"—":k[x].median_minutes_to_alert+" min"}</td><td class="num">${k[x].median_lost_before_alert==null?"—":(k[x].median_lost_before_alert*100).toFixed(1)+"%"}</td></tr>`).join("")}
+    </tbody></table></div>
+    <p style="margin:12px 0 6px">Threshold trade-off (1 run per exploit):</p>
+    <div class="scroll"><table><thead><tr><th>Threshold (spreads)</th><th class="num">Caught</th><th class="num">False alarms per bridge-day</th></tr></thead><tbody>
+    ${e.sweep.map(s=>`<tr><td>${s.z_threshold}</td><td class="num">${s.detected} / ${s.runs}</td><td class="num">${s.false_alarms_per_bridge_day.toFixed(2)}</td></tr>`).join("")}
+    </tbody></table></div><p class="msg">${esc(e.note)}</p>`;
+}
+async function loadEval(){
+  try{const r=await getJSON("api/evaluation/real");$("eval-real").innerHTML=r.ok?"":missing(r);if(r.ok)renderEvalReal(r.body);}catch{$("eval-real").innerHTML='<p class="empty">Couldn\'t reach the BridgeWatch server.</p>';}
+  try{const r=await getJSON("api/evaluation");$("eval").innerHTML=r.ok?"":missing(r);if(r.ok)renderEval(r.body);}catch{}
 }
 
-// ---- polling ------------------------------------------------------------
-async function refreshSeries(){try{const r=await fetch(`api/series/${selected}?hours=24`);if(r.ok)renderChart(await r.json());}catch{}}
-let evalDone=false;
-let lastEvalTry=0, bannerMode=null;
-function renderBanner(st){
-  const b=$("banner");
-  if(st.mode==="live"){
-    const tone=st.health==="ok"?"pass":st.health==="starting"?"unk":"fail";
-    const label=st.health==="ok"?"Live":st.health==="starting"?"Starting":"Degraded";
-    b.style.background=`var(--${tone}-soft)`;b.style.borderColor=`color-mix(in srgb,var(--${tone}) 40%,var(--line))`;
-    b.innerHTML=`<b style="color:var(--${tone})">${label}.</b> Real Ethereum mainnet data: USDT, USDC, DAI and WBTC moving through the official bridge contracts of OP Mainnet, Base and Arbitrum One, counted once 6 blocks deep. Native ETH is not covered yet.${st.health!=="ok"&&st.health!=="starting"?" Data may be stale: check /api/health.":""}`;
-    $("sim-box").hidden=true;$("sim-msg").hidden=true;
-  }else if(bannerMode!=="demo"){
-    $("sim-box").hidden=false;$("sim-msg").hidden=false;
-  }
-  bannerMode=st.mode;
-}
+// ---- polling ---------------------------------------------------------------
+async function refreshSeries(){if(!selected)return;try{const r=await getJSON(`api/series/${encodeURIComponent(selected)}?hours=24`);if(r.ok)renderChart(r.body);}catch{}}
+let busy=false;
 async function refresh(){
+  if(busy)return;busy=true;
   try{
-    const st=await (await fetch("api/state")).json();STATE=st;
-    renderBanner(st);
-    if(st.mode==="live"){
-      $("clock-label").textContent="Chain time";$("clock").textContent=st.clock?fmtTime(st.clock):"—";
-      $("speed").textContent=st.cursor?`block ${st.cursor.toLocaleString()} · ${st.lag_blocks??"?"} behind head · ${st.transfers_stored.toLocaleString()} transfers stored`:st.phase;
-    }else{
-      $("clock-label").textContent="Simulated clock";$("clock").textContent=fmtTime(st.clock);
-      $("speed").textContent=`×${st.speed} speed · ${st.events_processed.toLocaleString()} transfers processed`;
-    }
-    renderCards(st);
-    const sel=st.bridges.find(b=>b.id===selected);
-    $("vault-line").innerHTML=sel&&sel.vault?` · <a href="https://etherscan.io/address/${esc(sel.vault)}" target="_blank" rel="noopener" style="color:inherit">${esc(sel.contract||"vault")} ${short(esc(sel.vault))} ↗</a>`:"";
-    renderFeed(await (await fetch("api/alerts?limit=30")).json());
-    if(st.bridges.length) await refreshSeries();
-    if(!evalDone&&Date.now()-lastEvalTry>10000){lastEvalTry=Date.now();const r=await fetch("api/evaluation");if(r.status===200){renderEval(await r.json());evalDone=true;}}
-  }catch{$("clock").textContent="server not reachable";}
+    const st=(await getJSON("api/state")).body;STATE=st;
+    const health=st.mode==="live"?(await getJSON("api/health")).body:null;
+    if(!st.bridges.some(b=>b.id===selected))selected=st.bridges[0]?.id||null;
+    if(firstLoad&&st.bridges.length){const al=st.bridges.find(b=>b.status==="alert");if(al)selected=al.id;firstLoad=false;}
+    renderHeader(st,health);renderBridges(st);renderVault();
+    const n=st.bridges.filter(b=>b.status==="alert").length;
+    $("tab-count").textContent=n?` · ${n} alert${n>1?"s":""}`:"";
+    const a=await getJSON("api/alerts?limit=30");if(a.ok){TOP=a.body;renderFeed();}
+    await refreshSeries();
+  }catch{$("health").innerHTML='<span class="st-critical"><i class="dot" aria-hidden="true"></i>Server not reachable</span>';}
+  finally{busy=false;}
 }
-refresh();setInterval(refresh,2000);
+showTab(location.hash.slice(1));refresh();loadReplay();loadEval();setInterval(refresh,10000);
 </script>
+</html>
