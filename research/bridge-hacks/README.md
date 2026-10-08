@@ -14,6 +14,8 @@ It is research input, not a design decision: the team decides what to build.
 
 ## Start here
 
+0. **[PLAIN-ENGLISH-SUMMARY.md](PLAIN-ENGLISH-SUMMARY.md):** the short,
+   plain-English version of everything here. New to crypto? Read this first.
 1. **[04-analysis/implementation-recommendations.md](04-analysis/implementation-recommendations.md):**
    the proposed detection design (signals, thresholds, what pages a human,
    per-bridge profiles, the data needed from SonarX, and a roadmap).
