@@ -1,0 +1,9 @@
+pattern,incidents,loss_musd,share_of_loss,median_loss_musd
+P1 key/keeper-authorised multi-asset sweep,12,1048.9,0.289,10.7
+P2 one or two huge releases (single-tx full drain),11,1308.1,0.361,11.58
+P3 copycat crowd drain,1,190.0,0.052,190.0
+"P4 forged/invalid-proof releases, tx pattern unknown",9,354.2,0.098,4.4
+P5 unbacked mint (escrow untouched),8,668.3,0.184,4.4
+P6 approval drain through a router,6,37.6,0.01,3.3
+P7 pool-pricing manipulation,3,2.8,0.001,0.57
+"P8 off-vault (solver, relayer, frontend)",4,16.2,0.004,4.5

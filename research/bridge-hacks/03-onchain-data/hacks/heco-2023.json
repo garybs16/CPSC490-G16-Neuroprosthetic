@@ -1,0 +1,622 @@
+{
+ "case": {
+  "key": "heco-2023",
+  "title": "HECO bridge (Ethereum vault), 22 Nov 2023",
+  "chain": "ethereum",
+  "vault": "0xa929022c9107643515f5c777ce9a910f0d1e490c",
+  "tokens": [
+   [
+    "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "USDT",
+    6
+   ],
+   [
+    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "USDC",
+    6
+   ],
+   [
+    "0x6b175474e89094c44da98b954eedeac495271d0f",
+    "DAI",
+    18
+   ],
+   [
+    "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    "WBTC",
+    8
+   ],
+   [
+    "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "WETH",
+    18
+   ],
+   [
+    "0x514910771af9ca656af840dff83e8264ecf986ca",
+    "LINK",
+    18
+   ],
+   [
+    "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+    "UNI",
+    18
+   ],
+   [
+    "0x0000000000085d4780b73119b644ae5ecd22b376",
+    "TUSD",
+    18
+   ],
+   [
+    "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+    "SHIB",
+    18
+   ],
+   [
+    "0x0316eb71485b0ab14103307bf65a021042c6d380",
+    "HBTC",
+    18
+   ]
+  ],
+  "start_block": 18526500,
+  "end_block": 18628500,
+  "price_block": 18626540,
+  "period": "hack: baseline before the incident, then the drain",
+  "eth_usd_feed": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+  "btc_usd_feed": "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+  "hack_window": [
+   18626540,
+   18628500
+  ],
+  "first_theft_any_block": 18626540,
+  "first_theft_tx": "0x46f2ebab3a3195d2c790e45dfbb24bb38bb7886caafc8dfc6c844e844957b1e8",
+  "first_theft_block": 18626564,
+  "theft_min_usd": 100000,
+  "attacker_addresses": [
+   "0xfc146d1caf6ba1d1ce6dcb5b35dcbf895f50b0c4",
+   "0x3d655889d197125fb90dcb72e4a287a8410ed1b9 (compromised operator)"
+  ],
+  "references": [
+   "https://www.certik.com/resources/blog/heco-bridge-exploit",
+   "https://cointelegraph.com/news/heco-chain-bridge-hack-86-million-lost",
+   "https://etherscan.io/tx/0x46f2ebab3a3195d2c790e45dfbb24bb38bb7886caafc8dfc6c844e844957b1e8"
+  ],
+  "notes": "Compromised operator 0x3d655889... called withdrawToken. First theft is native: 10,145 ETH in tx 0xbb6fe88427c2f3bc179075109d47a805dcfedab0e475eaca0d979311873e131b (block 18,626,540, 09:59:35 UTC). First tracked theft: 42,110,000 USDT (block 18,626,564), then HBTC, SHIB, UNI, USDC, LINK, TUSD within ~16 minutes, all to 0xfc146d1c..., amounts matching CertiK. The window ends before the 18,632,663+ transfers of the remaining tokens to 0x18709e89... (looks like an operator migration; not labelled as theft by the references).",
+  "coverage": "Tracked: USDT, USDC, DAI, WBTC, WETH, LINK, UNI, TUSD, SHIB, HBTC. Not tracked: 10,145 native ETH (~$20M). HBTC priced at BTC/USD (it traded far below BTC by late 2023; treat its USD as an upper bound). The HTX hot-wallet thefts the same day are a different custody and are not here."
+ },
+ "fetched": "2026-10-08T03:57:56+00:00",
+ "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co); built by research/bridge-hacks/03-onchain-data/fetch_more.py",
+ "prices_usd": {
+  "USDT": 1.0,
+  "USDC": 1.0,
+  "DAI": 1.0,
+  "WBTC": 36677.84,
+  "WETH": 2008.039,
+  "LINK": 14.17936215,
+  "UNI": 5.348794,
+  "TUSD": 0.99914033,
+  "SHIB": 8.068755848135818e-06,
+  "HBTC": 36677.84
+ },
+ "price_note": "USDT fixed $1; USDC fixed $1; DAI fixed $1; WBTC at Chainlink BTC / USD 36,677.8; WETH at Chainlink ETH / USD 2,008.04; LINK at Chainlink LINK / USD 14.1794; UNI at Chainlink UNI / USD 5.34879; TUSD at Chainlink TUSD / USD 0.99914; SHIB at Chainlink SHIB / ETH 4.01823e-09 x ETH/USD 2,008.04; HBTC ASSUMED = Chainlink BTC/USD 36,677.84 (no own feed; BTC-pegged wrapper, upper bound) (answers at block 18626540). Native ETH is not included except where it passed through WETH (rows with kind weth_wrap / weth_unwrap).",
+ "start_ts": 1699437575,
+ "end_ts": 1700670911,
+ "balances_at_start": {
+  "USDT": 41794631.01,
+  "USDC": 619949.0,
+  "DAI": 85138.1,
+  "WBTC": 2.00097,
+  "WETH": 0.0,
+  "LINK": 50389.275,
+  "UNI": 174565.3,
+  "TUSD": 346994.0,
+  "SHIB": 348905823017.0,
+  "HBTC": 540.011
+ },
+ "transfers": [
+  {
+   "ts": 1699511171,
+   "block": 18532589,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 2009970603.0,
+   "usd": 16217.962057537326,
+   "tx": "0xb171d19ac66cd44d377712572da4ccc0f13b8bb745caa2b5ea314b731d67dde0",
+   "log_index": 118,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699511171,
+   "block": 18532589,
+   "token": "UNI",
+   "direction": "out",
+   "amount": 885.0,
+   "usd": 4733.68269,
+   "tx": "0xb63c6afb94839baac1bf2c773322f4ff46d085298c4d0926be4c3796d03fad0e",
+   "log_index": 121,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699511183,
+   "block": 18532590,
+   "token": "HBTC",
+   "direction": "out",
+   "amount": 6.0,
+   "usd": 220067.03999999998,
+   "tx": "0xcdf06deef4d0847f8cea59859a22d23ece1cbf14dbb03719643dae16e91ff989",
+   "log_index": 64,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699511183,
+   "block": 18532590,
+   "token": "LINK",
+   "direction": "out",
+   "amount": 3253.0,
+   "usd": 46125.46507395,
+   "tx": "0x1ee2f9a80a242e26e8b911b7e47879e7d18d0692740456b0d7f32576db2e9436",
+   "log_index": 72,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699511927,
+   "block": 18532651,
+   "token": "LINK",
+   "direction": "out",
+   "amount": 3253.0,
+   "usd": 46125.46507395,
+   "tx": "0x8741a03b927917e85be32921287aba487d2541333a3d763188a26825127d3ec8",
+   "log_index": 37,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699512599,
+   "block": 18532707,
+   "token": "LINK",
+   "direction": "out",
+   "amount": 478.0,
+   "usd": 6777.735107699999,
+   "tx": "0x5a009ff700e17736375856424f11b7ba36c50dbd44e993c8bd76f7624087ea5f",
+   "log_index": 88,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699517231,
+   "block": 18533089,
+   "token": "WBTC",
+   "direction": "out",
+   "amount": 1.0,
+   "usd": 36677.84,
+   "tx": "0xbe2028bc46bdf92d30b03e425fe820d8eb9188739e4fc6ba1b7fb5c3f83833b8",
+   "log_index": 103,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699534871,
+   "block": 18534552,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 62122833.0,
+   "usd": 501.2539720715148,
+   "tx": "0x18c9efed74a6f60611f984cb4b294e044fde05ba42834273bd23651a4fe08578",
+   "log_index": 11,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699535531,
+   "block": 18534607,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 75155552.0,
+   "usd": 606.4117997198756,
+   "tx": "0x607cd537cbaf4836ba430ad94507e3365fb064203a404946b3983d3e7b388a29",
+   "log_index": 28,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699613207,
+   "block": 18541040,
+   "token": "SHIB",
+   "direction": "in",
+   "amount": 353857976.0,
+   "usd": 2855.1936132595038,
+   "tx": "0x89be525937208e8570c5ef60efeab5787195c721fd5312cb8ff0753ac085c510",
+   "log_index": 106,
+   "counterparty": "0xbc53b706b165d2b7e98f254095d9d342e845e5ac"
+  },
+  {
+   "ts": 1699635167,
+   "block": 18542858,
+   "token": "USDT",
+   "direction": "in",
+   "amount": 323688.0,
+   "usd": 323688.0,
+   "tx": "0x81bed4230024acc761f288cafefae91438d125fe29ffdafc381a0ce49cefe918",
+   "log_index": 39,
+   "counterparty": "0xbc53b706b165d2b7e98f254095d9d342e845e5ac"
+  },
+  {
+   "ts": 1699773719,
+   "block": 18554314,
+   "token": "SHIB",
+   "direction": "in",
+   "amount": 254883833.0,
+   "usd": 2056.5954181140232,
+   "tx": "0xac0024861e0ca6bf2b03e11e0015336e2f8c66b2be7fbed9e52fc025d2ddcec5",
+   "log_index": 88,
+   "counterparty": "0xbc53b706b165d2b7e98f254095d9d342e845e5ac"
+  },
+  {
+   "ts": 1699774643,
+   "block": 18554389,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 314927400.0,
+   "usd": 2541.072300488208,
+   "tx": "0x8d3652c552ba42f9802865a6e991d515e2c76169131368dc1f571fb335950e87",
+   "log_index": 39,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699840931,
+   "block": 18559875,
+   "token": "SHIB",
+   "direction": "in",
+   "amount": 412750845.0,
+   "usd": 3330.3857944167507,
+   "tx": "0xcb6b4e8c12a9361179b55ad799dd7213da98d864e3242c4889607034d76efea9",
+   "log_index": 56,
+   "counterparty": "0xbc53b706b165d2b7e98f254095d9d342e845e5ac"
+  },
+  {
+   "ts": 1699841555,
+   "block": 18559927,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 422253248.0,
+   "usd": 3407.058364194344,
+   "tx": "0x47f7afa75a4085e7eb13c215bb9a6b66f344fd15c98f81856772d52e6e1d4ef9",
+   "log_index": 3,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699867355,
+   "block": 18562060,
+   "token": "LINK",
+   "direction": "out",
+   "amount": 513.0,
+   "usd": 7274.01278295,
+   "tx": "0x82eeccc451964588acdc5b72f209dae06fbb0d015b7abc88c4b67ca95f3c7d11",
+   "log_index": 101,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699876055,
+   "block": 18562780,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 53809853.0,
+   "usd": 434.1785660810787,
+   "tx": "0x48b6a0d1f2204c6bc997a0ad5b93837f68c649d19128ec44caf59e5e62c57323",
+   "log_index": 1,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699883555,
+   "block": 18563396,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 92494533.0,
+   "usd": 746.3158040643414,
+   "tx": "0x26f798a571282ee34a952d3073866cbfc007799b816a732bcfa04c27564f36d7",
+   "log_index": 397,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699959395,
+   "block": 18569688,
+   "token": "UNI",
+   "direction": "out",
+   "amount": 480.0,
+   "usd": 2567.42112,
+   "tx": "0x852db063bda8d58bac0ce52ff9cbfa4f444b521a69ab8fa3fa6badf282a633b0",
+   "log_index": 262,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1699962731,
+   "block": 18569962,
+   "token": "SHIB",
+   "direction": "in",
+   "amount": 364758126.0,
+   "usd": 2943.1442623175617,
+   "tx": "0x9da66fd799a35f7c6b3b959ac428703d36a15f11862510aa24bd8ab231f1eedb",
+   "log_index": 22,
+   "counterparty": "0xbc53b706b165d2b7e98f254095d9d342e845e5ac"
+  },
+  {
+   "ts": 1699963175,
+   "block": 18569998,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 430074776.0,
+   "usd": 3470.168363985702,
+   "tx": "0xe4679cdc2488ce528594198fefb56ddb7cd82c60b8e5fe8ac34d56c3f60707f5",
+   "log_index": 1,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700027267,
+   "block": 18575307,
+   "token": "LINK",
+   "direction": "out",
+   "amount": 493.0,
+   "usd": 6990.42553995,
+   "tx": "0xe3ed751ee9bb6525ebdc34c911b6e1541ed2c63811c23659aa80fe9ea96d161e",
+   "log_index": 40,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700037167,
+   "block": 18576123,
+   "token": "DAI",
+   "direction": "out",
+   "amount": 4075.0,
+   "usd": 4075.0,
+   "tx": "0x42c4ed04d103a4b3b7996aa783f4074283ef838b1380cc881ac769c3692af412",
+   "log_index": 14,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700038067,
+   "block": 18576198,
+   "token": "DAI",
+   "direction": "out",
+   "amount": 4075.0,
+   "usd": 4075.0,
+   "tx": "0x062b90bfe411512fcecf48993be15add398d79da12e65b1f7bbb12f57abac414",
+   "log_index": 35,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700038667,
+   "block": 18576248,
+   "token": "DAI",
+   "direction": "out",
+   "amount": 4075.0,
+   "usd": 4075.0,
+   "tx": "0x487ab214bbf7126823d5105a12a93d051d586bdf0fcebce93033e46807debc1c",
+   "log_index": 7,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700038943,
+   "block": 18576269,
+   "token": "SHIB",
+   "direction": "in",
+   "amount": 370226386.0,
+   "usd": 2987.2663171716886,
+   "tx": "0x9c9fe4a23033a116926eb0137720955dac93dabda5b8c71a67d4458d83b035bd",
+   "log_index": 48,
+   "counterparty": "0xbc53b706b165d2b7e98f254095d9d342e845e5ac"
+  },
+  {
+   "ts": 1700039567,
+   "block": 18576321,
+   "token": "DAI",
+   "direction": "out",
+   "amount": 4075.0,
+   "usd": 4075.0,
+   "tx": "0x4e0e72f854dcbdf5a3d1af605043562bef7d6b7f422d11cbd71795637c31c95d",
+   "log_index": 8,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700039867,
+   "block": 18576346,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 431315775.0,
+   "usd": 3480.1816819244827,
+   "tx": "0x9e6b69ded25d2cae1d16ce0c0c8c7323f7775fa78080639f69007b74e69ca9fe",
+   "log_index": 10,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700135867,
+   "block": 18584294,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 79668815.0,
+   "usd": 642.8282169453006,
+   "tx": "0xed9795e23020424b1ca2b77672b69903b921b1f3d7bb6023eeca781c490a9c93",
+   "log_index": 205,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700138543,
+   "block": 18584517,
+   "token": "SHIB",
+   "direction": "in",
+   "amount": 383123435.0,
+   "usd": 3091.329456714133,
+   "tx": "0xf77d5d72731bd7345d88d93d0a5f6aa36f5389dd7a3563bf8c2a04ae10f0f2f7",
+   "log_index": 15,
+   "counterparty": "0xbc53b706b165d2b7e98f254095d9d342e845e5ac"
+  },
+  {
+   "ts": 1700138999,
+   "block": 18584555,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 404844104.0,
+   "usd": 3266.5882317333053,
+   "tx": "0x9d9aa219455dcc4c9e9c4611ec4d3b3083e7c0c383f90b207ac28760699a5b56",
+   "log_index": 102,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700184779,
+   "block": 18588345,
+   "token": "HBTC",
+   "direction": "out",
+   "amount": 45.0,
+   "usd": 1650502.7999999998,
+   "tx": "0x29a2786507a3e887084bbdacd8293760b67457aeafca5647d9bf9748a56b6d3f",
+   "log_index": 97,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700191919,
+   "block": 18588938,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 135717457.0,
+   "usd": 1095.0710248628714,
+   "tx": "0x73d66ddee785f96d8ff2932ea7a61eca6aada128aa6fcc5cead28b9ba99f8024",
+   "log_index": 1,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700192243,
+   "block": 18588965,
+   "token": "SHIB",
+   "direction": "in",
+   "amount": 409738253.0,
+   "usd": 3306.0779250987034,
+   "tx": "0xe130ea503f1b0864441bd1c1d4b86310ca9ab3045ffc5341f193b541cc9d5b74",
+   "log_index": 74,
+   "counterparty": "0xbc53b706b165d2b7e98f254095d9d342e845e5ac"
+  },
+  {
+   "ts": 1700192579,
+   "block": 18588993,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 420016458.0,
+   "usd": 3389.010251800792,
+   "tx": "0x0ed00ca0fd3517fdb091e6ab0a020d222c5c5bbb8648c7d4aa0cc08669302f89",
+   "log_index": 157,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700216279,
+   "block": 18590949,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 56888223.0,
+   "usd": 459.01718202130456,
+   "tx": "0xe5cc3266d34cec2f5096373a0e556badc54e82816b2e0072a996b81a1e77dfec",
+   "log_index": 2,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700283455,
+   "block": 18596504,
+   "token": "SHIB",
+   "direction": "in",
+   "amount": 423326926.0,
+   "usd": 3415.7216098358585,
+   "tx": "0xca871a6f6b6d89cb3b34073fc932be23c1cc764a89fcae6022c7942e9cf31cf5",
+   "log_index": 161,
+   "counterparty": "0xbc53b706b165d2b7e98f254095d9d342e845e5ac"
+  },
+  {
+   "ts": 1700283779,
+   "block": 18596530,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 454448387.0,
+   "usd": 3666.8330802821392,
+   "tx": "0x3936934ed2f244970995461fa2bc92d5602b1c6833a9c97fd7839601f167f391",
+   "log_index": 126,
+   "counterparty": "0xa9c0204b10bba10ffce488dce6ffff1cacdbbb10"
+  },
+  {
+   "ts": 1700389595,
+   "block": 18605253,
+   "token": "SHIB",
+   "direction": "in",
+   "amount": 432347443.0,
+   "usd": 3488.505959132817,
+   "tx": "0x14193fed18acd327f2707ace1664b7f44ff73029daa8ac93bc8320462da37c09",
+   "log_index": 111,
+   "counterparty": "0xbc53b706b165d2b7e98f254095d9d342e845e5ac"
+  },
+  {
+   "ts": 1700647463,
+   "block": 18626564,
+   "token": "USDT",
+   "direction": "out",
+   "amount": 42110000.0,
+   "usd": 42110000.0,
+   "tx": "0x46f2ebab3a3195d2c790e45dfbb24bb38bb7886caafc8dfc6c844e844957b1e8",
+   "log_index": 235,
+   "counterparty": "0xfc146d1caf6ba1d1ce6dcb5b35dcbf895f50b0c4"
+  },
+  {
+   "ts": 1700647655,
+   "block": 18626580,
+   "token": "HBTC",
+   "direction": "out",
+   "amount": 489.0,
+   "usd": 17935463.759999998,
+   "tx": "0x98b44a9d405fc6acaadfbb6e263d5d9ab2158e32e4f6669696c62cec4fb5a375",
+   "log_index": 18,
+   "counterparty": "0xfc146d1caf6ba1d1ce6dcb5b35dcbf895f50b0c4"
+  },
+  {
+   "ts": 1700647883,
+   "block": 18626599,
+   "token": "SHIB",
+   "direction": "out",
+   "amount": 346867120000.0,
+   "usd": 2798786.1030260287,
+   "tx": "0x43436bda86fcb9fb4869eda6481a6e638b97cabbfaed00c6ddbb15d2a0be8a9d",
+   "log_index": 76,
+   "counterparty": "0xfc146d1caf6ba1d1ce6dcb5b35dcbf895f50b0c4"
+  },
+  {
+   "ts": 1700648039,
+   "block": 18626612,
+   "token": "UNI",
+   "direction": "out",
+   "amount": 173200.0,
+   "usd": 926411.1207999999,
+   "tx": "0x066055fa31c8c4c018a26c1919740a6ba5077f7482e7fbbf061f426af87c899b",
+   "log_index": 13,
+   "counterparty": "0xfc146d1caf6ba1d1ce6dcb5b35dcbf895f50b0c4"
+  },
+  {
+   "ts": 1700648159,
+   "block": 18626622,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 619000.0,
+   "usd": 619000.0,
+   "tx": "0xb9e09bf59b4b34f00c14159f56c9e27402bf86e92c02bf1726fab3454fcaaa77",
+   "log_index": 68,
+   "counterparty": "0xfc146d1caf6ba1d1ce6dcb5b35dcbf895f50b0c4"
+  },
+  {
+   "ts": 1700648303,
+   "block": 18626634,
+   "token": "LINK",
+   "direction": "out",
+   "amount": 42399.0,
+   "usd": 601190.77579785,
+   "tx": "0x5d30125e15a5a8660f6caf280f26c7a42bc544b8872ca30a3b2de2dbcc8024c8",
+   "log_index": 37,
+   "counterparty": "0xfc146d1caf6ba1d1ce6dcb5b35dcbf895f50b0c4"
+  },
+  {
+   "ts": 1700648423,
+   "block": 18626644,
+   "token": "TUSD",
+   "direction": "out",
+   "amount": 346994.0,
+   "usd": 346695.69966802,
+   "tx": "0x4d346f63fe62fab8127e43a65af749af92185531d16b128ef782a2cdf88e80cd",
+   "log_index": 88,
+   "counterparty": "0xfc146d1caf6ba1d1ce6dcb5b35dcbf895f50b0c4"
+  }
+ ]
+}

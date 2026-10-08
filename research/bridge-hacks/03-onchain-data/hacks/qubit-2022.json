@@ -1,0 +1,79 @@
+{
+ "case": {
+  "key": "qubit-2022",
+  "title": "Qubit QBridge handler, Ethereum side, 27-28 Jan 2022 (fake deposits; theft happened on BSC)",
+  "chain": "ethereum",
+  "vault": "0x17b7163cf1dbd286e262ddc68b553d899b93f526",
+  "tokens": [
+   [
+    "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "USDT",
+    6
+   ],
+   [
+    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "USDC",
+    6
+   ],
+   [
+    "0x6b175474e89094c44da98b954eedeac495271d0f",
+    "DAI",
+    18
+   ],
+   [
+    "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    "WBTC",
+    8
+   ],
+   [
+    "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "WETH",
+    18
+   ]
+  ],
+  "start_block": 13999613,
+  "end_block": 14096000,
+  "price_block": 14090170,
+  "period": "hack: baseline before the incident, then the drain",
+  "eth_usd_feed": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+  "btc_usd_feed": "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+  "hack_window": [
+   14090170,
+   14096000
+  ],
+  "first_theft_any_block": 14090170,
+  "first_theft_tx": "0xac7292e7d0ec8ebe1c94203d190874b2aab30592327b6cc875d00f18de6f3133",
+  "first_theft_block": 14090170,
+  "theft_min_usd": 100000,
+  "attacker_addresses": [
+   "0xd01ae1a708614948b2b5e0b7ab5be6afa01325c7"
+  ],
+  "references": [
+   "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/src/test/2022-01/Qubit_exp.sol",
+   "https://rekt.news/qubit-rekt/",
+   "https://medium.com/@QubitFin/protocol-exploit-report-305c34540fa3"
+  ],
+  "notes": "NEGATIVE CONTROL. The attacker called QBridge.deposit (0x20e5e35b...) with a resourceID whose token was address(0); safeTransferFrom on address(0) did not revert, so a 'deposit' of 190 ETH was emitted with no tokens moving. The BSC side then minted ~$80M of qXETH. first_theft_tx is that fake deposit: it moves NO tokens on Ethereum, so this vault shows no anomalous outflow at all.",
+  "coverage": "Tracked: USDT, USDC, DAI, WBTC, WETH. The handler held ~199.4 native ETH and none of these tokens, so the file has ZERO transfers: nothing was stolen from this Ethereum vault and the replay is expected to find no thefts. Kept to document what an Ethereum-vault monitor cannot see."
+ },
+ "fetched": "2026-10-08T04:03:54+00:00",
+ "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co); built by research/bridge-hacks/03-onchain-data/fetch_more.py",
+ "prices_usd": {
+  "USDT": 1.0,
+  "USDC": 1.0,
+  "DAI": 1.0,
+  "WBTC": 35701.95662185,
+  "WETH": 2328.62350561
+ },
+ "price_note": "USDT fixed $1; USDC fixed $1; DAI fixed $1; WBTC at Chainlink BTC / USD 35,702; WETH at Chainlink ETH / USD 2,328.62 (answers at block 14090170). Native ETH is not included except where it passed through WETH (rows with kind weth_wrap / weth_unwrap).",
+ "start_ts": 1642109650,
+ "end_ts": 1643397402,
+ "balances_at_start": {
+  "USDT": 0.0,
+  "USDC": 0.0,
+  "DAI": 0.0,
+  "WBTC": 0.0,
+  "WETH": 0.0
+ },
+ "transfers": []
+}

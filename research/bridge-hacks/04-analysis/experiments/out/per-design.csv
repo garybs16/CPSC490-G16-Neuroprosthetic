@@ -1,0 +1,28 @@
+policy,design,role,windows,bridge_weeks,pages,pages_per_bridge_week,warnings_per_bridge_week
+current (any rule pages),lockbox,normal,4,15.43,3,0.194,0.194
+current (any rule pages),lockbox,stress,2,7.71,36,4.667,4.667
+current (any rule pages),lockbox,pre-hack,12,18.8,42,2.234,2.234
+current (any rule pages),rollup,normal,3,11.57,0,0.0,0.0
+current (any rule pages),oft-adapter,normal,2,7.71,28,3.63,3.63
+current (any rule pages),oft-adapter,pre-hack,1,1.57,3,1.916,1.916
+current (any rule pages),pool,normal,3,8.29,110,13.276,13.276
+current (any rule pages),mpc,normal,1,3.86,10,2.593,2.593
+current (any rule pages),mpc,pre-hack,1,1.58,0,0.0,0.0
+"current rules, page only if >=2 agree",lockbox,normal,4,15.43,0,0.0,0.194
+"current rules, page only if >=2 agree",lockbox,stress,2,7.71,7,0.907,4.667
+"current rules, page only if >=2 agree",lockbox,pre-hack,12,18.8,8,0.426,2.234
+"current rules, page only if >=2 agree",rollup,normal,3,11.57,0,0.0,0.0
+"current rules, page only if >=2 agree",oft-adapter,normal,2,7.71,2,0.259,3.63
+"current rules, page only if >=2 agree",oft-adapter,pre-hack,1,1.57,0,0.0,1.916
+"current rules, page only if >=2 agree",pool,normal,3,8.29,15,1.81,13.276
+"current rules, page only if >=2 agree",mpc,normal,1,3.86,2,0.519,2.593
+"current rules, page only if >=2 agree",mpc,pre-hack,1,1.58,0,0.0,0.0
+REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile),lockbox,normal,4,15.43,0,0.0,0.13
+REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile),lockbox,stress,2,7.71,1,0.13,0.648
+REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile),lockbox,pre-hack,12,18.8,3,0.16,1.064
+REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile),rollup,normal,3,11.57,0,0.0,0.086
+REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile),oft-adapter,normal,2,7.71,1,0.13,2.204
+REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile),oft-adapter,pre-hack,1,1.57,0,0.0,0.0
+REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile),pool,normal,3,8.29,3,0.362,3.379
+REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile),mpc,normal,1,3.86,0,0.0,0.519
+REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile),mpc,pre-hack,1,1.58,0,0.0,0.0

@@ -1,0 +1,157 @@
+{
+ "case": {
+  "key": "force-bridge-2025",
+  "title": "Force Bridge (Nervos), Ethereum vault, 1 Jun 2025",
+  "chain": "ethereum",
+  "vault": "0x63a993502e74828ddba5710327afc6dc78d661b2",
+  "tokens": [
+   [
+    "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "USDT",
+    6
+   ],
+   [
+    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "USDC",
+    6
+   ],
+   [
+    "0x6b175474e89094c44da98b954eedeac495271d0f",
+    "DAI",
+    18
+   ],
+   [
+    "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    "WBTC",
+    8
+   ],
+   [
+    "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "WETH",
+    18
+   ]
+  ],
+  "start_block": 22508334,
+  "end_block": 22610000,
+  "price_block": 22608306,
+  "period": "hack: baseline before the incident, then the drain",
+  "eth_usd_feed": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+  "btc_usd_feed": "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+  "hack_window": [
+   22608306,
+   22610000
+  ],
+  "first_theft_any_block": 22608306,
+  "first_theft_tx": "0x6b6fbd9d6beef56d2a4f0d14852beea381764b962d7d73ecd216b9fd991299a1",
+  "first_theft_block": 22608306,
+  "theft_min_usd": 100000,
+  "attacker_addresses": [
+   "0x1998c6d25212194ebf9bb919b87d40b2dc8aa8b9"
+  ],
+  "references": [
+   "https://rekt.news/force-bridge-rekt",
+   "https://www.halborn.com/blog/post/explained-the-force-bridge-hack-june-2025",
+   "https://www.theblock.co/post/356535/hackers-drain-over-3-million-in-crypto-from-nervos-networks-force-cross-chain-bridge-say-security-analysts"
+  ],
+  "notes": "Leaked validator keys (per later reports). Tx 0x6b6fbd9d... (07:16:47 UTC) took 898,485 USDC, 0.79 WBTC, 257,683 USDT, 60,403 DAI and 539.09 native ETH; tx 0x9859b6cb... (block 22,608,336) took 4.23 WBTC. A failed attempt 0x69104f6b... (block 22,608,287) preceded it. The vault was being sunset (announced 31 May).",
+  "coverage": "Tracked: USDT, USDC, DAI, WBTC, WETH. Not tracked: 539 native ETH (~$1.4M). The BSC leg is separate."
+ },
+ "fetched": "2026-10-08T03:59:07+00:00",
+ "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co); built by research/bridge-hacks/03-onchain-data/fetch_more.py",
+ "prices_usd": {
+  "USDT": 1.0,
+  "USDC": 1.0,
+  "DAI": 1.0,
+  "WBTC": 104256.67825907,
+  "WETH": 2518.6
+ },
+ "price_note": "USDT fixed $1; USDC fixed $1; DAI fixed $1; WBTC at Chainlink BTC / USD 104,257; WETH at Chainlink ETH / USD 2,518.6 (answers at block 22608306). Native ETH is not included except where it passed through WETH (rows with kind weth_wrap / weth_unwrap).",
+ "start_ts": 1747552607,
+ "end_ts": 1748782703,
+ "balances_at_start": {
+  "USDT": 257683.12921,
+  "USDC": 893588.114877,
+  "DAI": 60402.966600313455,
+  "WBTC": 5.01895059,
+  "WETH": 0.0
+ },
+ "transfers": [
+  {
+   "ts": 1747970087,
+   "block": 22542817,
+   "token": "USDC",
+   "direction": "in",
+   "amount": 4997.0,
+   "usd": 4997.0,
+   "tx": "0xc22684cfc121aebaeb3e8bbbd182d688c8a2e6944f55acc71342d1b60fa07c8f",
+   "log_index": 270,
+   "counterparty": "0xe33d263a908d1974d9702ceab526a9dd242f7af9"
+  },
+  {
+   "ts": 1748755943,
+   "block": 22607787,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 100.0,
+   "usd": 100.0,
+   "tx": "0x77ee3a0c6a95adbf274335bc257bf34314869921f060705fe42755cddf3318f8",
+   "log_index": 310,
+   "counterparty": "0x28982c70691fe4799eb593b11b9f1f6a6fea7c51"
+  },
+  {
+   "ts": 1748762207,
+   "block": 22608306,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 898485.114877,
+   "usd": 898485.114877,
+   "tx": "0x6b6fbd9d6beef56d2a4f0d14852beea381764b962d7d73ecd216b9fd991299a1",
+   "log_index": 234,
+   "counterparty": "0x1998c6d25212194ebf9bb919b87d40b2dc8aa8b9"
+  },
+  {
+   "ts": 1748762207,
+   "block": 22608306,
+   "token": "WBTC",
+   "direction": "out",
+   "amount": 0.7900915,
+   "usd": 82372.315310726,
+   "tx": "0x6b6fbd9d6beef56d2a4f0d14852beea381764b962d7d73ecd216b9fd991299a1",
+   "log_index": 236,
+   "counterparty": "0x1998c6d25212194ebf9bb919b87d40b2dc8aa8b9"
+  },
+  {
+   "ts": 1748762207,
+   "block": 22608306,
+   "token": "USDT",
+   "direction": "out",
+   "amount": 257683.12921,
+   "usd": 257683.12921,
+   "tx": "0x6b6fbd9d6beef56d2a4f0d14852beea381764b962d7d73ecd216b9fd991299a1",
+   "log_index": 238,
+   "counterparty": "0x1998c6d25212194ebf9bb919b87d40b2dc8aa8b9"
+  },
+  {
+   "ts": 1748762207,
+   "block": 22608306,
+   "token": "DAI",
+   "direction": "out",
+   "amount": 60402.966600313455,
+   "usd": 60402.966600313455,
+   "tx": "0x6b6fbd9d6beef56d2a4f0d14852beea381764b962d7d73ecd216b9fd991299a1",
+   "log_index": 240,
+   "counterparty": "0x1998c6d25212194ebf9bb919b87d40b2dc8aa8b9"
+  },
+  {
+   "ts": 1748762579,
+   "block": 22608336,
+   "token": "WBTC",
+   "direction": "out",
+   "amount": 4.22885909,
+   "usd": 440886.8015490736,
+   "tx": "0x9859b6cbb2764a6cb86450cd7b514f54766b461735da081195226265d72a75fa",
+   "log_index": 476,
+   "counterparty": "0x1998c6d25212194ebf9bb919b87d40b2dc8aa8b9"
+  }
+ ]
+}

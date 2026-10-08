@@ -1,0 +1,237 @@
+{
+ "normal_and_prehack": {
+  "force-bridge-2025": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 1,
+   "dust_then_large_within_24h": []
+  },
+  "heco-2023": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 0,
+   "dust_then_large_within_24h": []
+  },
+  "kelp-2026": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 8,
+   "dust_then_large_within_24h": []
+  },
+  "poly-2021": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 125,
+   "dust_then_large_within_24h": []
+  },
+  "poly-2023": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 0,
+   "dust_then_large_within_24h": []
+  },
+  "ronin-2024": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 69,
+   "dust_then_large_within_24h": []
+  },
+  "shibarium-2025": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 5,
+   "dust_then_large_within_24h": []
+  },
+  "verus-2026": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 1,
+   "dust_then_large_within_24h": []
+  },
+  "xbridge-2024": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 5,
+   "dust_then_large_within_24h": []
+  },
+  "harmony-2022": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 22,
+   "dust_then_large_within_24h": []
+  },
+  "multichain-2023": {
+   "weeks": 1.58,
+   "dust_to_new_recipient": 61,
+   "dust_then_large_within_24h": []
+  },
+  "nomad-2022": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 1079,
+   "dust_then_large_within_24h": []
+  },
+  "orbit-2023": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 21,
+   "dust_then_large_within_24h": []
+  },
+  "ronin-2022": {
+   "weeks": 1.57,
+   "dust_to_new_recipient": 89,
+   "dust_then_large_within_24h": []
+  },
+  "across-spokepool-7d": {
+   "weeks": 0.57,
+   "dust_to_new_recipient": 12,
+   "dust_then_large_within_24h": []
+  },
+  "celer-cbridge-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 15,
+   "dust_then_large_within_24h": []
+  },
+  "kelp-rseth-adapter-prehack-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 11,
+   "dust_then_large_within_24h": []
+  },
+  "polygon-pos-erc20-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 82,
+   "dust_then_large_within_24h": []
+  },
+  "polygon-pos-erc20-usdc-depeg-2023": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 389,
+   "dust_then_large_within_24h": []
+  },
+  "ronin-gateway-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 11,
+   "dust_then_large_within_24h": []
+  },
+  "stargate-v2-usdc-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 1914,
+   "dust_then_large_within_24h": [
+    {
+     "utc": "2026-09-18 20:23:59",
+     "usd": 999976,
+     "tx": "0xfe7e95178f75b38829e509e823030c4ba51df8939ec5f607b39e98f2e8473877",
+     "lead_min": 6.2,
+     "theft": false
+    },
+    {
+     "utc": "2026-09-19 04:56:59",
+     "usd": 1000000,
+     "tx": "0xe215e7dbac24599b14aa4b0e8e59e57b0e562987c2b64cbf988a631b86b11eba",
+     "lead_min": 519.2,
+     "theft": false
+    }
+   ]
+  },
+  "usdt0-oft-adapter-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 961,
+   "dust_then_large_within_24h": []
+  },
+  "wormhole-portal-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 26,
+   "dust_then_large_within_24h": []
+  },
+  "wormhole-portal-ftx-2022": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 611,
+   "dust_then_large_within_24h": [
+    {
+     "utc": "2022-11-10 19:20:47",
+     "usd": 1499523,
+     "tx": "0x22245bb038303d9020bbda6750f5eeaf6f0d8c54fd46decc0198f9681ef066d0",
+     "lead_min": 1403.4,
+     "theft": false
+    }
+   ]
+  },
+  "arbitrum-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 3,
+   "dust_then_large_within_24h": []
+  },
+  "base-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 3,
+   "dust_then_large_within_24h": []
+  },
+  "multichain-2023-normal-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 261,
+   "dust_then_large_within_24h": []
+  },
+  "optimism-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 6,
+   "dust_then_large_within_24h": []
+  },
+  "orbit-2023-normal-30d": {
+   "weeks": 3.86,
+   "dust_to_new_recipient": 47,
+   "dust_then_large_within_24h": []
+  }
+ },
+ "hacks": {
+  "force-bridge-2025": [],
+  "heco-2023": [],
+  "kelp-2026": [],
+  "poly-2021": [],
+  "poly-2023": [],
+  "qubit-2022": [],
+  "ronin-2024": [],
+  "shibarium-2025": [],
+  "verus-2026": [],
+  "xbridge-2024": [],
+  "harmony-2022": [],
+  "multichain-2023": [
+   {
+    "utc": "2023-07-06 18:10:35",
+    "usd": 27653471,
+    "tx": "0xbd29fe07555c28527fb0207aa0ac2b67d4afef0426793c35b76d005613477fc4",
+    "lead_min": 109.2,
+    "theft": true
+   }
+  ],
+  "nomad-2022": [],
+  "orbit-2023": [
+   {
+    "utc": "2023-12-31 21:07:59",
+    "usd": 10000000,
+    "tx": "0xafdc36278fcef8d54824b09ec019147cfe2afd995abf6754e52d273a2c1b07ca",
+    "lead_min": 45.0,
+    "theft": true
+   },
+   {
+    "utc": "2023-12-31 21:10:59",
+    "usd": 9826263,
+    "tx": "0xe0bada18fdc56dec125c31b1636490f85ba66016318060a066ed7050ff7271f9",
+    "lead_min": 30.4,
+    "theft": true
+   },
+   {
+    "utc": "2023-12-31 21:25:11",
+    "usd": 10000000,
+    "tx": "0x64a6f486c20671e1389b3c7948d46733325c407245a86bf510cb69ef401a3f0e",
+    "lead_min": 80.8,
+    "theft": true
+   },
+   {
+    "utc": "2023-12-31 21:25:35",
+    "usd": 30000000,
+    "tx": "0xd8ca42941a0a2c25669267ad8d61f7f9f4118252cb502316602fe16624b80ac8",
+    "lead_min": 175.4,
+    "theft": true
+   }
+  ],
+  "ronin-2022": []
+ },
+ "summary": {
+  "bridge_weeks": 76.5,
+  "dust_releases_to_new_recipients": 5838,
+  "per_bridge_week": 76.3,
+  "dust_then_large_in_normal_traffic": 3,
+  "dust_then_large_per_bridge_week": 0.039,
+  "hack_cases_with_the_pattern": [
+   "multichain-2023",
+   "orbit-2023"
+  ]
+ }
+}
