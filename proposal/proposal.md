@@ -451,10 +451,10 @@ tasks under each objective in Table 10 as they are filed on our board.
 |---|---|---|---|---|---|
 | #22 | task | Put the submitted proposal into proposal/proposal.md and link the board from §2 and §4 | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
 | #23 | task | Make the README describe BridgeWatch (title, sponsor SNX-3, summary) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
-| #26 | task | Write the development plan (charter, QA owner rotation, AI rules, risk register) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
-| #27 | task | Homework #5 — Topic and Survey (due Sun Oct 11) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
+| #26 | task | Write the development plan (charter, QA owner rotation, AI rules, risk register) | Writing task (own points) | Acuna, Isaac | Sprint 1 |
+| #27 | task | Homework #5 — Topic and Survey (due Sun Oct 11) | Writing task (own points) | Bowen, Jake | Sprint 1 |
 | #28 | task | Send the first questions to the SonarX mentor | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
-| #29 | task | Set up the GitHub Projects board and link it from the README | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
+| #29 | task | Set up the GitHub Projects board and link it from the README | Writing task (own points) | Jaglan, Avni | Sprint 1 |
 | #30 | task | Write the Sprint 1 review (docs/sprint-reviews/sprint-1.md) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
 
 Tasks for Sprint 2 will be added here as they are filed on our board.
