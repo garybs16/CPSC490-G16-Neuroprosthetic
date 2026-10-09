@@ -28,11 +28,15 @@ merely suggested; see `docs/aidlc/loop-engineering.md`.
 - **Course:** CPSC 490 Undergraduate Seminar, Fall 2026 (proposal + prototype
   semester; full implementation happens in CPSC 491).
 - **Team:** Group 16 neuroprosthetic — members in `README.md`.
-- **Project:** Phenoscope — 〈one or two sentences a stranger understands〉
-- **Sponsor:** 〈RTX-3 / EL-1 / SNX-n / independent〉
+- **Project:** BridgeWatch: Real-Time Detection of Cross-Chain Bridge
+  Exploits — learns how much money normally leaves each bridge vault at each
+  hour of the day and alerts, in one plain sentence, when withdrawals jump
+  far above normal, with a measured false-alarm rate.
+- **Sponsor:** SNX-3 (SonarX)
 - **Source of truth:** `proposal/proposal.md`. Specs in `docs/specs/`,
   designs in `docs/design/`, proof-of-concept code in `prototype/`.
-- **Stack (prototype):** 〈languages, frameworks, services〉
+- **Stack (prototype):** Python 3.12, FastAPI, SQLite; web dashboard; alerts
+  to Slack (proposal §4, Table 6)
 
 ## How we work
 
