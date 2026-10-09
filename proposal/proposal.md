@@ -3,12 +3,17 @@
 **Department of Computer Science**
 **CPSC 490 Undergraduate Seminar in Computer Science — Proposal for Capstone Project**
 
-**Group 16 — Neuroprosthetic** · Sponsor: SonarX, project SNX-3 · Mentor: Erel Saul
-Authors: Samuel, Gary Bennet (garybs16); Bowen, Jake (JakeBowen2005);
-Jaglan, Avni (Avnijaglan19); Acuna, Isaac (1600isad)
-Faculty advisor: Kyoung Shin · Semester: Fall 2026
-Proposal date: 2026-10-04
-Repository: https://github.com/garybs16/CPSC490-G16-Neuroprosthetic
+| | | | |
+|---|---|---|---|
+| **Project title** | BridgeWatch: Real-Time Detection of Cross-Chain Bridge Exploits | | |
+| **Semester:** | Fall, 2026 | **Proposal date:** | October 11, 2026 |
+| **Team name:** | Group 16 — Neuroprosthetic (Sponsor: SonarX, project SNX-3; mentor: Erel Saul) | | |
+| **GitHub repository URL:** | https://github.com/garybs16/CPSC490-G16-Neuroprosthetic | | |
+| **Member name:** | Samuel, Gary Bennet | **Email:** | garysamuel@csu.fullerton.edu |
+| **Member name:** | Bowen, Jake | **Email:** | on the submitted cover page |
+| **Member name:** | Jaglan, Avni | **Email:** | on the submitted cover page |
+| **Member name:** | Acuna, Isaac | **Email:** | on the submitted cover page |
+| **Faculty advisor** | Kyoung Shin | **Reviewer** (optional) | |
 
 > **This file is the proposal document, not a README.** It is the Markdown
 > copy of the proposal the team submitted on 4 October 2026, with the course
@@ -241,47 +246,47 @@ if they change. Throughout, *real time* means that BridgeWatch evaluates a
 withdrawal within one minute of the block that contains it being confirmed
 six blocks deep, which protects against short chain reorganizations.
 
-**Goal 1: Learn what normal bridge activity looks like (P1).** Epic #11.
+**Goal 1: Learn what normal bridge activity looks like (P1).** Epic [#11](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/11).
 
 - **Objective 1.1.** Collect every deposit and withdrawal for three major
   bridges from SonarX’s real-time stream, no more than five minutes behind
-  the latest block. (#14)
+  the latest block. ([#14](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/14))
 - **Objective 1.2.** Compute the normal outflow range for each bridge and
   each hour of the day from the past seven days, and show that at least 95%
   of normal 10-minute periods fall inside this range. This objective
   measures how well the baseline describes normal days and allows alerts to
-  fire only far above this range, so it does not set the alert rate. (#15)
+  fire only far above this range, so it does not set the alert rate. ([#15](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/15))
 
-**Goal 2: Catch hacks early with few false alarms (P2, P3).** Epic #12.
+**Goal 2: Catch hacks early with few false alarms (P2, P3).** Epic [#12](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/12).
 
 - **Objective 2.0.** Build a first prototype and demonstrate it on live
   Ethereum data and on one real past hack, making sure all results are
-  valid. (#5)
+  valid. ([#5](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/5))
 - **Objective 2.1.** Build three alert rules: a sudden jump in money
   leaving, an unusual burst of withdrawals, and the vault losing more than a
   set share of its money in one hour. Each alert explains itself in plain
-  words. (#16)
+  words. ([#16](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/16))
 - **Objective 2.2.** Replay five past hacks in which tokens left an Ethereum
   vault (for example, Orbit, Multichain and Harmony). For each, report the
   minutes from the first theft to the first alert and how much money was
   already gone, with the proposed target of alerting before half of the
-  stolen funds had left in at least four of the five replays. (#17)
+  stolen funds had left in at least four of the five replays. ([#17](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/17))
 - **Objective 2.3.** Count false alarms per bridge over at least 30 normal
   days, and set the alert level to meet a proposed target of no more than
   one false alarm per bridge per week, to be confirmed with the
-  mentor. (#18)
+  mentor. ([#18](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/18))
 - **Objective 2.4 (stretch).** Where SonarX provides data from both sides of
   a bridge, add the cross-chain accounting check and report how many
-  replayed hacks it detects. (#19)
+  replayed hacks it detects. ([#19](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/19))
 
-**Goal 3: Give the operator a dashboard they can act on (P4).** Epic #13.
+**Goal 3: Give the operator a dashboard they can act on (P4).** Epic [#13](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/13).
 
 - **Objective 3.1.** Build a live dashboard showing each bridge’s status,
   its money flow compared with normal, and a list of alerts the operator
-  can mark as seen, which is useful for seeing activity at a glance. (#20)
+  can mark as seen, which is useful for seeing activity at a glance. ([#20](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/20))
 - **Objective 3.2.** Test the dashboard with four users on a replayed hack,
   and record whether they notice and understand the alert within five
-  minutes. (#21)
+  minutes. ([#21](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/21))
 
 These objectives map directly onto the sponsor’s two difficulties.
 Objectives 1.2 and 2.3 turn “a baseline of normal” and “a false-alarm rate
@@ -449,13 +454,13 @@ tasks under each objective in Table 10 as they are filed on our board.
 
 | Issue | Type | Task | Parent | Owner | Sprint |
 |---|---|---|---|---|---|
-| #22 | task | Put the submitted proposal into proposal/proposal.md and link the board from §2 and §4 | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
-| #23 | task | Make the README describe BridgeWatch (title, sponsor SNX-3, summary) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
-| #26 | task | Write the development plan (charter, QA owner rotation, AI rules, risk register) | Writing task (own points) | Acuna, Isaac | Sprint 1 |
-| #27 | task | Homework #5 — Topic and Survey (due Sun Oct 11) | Writing task (own points) | Bowen, Jake | Sprint 1 |
-| #28 | task | Send the first questions to the SonarX mentor | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
-| #29 | task | Set up the GitHub Projects board and link it from the README | Writing task (own points) | Jaglan, Avni | Sprint 1 |
-| #30 | task | Write the Sprint 1 review (docs/sprint-reviews/sprint-1.md) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
+| [#22](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/22) | task | Put the submitted proposal into proposal/proposal.md and link the board from §2 and §4 | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
+| [#23](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/23) | task | Make the README describe BridgeWatch (title, sponsor SNX-3, summary) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
+| [#26](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/26) | task | Write the development plan (charter, QA owner rotation, AI rules, risk register) | Writing task (own points) | Acuna, Isaac | Sprint 1 |
+| [#27](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/27) | task | Homework #5 — Topic and Survey (due Sun Oct 11) | Writing task (own points) | Bowen, Jake | Sprint 1 |
+| [#28](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/28) | task | Send the first questions to the SonarX mentor | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
+| [#29](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/29) | task | Set up the GitHub Projects board and link it from the README | Writing task (own points) | Jaglan, Avni | Sprint 1 |
+| [#30](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/30) | task | Write the Sprint 1 review (docs/sprint-reviews/sprint-1.md) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
 
 Tasks for Sprint 2 will be added here as they are filed on our board.
 
