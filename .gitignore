@@ -35,3 +35,7 @@ prototype/bridgewatch.db*
 prototype/bridgewatch-datasets.db*
 *.db-wal
 *.db-shm
+# …except the course's own: the Word template pandoc lays the proposal into,
+# and the worked example's output
+!proposal/reference.docx
+!proposal/example-proposal.docx
