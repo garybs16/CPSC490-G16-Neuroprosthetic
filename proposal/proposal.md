@@ -462,6 +462,7 @@ tasks under each objective in Table 10 as they are filed on our board.
 | [#29](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/29) | task | Set up the GitHub Projects board and link it from the README | Writing task (own points) | Jaglan, Avni | Sprint 1 |
 | [#30](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/30) | task | Write the Sprint 1 review (docs/sprint-reviews/sprint-1.md) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
 | [#34](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/34) | task | Start the Goal 2 specification (docs/specs/goal-2-detection.md) | Writing task (own points) | Acuna, Isaac | Sprint 1 |
+| [#39](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/39) | task | Save the Sprint 1 starting story points (docs/sprint-reviews/sprint-1-start.md) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
 
 Tasks for Sprint 2 will be added here as they are filed on our board.
 
