@@ -1,0 +1,95 @@
+{
+ "cases": [
+  {
+   "key": "force-bridge-2025",
+   "replay_before": 1156168.24,
+   "here_before": 1156168.24
+  },
+  {
+   "key": "heco-2023",
+   "replay_before": 42110000.0,
+   "here_before": 42110000.0
+  },
+  {
+   "key": "kelp-2026",
+   "replay_before": 294213758.76,
+   "here_before": 294213758.76
+  },
+  {
+   "key": "poly-2021",
+   "replay_before": 96389444.23,
+   "here_before": 96389444.23
+  },
+  {
+   "key": "poly-2023",
+   "replay_before": 5664103.44,
+   "here_before": 5664103.44
+  },
+  {
+   "key": "ronin-2024",
+   "replay_before": 1998046.88,
+   "here_before": 1998046.88
+  },
+  {
+   "key": "shibarium-2025",
+   "replay_before": 1254403.5,
+   "here_before": 1254403.5
+  },
+  {
+   "key": "verus-2026",
+   "replay_before": 8243322.37,
+   "here_before": 8243322.37
+  },
+  {
+   "key": "xbridge-2024",
+   "replay_before": 794558.13,
+   "here_before": 794558.13
+  },
+  {
+   "key": "harmony-2022",
+   "replay_before": 41200000.0,
+   "here_before": 41200000.0
+  },
+  {
+   "key": "multichain-2023",
+   "replay_before": 27653471.0,
+   "here_before": 27653471.0
+  },
+  {
+   "key": "nomad-2022",
+   "replay_before": 16091407.5,
+   "here_before": 16091407.5
+  },
+  {
+   "key": "orbit-2023",
+   "replay_before": 10000000.0,
+   "here_before": 10000000.0
+  },
+  {
+   "key": "ronin-2022",
+   "replay_before": 514064294.57,
+   "here_before": 514064294.57
+  }
+ ],
+ "summary": {
+  "policy": "current (any rule pages)",
+  "hacks_detected": 14,
+  "hacks_at_floor": 14,
+  "hacks_before_half": 4,
+  "mean_stolen_before_share": 0.667,
+  "excess_loss_musd": 0.0,
+  "median_latency_s": 4.0,
+  "pages_per_bridge_week_all": 3.032,
+  "pages_per_bridge_week_nonpool": 1.788,
+  "pages_per_bridge_week_pool": 13.276,
+  "pages_per_bridge_week_normal_windows": 3.427,
+  "pages_per_bridge_week_prehack": 2.051,
+  "warnings_per_bridge_week_all": 3.032,
+  "worst_window": "across-spokepool-7d 40.25",
+  "worst_nonpool_window": "poly-2021 11.49",
+  "windows_over_1_per_week": 12,
+  "nonpool_windows_over_1_per_week": 9,
+  "total_pages_in_fa_periods": 232,
+  "nab_lowfp": -83.4
+ }
+}

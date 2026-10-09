@@ -1,0 +1,246 @@
+{
+ "case": {
+  "key": "ronin-gateway-30d",
+  "title": "Ronin bridge MainchainGatewayV3 proxy, 30 believed-normal days (2026)",
+  "chain": "ethereum",
+  "vault": "0x64192819ac13ef72bf6b5ae239ac672b43a9af08",
+  "tokens": [
+   [
+    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "USDC",
+    6
+   ],
+   [
+    "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "WETH",
+    18
+   ]
+  ],
+  "start_block": 25924973,
+  "end_block": 26140000,
+  "price_block": 26140000,
+  "period": "believed-normal: no known incident on this vault in this window",
+  "eth_usd_feed": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+  "btc_usd_feed": "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+  "references": [
+   "https://threesigma.xyz/blog/ronin-network-12m-exploit-analysis (same proxy)"
+  ],
+  "coverage": "Tracked tokens: USDC, WETH. Native ETH is not visible in token logs."
+ },
+ "fetched": "2026-10-08T03:57:47+00:00",
+ "source": "Ethereum mainnet via public JSON-RPC (https://gateway.tenderly.co, https://rpc.mevblocker.io); built by research/bridge-hacks/03-onchain-data/fetch_more.py",
+ "prices_usd": {
+  "USDC": 1.0,
+  "WETH": 2579.65382799
+ },
+ "price_note": "USDC fixed $1; WETH at Chainlink ETH / USD 2,579.65 (answers at block 26140000). Native ETH is not included except where it passed through WETH (rows with kind weth_wrap / weth_unwrap).",
+ "start_ts": 1788777995,
+ "end_ts": 1791369995,
+ "balances_at_start": {
+  "USDC": 541584.780313,
+  "WETH": 0.5700001
+ },
+ "transfers": [
+  {
+   "ts": 1788820715,
+   "block": 25928514,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 10.0,
+   "usd": 10.0,
+   "tx": "0x6c39cd6a5d163371cdabf2e0f361278a3ba41a4ba66d35b63a924a5d6fa36e0f",
+   "log_index": 584,
+   "counterparty": "0x8f73c4e77d4322ae47ed17d4beb2f23f9982a5d9"
+  },
+  {
+   "ts": 1788820715,
+   "block": 25928514,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 10.0,
+   "usd": 10.0,
+   "tx": "0x6c39cd6a5d163371cdabf2e0f361278a3ba41a4ba66d35b63a924a5d6fa36e0f",
+   "log_index": 587,
+   "counterparty": "0x8f73c4e77d4322ae47ed17d4beb2f23f9982a5d9"
+  },
+  {
+   "ts": 1788820727,
+   "block": 25928515,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 10.0,
+   "usd": 10.0,
+   "tx": "0x395abc666504508735d882e532e1c24cc41e8a50d8dc2aed495f160cdb71ae6b",
+   "log_index": 287,
+   "counterparty": "0x527b79d95346ca9942b860f89bc35398675fae35"
+  },
+  {
+   "ts": 1789413335,
+   "block": 25977723,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 47.459095,
+   "usd": 47.459095,
+   "tx": "0x5045d748b38601d3c8290985c6395ae7efa788f24ec32e8e7990058528245e7e",
+   "log_index": 70,
+   "counterparty": "0xb95f7662b3af6a12cec8a091c7e9a9e9ceac49d3"
+  },
+  {
+   "ts": 1789894163,
+   "block": 26017632,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 13.713848,
+   "usd": 13.713848,
+   "tx": "0x3e09f59509a72f71dd580ac43ca8e05c266c4ac0d5e3828a346780fde319f6b4",
+   "log_index": 636,
+   "counterparty": "0x093e5aff1b765def5271cbc15096ffbb1b5ad3dc"
+  },
+  {
+   "ts": 1789989971,
+   "block": 26025578,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 12.977787,
+   "usd": 12.977787,
+   "tx": "0x0224751c8297292c63d6dcdd385b2bf05b0a60f461ff42740c97ef0186180bd7",
+   "log_index": 390,
+   "counterparty": "0xb9d5f2b7a82cc255652224c4f196e7dce40b2c24"
+  },
+  {
+   "ts": 1790039231,
+   "block": 26029648,
+   "token": "WETH",
+   "direction": "in",
+   "amount": 0.043977,
+   "usd": 113.44543639351625,
+   "tx": "0x31e015f30b79ef46b70ef0e729c628615fa9e787e288697ba9faf78c9a872584",
+   "log_index": 293,
+   "counterparty": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "kind": "weth_wrap"
+  },
+  {
+   "ts": 1790039231,
+   "block": 26029648,
+   "token": "WETH",
+   "direction": "out",
+   "amount": 0.043977,
+   "usd": 113.44543639351625,
+   "tx": "0x31e015f30b79ef46b70ef0e729c628615fa9e787e288697ba9faf78c9a872584",
+   "log_index": 294,
+   "counterparty": "0xd57fa5c3e347c1bb4f944ba124f166f704d82186"
+  },
+  {
+   "ts": 1790039315,
+   "block": 26029655,
+   "token": "WETH",
+   "direction": "in",
+   "amount": 0.04,
+   "usd": 103.18615311960001,
+   "tx": "0xda568e5ecada960c6a9a58691256e583dc5ede161ad551d77ceb408582d7e013",
+   "log_index": 516,
+   "counterparty": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "kind": "weth_wrap"
+  },
+  {
+   "ts": 1790039315,
+   "block": 26029655,
+   "token": "WETH",
+   "direction": "out",
+   "amount": 0.04,
+   "usd": 103.18615311960001,
+   "tx": "0xda568e5ecada960c6a9a58691256e583dc5ede161ad551d77ceb408582d7e013",
+   "log_index": 517,
+   "counterparty": "0xe79421fd0638d530ec1cf306a18326f32d534231"
+  },
+  {
+   "ts": 1790582267,
+   "block": 26074604,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 604.070064,
+   "usd": 604.070064,
+   "tx": "0xfc14956b237c9167b7f9268c468351bdc7b8c797e8dfa67600ed25140c9e894d",
+   "log_index": 111,
+   "counterparty": "0xf7f6f7ec25c52c3e4794c9e2d32020ec00c07dc2"
+  },
+  {
+   "ts": 1790599307,
+   "block": 26076021,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 26500.1,
+   "usd": 26500.1,
+   "tx": "0x55849215ec8681a1d22519d95c2bb24cef2a89bb3aef1707242d1f907e885f29",
+   "log_index": 376,
+   "counterparty": "0xb08ab4332ad871f89da24df4751968a61e58013c"
+  },
+  {
+   "ts": 1790611607,
+   "block": 26077041,
+   "token": "WETH",
+   "direction": "in",
+   "amount": 0.02011148148148148,
+   "usd": 51.8806601902537,
+   "tx": "0xf41a84d7411da128905bbbb79ac5550e85bf8b793e79d4ff0529ca5d8ae8a774",
+   "log_index": 273,
+   "counterparty": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "kind": "weth_wrap"
+  },
+  {
+   "ts": 1790611607,
+   "block": 26077041,
+   "token": "WETH",
+   "direction": "out",
+   "amount": 0.02011148148148148,
+   "usd": 51.8806601902537,
+   "tx": "0xf41a84d7411da128905bbbb79ac5550e85bf8b793e79d4ff0529ca5d8ae8a774",
+   "log_index": 274,
+   "counterparty": "0x07825fbdd63c4fcbbf19388a276838b909264585"
+  },
+  {
+   "ts": 1790690183,
+   "block": 26083562,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 70.65203,
+   "usd": 70.65203,
+   "tx": "0xd1b607755bdd5131aef82dcd1b8e9d013969603f22febfa1ed6f9d84b4bc0ebc",
+   "log_index": 759,
+   "counterparty": "0x67ed35ed9d3bbb0b82596f4e0e07499a87aac518"
+  },
+  {
+   "ts": 1790791547,
+   "block": 26091976,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 24.276528,
+   "usd": 24.276528,
+   "tx": "0x6698c9e24f4a8957b18e9de9e3c3ec806448dc3ff9a2344331afb9759c21fdc7",
+   "log_index": 349,
+   "counterparty": "0x63c05b0c9314ef62789dc2d5426ee179d2fb3c02"
+  },
+  {
+   "ts": 1790839211,
+   "block": 26095934,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 10.212672,
+   "usd": 10.212672,
+   "tx": "0x431bbb5d7798c98cda0970b050c39ebca41af5fd65f960b3968c3f66b72195ea",
+   "log_index": 191,
+   "counterparty": "0x89434ee8caca109bf41b46b072652fce87f8bd81"
+  },
+  {
+   "ts": 1791293975,
+   "block": 26133688,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 10.0,
+   "usd": 10.0,
+   "tx": "0x26751f2aa32be89676b547677efbd22e61d627b1151e89decda3d8b259fbf955",
+   "log_index": 88,
+   "counterparty": "0xd9a9bb8dadfbfdce5315dc798133fa3e31f3d5e0"
+  }
+ ]
+}

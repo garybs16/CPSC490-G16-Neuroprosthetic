@@ -1,0 +1,80 @@
+{
+ "confirmed_incidents": 54,
+ "total_loss_musd": 3626.0,
+ "by_bucket_musd": {
+  "eth_token": 1979.7,
+  "mint": 739.8,
+  "other_evm": 378.2,
+  "non_evm": 357.1,
+  "eth_native": 92.1,
+  "approval": 37.6,
+  "eth_longtail": 25.3,
+  "offvault": 16.2
+ },
+ "layers": [
+  {
+   "layer": "L0 today: ERC-20 outflows from Ethereum vaults (standard prices)",
+   "adds_musd": 1979.7,
+   "cumulative_musd": 1979.7,
+   "cumulative_share": 0.546
+  },
+  {
+   "layer": "L1 + native ETH (traces / balance diffs)",
+   "adds_musd": 92.1,
+   "cumulative_musd": 2071.8,
+   "cumulative_share": 0.571
+  },
+  {
+   "layer": "L2 + long-tail token prices (DEX-derived, flagged)",
+   "adds_musd": 25.3,
+   "cumulative_musd": 2097.2,
+   "cumulative_share": 0.578
+  },
+  {
+   "layer": "L3 + cross-chain accounting (supply vs collateral, unbacked mints)",
+   "adds_musd": 739.8,
+   "cumulative_musd": 2836.9,
+   "cumulative_share": 0.782
+  },
+  {
+   "layer": "L4 + other EVM chains (same detector, more ingest)",
+   "adds_musd": 378.2,
+   "cumulative_musd": 3215.1,
+   "cumulative_share": 0.887
+  },
+  {
+   "layer": "L5 + non-EVM pegs (Bitcoin/Liquid, Solana, TON, Cardano, XRPL)",
+   "adds_musd": 357.1,
+   "cumulative_musd": 3572.2,
+   "cumulative_share": 0.985
+  },
+  {
+   "layer": "L6 + approval-spend and solver/relayer wallet monitoring",
+   "adds_musd": 53.8,
+   "cumulative_musd": 3626.0,
+   "cumulative_share": 1.0
+  }
+ ],
+ "config_change_flagged": {
+  "incidents": 12,
+  "loss_musd": 1136.1,
+  "ids": [
+   "2021-08-poly-network",
+   "2022-08-nomad",
+   "2024-01-socket-bungee",
+   "2024-04-xbridge",
+   "2024-07-lifi",
+   "2024-08-ronin",
+   "2025-06-force-bridge",
+   "2025-09-shibarium",
+   "2026-02-iotex-iotube",
+   "2026-04-kelpdao-rseth",
+   "2026-05-gravity-bridge",
+   "2026-08-sandbox-oft"
+  ]
+ },
+ "replay_cases_unpreventable_share": {
+  "note": "share of TRACKED stolen value (14 replay cases) that left before the earliest possible 6-confirmation alert on the first theft (sum of floor_6conf x stolen / sum stolen)",
+  "value": 0.664
+ }
+}

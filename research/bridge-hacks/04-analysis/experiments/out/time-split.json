@@ -1,0 +1,91 @@
+{
+ "train_hacks": [
+  "heco-2023",
+  "poly-2021",
+  "poly-2023",
+  "harmony-2022",
+  "multichain-2023",
+  "nomad-2022",
+  "orbit-2023",
+  "ronin-2022"
+ ],
+ "test_hacks": [
+  "force-bridge-2025",
+  "kelp-2026",
+  "ronin-2024",
+  "shibarium-2025",
+  "verus-2026",
+  "xbridge-2024"
+ ],
+ "train_fa_windows": [
+  "heco-2023",
+  "poly-2021",
+  "poly-2023",
+  "harmony-2022",
+  "multichain-2023",
+  "nomad-2022",
+  "orbit-2023",
+  "ronin-2022",
+  "polygon-pos-erc20-usdc-depeg-2023",
+  "wormhole-portal-ftx-2022",
+  "multichain-2023-normal-30d",
+  "orbit-2023-normal-30d"
+ ],
+ "test_fa_windows": [
+  "force-bridge-2025",
+  "kelp-2026",
+  "ronin-2024",
+  "shibarium-2025",
+  "verus-2026",
+  "xbridge-2024",
+  "across-spokepool-7d",
+  "celer-cbridge-30d",
+  "kelp-rseth-adapter-prehack-30d",
+  "polygon-pos-erc20-30d",
+  "ronin-gateway-30d",
+  "stargate-v2-usdc-30d",
+  "usdt0-oft-adapter-30d",
+  "wormhole-portal-30d",
+  "arbitrum-30d",
+  "base-30d",
+  "optimism-30d"
+ ],
+ "chosen": "size 0.1 fresh None net1h 0.1 crowd 5 spike 10.0 win 600 floor 250000",
+ "test_cases": {
+  "force-bridge-2025": {
+   "detected": true,
+   "before_share": 0.724,
+   "floor_share": 0.724
+  },
+  "kelp-2026": {
+   "detected": true,
+   "before_share": 1.0,
+   "floor_share": 1.0
+  },
+  "ronin-2024": {
+   "detected": false,
+   "before_share": 1,
+   "floor_share": 1.0
+  },
+  "shibarium-2025": {
+   "detected": true,
+   "before_share": 0.619,
+   "floor_share": 0.619
+  },
+  "verus-2026": {
+   "detected": true,
+   "before_share": 1.0,
+   "floor_share": 1.0
+  },
+  "xbridge-2024": {
+   "detected": true,
+   "before_share": 1.0,
+   "floor_share": 1.0
+  }
+ },
+ "test_pages_per_bridge_week": 0.33,
+ "test_windows_over_1_per_week": [
+  "across-spokepool-7d",
+  "stargate-v2-usdc-30d"
+ ]
+}

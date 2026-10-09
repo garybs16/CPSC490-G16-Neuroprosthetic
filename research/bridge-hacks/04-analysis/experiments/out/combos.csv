@@ -1,0 +1,32 @@
+policy,hacks_detected,hacks_at_floor,hacks_before_half,mean_stolen_before_share,excess_loss_musd,median_latency_s,pages_per_bridge_week_all,pages_per_bridge_week_nonpool,pages_per_bridge_week_pool,pages_per_bridge_week_normal_windows,pages_per_bridge_week_prehack,warnings_per_bridge_week_all,worst_window,worst_nonpool_window,windows_over_1_per_week,nonpool_windows_over_1_per_week,total_pages_in_fa_periods,nab_lowfp
+current (any rule pages),14,14,4,0.667,0.0,4.0,3.032,1.788,13.276,3.427,2.051,3.032,across-spokepool-7d 40.25,poly-2021 11.49,12,9,232,-83.4
+current + $1M spread floor,14,14,4,0.667,0.0,4.0,1.294,0.835,5.069,1.374,1.094,1.294,across-spokepool-7d 42.00,nomad-2022 8.94,9,6,99,21.1
+"current, z 10, $1M floor, burst n30",14,14,4,0.667,0.0,4.0,0.993,0.498,5.069,1.209,0.456,0.993,across-spokepool-7d 42.00,usdt0-oft-adapter-30d 4.41,9,6,76,39.2
+"current rules, all thresholds raised",13,13,4,0.667,0.0,4.0,0.379,0.308,0.966,0.476,0.137,0.379,across-spokepool-7d 5.25,usdt0-oft-adapter-30d 4.41,3,1,29,69.1
+"current rules, page only if >=2 agree",14,14,4,0.667,0.0,4.0,0.444,0.278,1.81,0.476,0.365,3.032,across-spokepool-7d 12.25,harmony-2022 1.92,6,4,34,72.2
+fresh recipient >=1% & $250K alone,14,14,4,0.667,0.0,4.0,0.248,0.205,0.603,0.202,0.365,0.248,poly-2021 3.83,poly-2021 3.83,3,1,19,84.0
+"R: first draft (size strong; >=2 of fresh/net1h/multi/crowd5/spike/conc, $1M floors)",13,13,4,0.667,0.0,4.0,0.196,0.103,0.966,0.202,0.182,1.882,across-spokepool-7d 3.50,poly-2021 1.28,3,1,15,80.1
+R without multi-token / concentration,12,12,4,0.667,0.0,6.5,0.17,0.088,0.845,0.183,0.137,1.673,across-spokepool-7d 1.75,poly-2021 1.28,3,1,13,74.6
+R + huge (>=50% TVL & $250K) pages alone,14,14,4,0.667,0.0,6.5,0.196,0.103,0.966,0.202,0.182,1.882,across-spokepool-7d 3.50,poly-2021 1.28,3,1,15,87.1
+REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile),14,14,4,0.667,0.0,6.5,0.105,0.073,0.362,0.092,0.137,0.98,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,8,92.6
+REC without pool profile,14,14,4,0.667,0.0,6.5,0.17,0.073,0.966,0.183,0.137,0.98,across-spokepool-7d 5.25,nomad-2022 0.64,2,0,13,88.7
+REC without pool profile or LP suppression,14,14,4,0.667,0.0,6.5,0.34,0.073,2.534,0.421,0.137,0.941,across-spokepool-7d 28.00,nomad-2022 0.64,2,0,26,78.5
+"REC, 10-minute combination window",14,14,4,0.667,0.0,6.5,0.091,0.073,0.241,0.073,0.137,0.98,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,7,93.4
+"REC, 60-minute combination window",14,14,4,0.667,0.0,6.5,0.131,0.088,0.483,0.11,0.182,0.98,across-spokepool-7d 1.75,poly-2021 1.28,2,1,10,91.0
+REC without fresh-recipient signal,13,12,4,0.67,7.4,9.0,0.065,0.029,0.362,0.055,0.091,0.836,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,5,87.8
+"REC, unknown (weth-unwrap) recipient not fresh",14,14,4,0.667,0.0,6.5,0.105,0.073,0.362,0.092,0.137,0.967,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,8,92.6
+REC without seasonal spike,14,13,4,0.67,7.4,6.5,0.091,0.059,0.362,0.073,0.137,0.758,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,7,93.3
+"REC with the prototype spike (z 6, $100K floor)",14,14,4,0.667,0.0,4.0,0.248,0.22,0.483,0.202,0.365,2.784,across-spokepool-7d 3.50,poly-2021 3.19,4,3,19,84.0
+REC without crowd,14,14,4,0.667,0.0,6.5,0.105,0.073,0.362,0.092,0.137,0.797,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,8,92.6
+REC without crowd and spike,14,13,4,0.67,7.4,6.5,0.065,0.059,0.121,0.037,0.137,0.562,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,5,94.9
+REC without one-recipient concentration,13,13,4,0.667,0.0,9.0,0.065,0.044,0.241,0.055,0.091,0.954,nomad-2022 0.64,nomad-2022 0.64,0,0,5,87.9
+REC + multi-token family,14,14,4,0.667,0.0,6.5,0.118,0.073,0.483,0.11,0.137,0.98,across-spokepool-7d 3.50,nomad-2022 0.64,1,0,9,91.8
+REC without huge (small vaults),14,14,4,0.667,0.0,6.5,0.105,0.073,0.362,0.092,0.137,0.98,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,8,92.6
+"REC, size strong at 5%",14,14,4,0.667,0.0,6.5,0.105,0.073,0.362,0.092,0.137,0.98,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,8,92.6
+"REC, size strong at 20%",14,14,4,0.667,0.0,6.5,0.105,0.073,0.362,0.092,0.137,0.98,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,8,92.6
+"REC, nothing pages alone (>=2 only)",14,14,4,0.667,0.0,6.5,0.105,0.073,0.362,0.092,0.137,0.98,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,8,92.6
+"REC, fresh also pages alone",14,14,4,0.667,0.0,4.0,0.222,0.205,0.362,0.165,0.365,0.98,poly-2021 3.83,poly-2021 3.83,2,1,17,85.5
+"REC, fresh at 0.5%",14,14,4,0.667,0.0,6.5,0.105,0.073,0.362,0.092,0.137,1.346,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,8,92.6
+"REC, fresh at 2% & $1M",14,13,4,0.67,7.4,6.5,0.091,0.059,0.362,0.073,0.137,0.876,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,7,93.3
+"REC, net1h at 5%",14,14,4,0.667,0.0,4.0,0.144,0.117,0.362,0.128,0.182,0.98,across-spokepool-7d 1.75,nomad-2022 1.28,2,1,11,90.3
+"REC, net1h at 20% & $1M",14,14,4,0.667,0.0,6.5,0.105,0.073,0.362,0.092,0.137,0.771,across-spokepool-7d 1.75,nomad-2022 0.64,1,0,8,92.6

@@ -1,0 +1,65 @@
+{
+ "generated_at": 1791410581.6779032,
+ "config": {
+  "z_threshold": 6.0,
+  "min_escrow_share": 0.005,
+  "min_spread_usd": 100000.0,
+  "burst_min_count": 12,
+  "drain_share": 0.05,
+  "large_withdrawal_share": 0.02,
+  "large_withdrawal_min_usd": 1000000,
+  "warmup": 259200,
+  "cooldown": 3600,
+  "history_days": 7.0,
+  "use_message_matching": false,
+  "max_alerts_in_memory": 5000
+ },
+ "by_kind": {
+  "mass_drain": {
+   "runs": 12,
+   "detected": 12,
+   "median_minutes_to_alert": 8.3,
+   "median_lost_before_alert": 0.0073
+  },
+  "key_compromise": {
+   "runs": 12,
+   "detected": 12,
+   "median_minutes_to_alert": 0.0,
+   "median_lost_before_alert": 0.4375
+  },
+  "slow_bleed": {
+   "runs": 12,
+   "detected": 7,
+   "median_minutes_to_alert": 123.9,
+   "median_lost_before_alert": 0.144
+  }
+ },
+ "false_alarms_per_bridge_day": 0.045,
+ "false_alarms_per_bridge_week": 0.318,
+ "false_alarms_by_rule": {
+  "withdrawal_burst": 1,
+  "outflow_spike": 1
+ },
+ "clean_bridge_days": 44.0,
+ "sweep": [
+  {
+   "z_threshold": 4.0,
+   "detected": 11,
+   "runs": 12,
+   "false_alarms_per_bridge_day": 0.341
+  },
+  {
+   "z_threshold": 6.0,
+   "detected": 11,
+   "runs": 12,
+   "false_alarms_per_bridge_day": 0.045
+  },
+  {
+   "z_threshold": 8.0,
+   "detected": 11,
+   "runs": 12,
+   "false_alarms_per_bridge_day": 0.0
+  }
+ ],
+ "note": "Synthetic data only. These numbers describe the detector on generated traffic, not its performance on real bridges."
+}

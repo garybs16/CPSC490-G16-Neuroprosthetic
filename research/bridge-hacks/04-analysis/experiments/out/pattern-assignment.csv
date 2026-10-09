@@ -1,0 +1,55 @@
+id,pattern,loss_musd,root_cause,design
+2021-07-anyswap-v3,P1 key/keeper-authorised multi-asset sweep,7.9,key/signer compromise,mpc-custody
+2021-08-poly-network,P1 key/keeper-authorised multi-asset sweep,611.0,access control,messaging
+2022-06-harmony,P1 key/keeper-authorised multi-asset sweep,100.0,key/signer compromise,lock-mint
+2023-07-multichain,P1 key/keeper-authorised multi-asset sweep,126.0,insider/custody,mpc-custody
+2023-11-heco-bridge,P1 key/keeper-authorised multi-asset sweep,86.6,key/signer compromise,lock-mint
+2023-12-orbit-bridge,P1 key/keeper-authorised multi-asset sweep,81.7,key/signer compromise,lock-mint
+2025-06-force-bridge,P1 key/keeper-authorised multi-asset sweep,3.76,access control,lock-mint
+2025-09-shibarium,P1 key/keeper-authorised multi-asset sweep,2.4,key/signer compromise,lock-mint
+2026-02-iotex-iotube,P1 key/keeper-authorised multi-asset sweep,4.4,key/signer compromise,lock-mint
+2026-05-gravity-bridge,P1 key/keeper-authorised multi-asset sweep,5.4,key/signer compromise,lock-mint
+2026-05-thorchain-asgard,P1 key/keeper-authorised multi-asset sweep,10.7,key/signer compromise,mpc-custody
+2026-07-wanchain-cardano,P1 key/keeper-authorised multi-asset sweep,9.0,verification bug,lock-mint
+2022-02-wormhole,P2 one or two huge releases (single-tx full drain),326.0,verification bug,messaging
+2022-03-ronin,P2 one or two huge releases (single-tx full drain),624.0,key/signer compromise,lock-mint
+2023-07-poly-network,P2 one or two huge releases (single-tx full drain),5.0,key/signer compromise,messaging
+2024-04-xbridge,P2 one or two huge releases (single-tx full drain),1.44,access control,lock-mint
+2024-08-ronin,P2 one or two huge releases (single-tx full drain),12.0,faulty upgrade/initialisation,lock-mint
+2026-04-kelpdao-rseth,P2 one or two huge releases (single-tx full drain),292.0,verifier/oracle/RPC manipulation,messaging
+2026-05-verus-1,P2 one or two huge releases (single-tx full drain),11.58,message/proof forgery,lock-mint
+2026-06-aztec-connect,P2 one or two huge releases (single-tx full drain),2.19,verification bug,canonical-rollup
+2026-06-aztec-bridge-escape,P2 one or two huge releases (single-tx full drain),2.2,verification bug,canonical-rollup
+2026-07-afx,P2 one or two huge releases (single-tx full drain),24.15,key/signer compromise,lock-mint
+2026-07-verus-2,P2 one or two huge releases (single-tx full drain),7.53,message/proof forgery,lock-mint
+2022-08-nomad,P3 copycat crowd drain,190.0,faulty upgrade/initialisation,messaging
+2021-07-chainswap-1,"P4 forged/invalid-proof releases, tx pattern unknown",0.8,verification bug,lock-mint
+2021-07-thorchain-1,"P4 forged/invalid-proof releases, tx pattern unknown",5.0,message/proof forgery,liquidity-pool
+2021-07-thorchain-2,"P4 forged/invalid-proof releases, tx pattern unknown",8.0,message/proof forgery,liquidity-pool
+2021-09-pnetwork-pbtc,"P4 forged/invalid-proof releases, tx pattern unknown",12.7,message/proof forgery,lock-mint
+2022-02-meter,"P4 forged/invalid-proof releases, tx pattern unknown",4.4,message/proof forgery,lock-mint
+2026-05-tac-ton,"P4 forged/invalid-proof releases, tx pattern unknown",2.86,message/proof forgery,lock-mint
+2026-08-allbridge-cctp,"P4 forged/invalid-proof releases, tx pattern unknown",0.19,message/proof forgery,router/aggregator
+2026-08-coreum-xrpl,"P4 forged/invalid-proof releases, tx pattern unknown",0.2,other,lock-mint
+2026-09-liquid-network,"P4 forged/invalid-proof releases, tx pattern unknown",320.0,verification bug,mpc-custody
+2021-07-chainswap-2,P5 unbacked mint (escrow untouched),4.4,verification bug,lock-mint
+2022-01-qubit,P5 unbacked mint (escrow untouched),80.0,message/proof forgery,lock-mint
+2022-10-bnb-token-hub,P5 unbacked mint (escrow untouched),570.0,message/proof forgery,lock-mint
+2026-04-hyperbridge,P5 unbacked mint (escrow untouched),2.5,message/proof forgery,messaging
+2026-05-adshares,P5 unbacked mint (escrow untouched),0.63,message/proof forgery,lock-mint
+2026-05-map-protocol,P5 unbacked mint (escrow untouched),0.11,verification bug,burn-mint
+2026-06-syscoin,P5 unbacked mint (escrow untouched),10.0,message/proof forgery,lock-mint
+2026-08-sandbox-oft,P5 unbacked mint (escrow untouched),0.68,access control,messaging
+2022-01-multichain-approvals,P6 approval drain through a router,1.4,user-approval abuse,router/aggregator
+2022-03-lifi,P6 approval drain through a router,0.6,user-approval abuse,router/aggregator
+2022-10-transit-swap,P6 approval drain through a router,21.2,user-approval abuse,router/aggregator
+2022-12-rubic,P6 approval drain through a router,1.41,user-approval abuse,router/aggregator
+2024-01-socket-bungee,P6 approval drain through a router,3.3,user-approval abuse,router/aggregator
+2024-07-lifi,P6 approval drain through a router,9.73,user-approval abuse,router/aggregator
+2021-11-nerve-bridge,P7 pool-pricing manipulation,0.54,other,liquidity-pool
+2023-04-allbridge-core,P7 pool-pricing manipulation,0.57,other,liquidity-pool
+2026-07-allbridge-core-solana,P7 pool-pricing manipulation,1.65,other,liquidity-pool
+2022-08-celer-cbridge,"P8 off-vault (solver, relayer, frontend)",0.24,frontend/DNS,liquidity-pool
+2025-10-garden,"P8 off-vault (solver, relayer, frontend)",11.0,key/signer compromise,router/aggregator
+2026-07-across-solana,"P8 off-vault (solver, relayer, frontend)",4.5,verifier/oracle/RPC manipulation,router/aggregator
+2026-07-garden-htlc,"P8 off-vault (solver, relayer, frontend)",0.45,key/signer compromise,router/aggregator

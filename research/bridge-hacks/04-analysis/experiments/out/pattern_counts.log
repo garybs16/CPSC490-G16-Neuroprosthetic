@@ -1,0 +1,8 @@
+{'pattern': 'P1 key/keeper-authorised multi-asset sweep', 'incidents': 12, 'loss_musd': 1048.9, 'share_of_loss': 0.289, 'median_loss_musd': 10.7}
+{'pattern': 'P2 one or two huge releases (single-tx full drain)', 'incidents': 11, 'loss_musd': 1308.1, 'share_of_loss': 0.361, 'median_loss_musd': 11.58}
+{'pattern': 'P3 copycat crowd drain', 'incidents': 1, 'loss_musd': 190.0, 'share_of_loss': 0.052, 'median_loss_musd': 190.0}
+{'pattern': 'P4 forged/invalid-proof releases, tx pattern unknown', 'incidents': 9, 'loss_musd': 354.2, 'share_of_loss': 0.098, 'median_loss_musd': 4.4}
+{'pattern': 'P5 unbacked mint (escrow untouched)', 'incidents': 8, 'loss_musd': 668.3, 'share_of_loss': 0.184, 'median_loss_musd': 4.4}
+{'pattern': 'P6 approval drain through a router', 'incidents': 6, 'loss_musd': 37.6, 'share_of_loss': 0.01, 'median_loss_musd': 3.3}
+{'pattern': 'P7 pool-pricing manipulation', 'incidents': 3, 'loss_musd': 2.8, 'share_of_loss': 0.001, 'median_loss_musd': 0.57}
+{'pattern': 'P8 off-vault (solver, relayer, frontend)', 'incidents': 4, 'loss_musd': 16.2, 'share_of_loss': 0.004, 'median_loss_musd': 4.5}
