@@ -1,0 +1,13 @@
+{
+ "bridge_weeks": 76.5,
+ "dust_releases_to_new_recipients": 5838,
+ "per_bridge_week": 76.3,
+ "dust_then_large_in_normal_traffic": 3,
+ "dust_then_large_per_bridge_week": 0.039,
+ "hack_cases_with_the_pattern": [
+  "multichain-2023",
+  "orbit-2023"
+ ]
+}
+multichain-2023 [{'utc': '2023-07-06 18:10:35', 'usd': 27653471, 'tx': '0xbd29fe07555c28527fb0207aa0ac2b67d4afef0426793c35b76d005613477fc4', 'lead_min': 109.2, 'theft': True}]
+orbit-2023 [{'utc': '2023-12-31 21:07:59', 'usd': 10000000, 'tx': '0xafdc36278fcef8d54824b09ec019147cfe2afd995abf6754e52d273a2c1b07ca', 'lead_min': 45.0, 'theft': True}, {'utc': '2023-12-31 21:10:59', 'usd': 9826263, 'tx': '0xe0bada18fdc56dec125c31b1636490f85ba66016318060a066ed7050ff7271f9', 'lead_min': 30.4, 'theft': True}, {'utc': '2023-12-31 21:25:11', 'usd': 10000000, 'tx': '0x64a6f486c20671e1389b3c7948d46733325c407245a86bf510cb69ef401a3f0e', 'lead_min': 80.8, 'theft': True}, {'utc': '2023-12-31 21:25:35', 'usd': 30000000, 'tx': '0xd8ca42941a0a2c25669267ad8d61f7f9f4118252cb502316602fe16624b80ac8', 'lead_min': 175.4, 'theft': True}]

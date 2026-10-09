@@ -1,0 +1,4691 @@
+{
+ "generated_at": 1791411996.765901,
+ "config": {
+  "z_threshold": 6.0,
+  "min_escrow_share": 0.005,
+  "min_spread_usd": 100000.0,
+  "burst_min_count": 12,
+  "drain_share": 0.05,
+  "large_withdrawal_share": 0.02,
+  "large_withdrawal_min_usd": 1000000,
+  "warmup": 259200,
+  "cooldown": 3600,
+  "history_days": 7.0,
+  "use_message_matching": false,
+  "max_alerts_in_memory": 5000
+ },
+ "simulated_pipeline": {
+  "confirmations": 6,
+  "block_time_s": 12.0,
+  "poll_seconds": 15.0
+ },
+ "cases": [
+  {
+   "key": "harmony-2022",
+   "case": "Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022",
+   "dataset": "harmony-2022.json",
+   "vault": "0x2dccdb493827e15a5dc8f8b72147e6c4a5620857",
+   "escrow_usd_at_start": 104941135.63,
+   "baseline_days": 14.0,
+   "ordinary_transfers": 319,
+   "stolen_usd_tracked": 76205514.31,
+   "thefts": [
+    {
+     "ts": 1655982481,
+     "token": "USDC",
+     "amount": 41200000.0,
+     "usd": 41200000.0,
+     "to": "0x0d043128146654c7683fbf30ac98d7b2285ded00",
+     "tx": "0x6e5251068aa99613366fd707f3ed99ce1cb7ffdea05b94568e6af4f460cecd65"
+    },
+    {
+     "ts": 1655982556,
+     "token": "WBTC",
+     "amount": 592.0,
+     "usd": 12239706.08,
+     "to": "0x0d043128146654c7683fbf30ac98d7b2285ded00",
+     "tx": "0x4b17ab45ce183acb08dc2ac745b2224407b65446f7ebb55c114d4bae34539586"
+    },
+    {
+     "ts": 1655982821,
+     "token": "USDT",
+     "amount": 9981000.0,
+     "usd": 9981000.0,
+     "to": "0x0d043128146654c7683fbf30ac98d7b2285ded00",
+     "tx": "0x6487952d46b5265f56ec914fcff1a3d45d76f77e2407f840bdf264a5a7459100"
+    },
+    {
+     "ts": 1655982875,
+     "token": "DAI",
+     "amount": 6070000.0,
+     "usd": 6070000.0,
+     "to": "0x0d043128146654c7683fbf30ac98d7b2285ded00",
+     "tx": "0xb51368d8c2b857c5f7de44c57ff32077881df9ecb60f0450ee1226e1a7b8a0dd"
+    },
+    {
+     "ts": 1655983134,
+     "token": "FXS",
+     "amount": 110000.0,
+     "usd": 567168.08,
+     "to": "0x0d043128146654c7683fbf30ac98d7b2285ded00",
+     "tx": "0x4a59c3e5c48ae796fe4482681c3da00c15b816d1af9d74210cca5e6ea9ced191"
+    },
+    {
+     "ts": 1655983153,
+     "token": "SUSHI",
+     "amount": 415000.0,
+     "usd": 527640.15,
+     "to": "0x0d043128146654c7683fbf30ac98d7b2285ded00",
+     "tx": "0x75eeae4776e453d2b43ce130007820d70898bcd4bd6f2216643bc90847a41f9c"
+    },
+    {
+     "ts": 1655983567,
+     "token": "FRAX",
+     "amount": 5620000.0,
+     "usd": 5620000.0,
+     "to": "0x0d043128146654c7683fbf30ac98d7b2285ded00",
+     "tx": "0x4ffe23abc37fcdb32e65af09117b9e44ecae82979d8df93884a5d3b5f698983e"
+    }
+   ],
+   "alerts": [
+    {
+     "id": 10,
+     "bridge": "harmony-2022",
+     "rule": "escrow_drain",
+     "severity": "critical",
+     "started": 1655982481,
+     "last_seen": 1655983567,
+     "observed": 0.9992322174972699,
+     "expected": 0.05,
+     "message": "Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022 lost $41.2M net in the last hour: 54% of its $76.4M escrow.",
+     "worst": "Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022 lost $76.3M net in the last hour: 100% of its $76.4M escrow.",
+     "acknowledged": false,
+     "confirmed_at": 1655982553.0,
+     "detected_at": 1655982555.0,
+     "incident": "harmony-2022-1655982481"
+    },
+    {
+     "id": 11,
+     "bridge": "harmony-2022",
+     "rule": "outflow_spike",
+     "severity": "critical",
+     "started": 1655982481,
+     "last_seen": 1655983567,
+     "observed": 69490706.07827777,
+     "expected": 0.0,
+     "message": "$41.2M left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022 in the last 10 minutes; normally nothing leaves at this hour.",
+     "worst": "$69.5M left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022 in the last 10 minutes; normally nothing leaves at this hour.",
+     "acknowledged": false,
+     "confirmed_at": 1655982553.0,
+     "detected_at": 1655982555.0,
+     "incident": "harmony-2022-1655982481"
+    },
+    {
+     "id": 12,
+     "bridge": "harmony-2022",
+     "rule": "large_withdrawal",
+     "severity": "critical",
+     "started": 1655982481,
+     "last_seen": 1655983567,
+     "observed": 41200000.0,
+     "expected": 1527587.8693596104,
+     "message": "One release of $41.2M left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022: 53.9% of its $76.4M escrow.",
+     "worst": "",
+     "acknowledged": false,
+     "confirmed_at": 1655982553.0,
+     "detected_at": 1655982555.0,
+     "incident": "harmony-2022-1655982481"
+    }
+   ],
+   "first_theft_ts": 1655982481,
+   "first_alert_ts": 1655982481,
+   "first_alert_detected_at": 1655982555.0,
+   "first_alert_rule": "escrow_drain",
+   "seconds_from_first_theft_to_alert": 0,
+   "detection_latency_s": 2.0,
+   "latency_target_s": 60,
+   "stolen_before_alert_usd": 41200000.0,
+   "stolen_after_alert_usd": 35005514.31,
+   "minutes_of_warning_for_later_thefts": [
+    0.0,
+    4.4,
+    5.3,
+    9.7,
+    10.0,
+    16.9
+   ],
+   "false_alarms_during_baseline": 9,
+   "false_alarms": [
+    {
+     "started": 1654825293,
+     "rule": "large_withdrawal",
+     "severity": "warning",
+     "message": "One release of $2.5M left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022: 2.4% of its $104.9M escrow."
+    },
+    {
+     "started": 1655180490,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$653.3K left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022 in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1655443230,
+     "rule": "escrow_drain",
+     "severity": "critical",
+     "message": "Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022 lost $7.1M net in the last hour: 8% of its $93.8M escrow."
+    },
+    {
+     "started": 1655443230,
+     "rule": "outflow_spike",
+     "severity": "critical",
+     "message": "$7.0M left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022 in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1655443230,
+     "rule": "large_withdrawal",
+     "severity": "critical",
+     "message": "One release of $7.0M left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022: 7.5% of its $93.8M escrow."
+    },
+    {
+     "started": 1655548334,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$2.9M left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022 in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1655548334,
+     "rule": "large_withdrawal",
+     "severity": "warning",
+     "message": "One release of $2.9M left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022: 3.5% of its $83.1M escrow."
+    },
+    {
+     "started": 1655707575,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$1.6M left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022 in the last 10 minutes; normally nothing leaves at this hour."
+    },
+    {
+     "started": 1655707575,
+     "rule": "large_withdrawal",
+     "severity": "warning",
+     "message": "One release of $1.6M left Harmony Horizon bridge (ERC20 manager), Ethereum, 23 Jun 2022: 2.1% of its $79.3M escrow."
+    }
+   ],
+   "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co/public/mainnet)",
+   "fetched": "2026-10-07T21:46:55+00:00",
+   "price_note": "Stablecoins and FRAX at $1; WBTC at Chainlink BTC / USD 20,675.18; WETH at Chainlink ETH / USD 1,108.87; AAVE at Chainlink AAVE / USD 68.24; SUSHI at Chainlink SUSHI / USD 1.27; FXS at Chainlink FXS / USD 5.16 (answers at block 15012652). Native ETH is not included except where it passed through WETH (rows with kind weth_wrap / weth_unwrap)."
+  },
+  {
+   "key": "multichain-2023",
+   "case": "Multichain Fantom bridge (MPC address), Ethereum, 6 Jul 2023",
+   "dataset": "multichain-2023.json",
+   "vault": "0xc564ee9f21ed8a2d8e7e76c085740d5e4c5fafbe",
+   "escrow_usd_at_start": 112534402.33,
+   "baseline_days": 14.1,
+   "ordinary_transfers": 433,
+   "stolen_usd_tracked": 111270956.99,
+   "thefts": [
+    {
+     "ts": 1688667035,
+     "token": "USDC",
+     "amount": 27653471.0,
+     "usd": 27653471.0,
+     "to": "0x027f1571aca57354223276722dc7b572a5b05cd8",
+     "tx": "0xbd29fe07555c28527fb0207aa0ac2b67d4afef0426793c35b76d005613477fc4"
+    },
+    {
+     "ts": 1688667251,
+     "token": "USDC",
+     "amount": 30138618.0,
+     "usd": 30138618.0,
+     "to": "0xefeef8e968a0db92781ac7b3b7c821909ef10c88",
+     "tx": "0xb9f52d5eb0d67c1038debe8e0f60ed265bd4937db0cfe5ef15b3f1fa28f31f8d"
+    },
+    {
+     "ts": 1688668391,
+     "token": "WBTC",
+     "amount": 1023.8,
+     "usd": 31143381.72,
+     "to": "0x622e5f32e9ed5318d3a05ee2932fd3e118347ba0",
+     "tx": "0x448f2a6a6c071cdce254937e06305a033538e1aeb9339227d0e59e0458e6185c"
+    },
+    {
+     "ts": 1688668871,
+     "token": "WETH",
+     "amount": 7214.000000000001,
+     "usd": 13624576.82,
+     "to": "0x418ed2554c010a0c63024d1da3a93b4dc26e5bb7",
+     "tx": "0xda80a8c8d5a8fdf0208a6fd01c39af018e400763b1d08f3543f52353345fe62e"
+    },
+    {
+     "ts": 1688670167,
+     "token": "DAI",
+     "amount": 4177590.0,
+     "usd": 4177590.0,
+     "to": "0x9d5765ae1c95c21d4cc3b1d5bba71bad3b012b68",
+     "tx": "0x2dc69aa95e60b9b649e31664663837aae4a3246b75b78cc4a2cba10312459c2d"
+    },
+    {
+     "ts": 1688670479,
+     "token": "LINK",
+     "amount": 491657.0,
+     "usd": 3040498.45,
+     "to": "0x9d5765ae1c95c21d4cc3b1d5bba71bad3b012b68",
+     "tx": "0x9ca00094e9144da26d1b3f9e1e547737b96684810342f6bdc4383b1d7ab0139b"
+    },
+    {
+     "ts": 1688671067,
+     "token": "USDT",
+     "amount": 1492821.0,
+     "usd": 1492821.0,
+     "to": "0x9d5765ae1c95c21d4cc3b1d5bba71bad3b012b68",
+     "tx": "0x6eab00d931a89c8efc7d649b26a4f335c0278f8ee94a712e6abce79acf9fdce4"
+    }
+   ],
+   "alerts": [
+    {
+     "id": 1,
+     "bridge": "multichain-2023",
+     "rule": "escrow_drain",
+     "severity": "critical",
+     "started": 1688667035,
+     "last_seen": 1688676371,
+     "observed": 0.999940248574355,
+     "expected": 0.05,
+     "message": "Multichain Fantom bridge (MPC address), Ethereum, 6 Jul 2023 lost $27.7M net in the last hour: 25% of its $111.3M escrow.",
+     "worst": "Multichain Fantom bridge (MPC address), Ethereum, 6 Jul 2023 lost $53.5M net in the last hour: 100% of its $53.5M escrow.",
+     "acknowledged": false,
+     "confirmed_at": 1688667107.0,
+     "detected_at": 1688667120.0,
+     "incident": "multichain-2023-1688667035"
+    },
+    {
+     "id": 2,
+     "bridge": "multichain-2023",
+     "rule": "outflow_spike",
+     "severity": "critical",
+     "started": 1688667035,
+     "last_seen": 1688671067,
+     "observed": 57792091.0,
+     "expected": 0.0,
+     "message": "$27.7M left Multichain Fantom bridge (MPC address), Ethereum, 6 Jul 2023 in the last 10 minutes; normally nothing leaves at this hour.",
+     "worst": "$57.8M left Multichain Fantom bridge (MPC address), Ethereum, 6 Jul 2023 in the last 10 minutes; normally nothing leaves at this hour.",
+     "acknowledged": false,
+     "confirmed_at": 1688667107.0,
+     "detected_at": 1688667120.0,
+     "incident": "multichain-2023-1688667035"
+    },
+    {
+     "id": 3,
+     "bridge": "multichain-2023",
+     "rule": "large_withdrawal",
+     "severity": "critical",
+     "started": 1688667035,
+     "last_seen": 1688671067,
+     "observed": 31143381.72,
+     "expected": 2226190.125136221,
+     "message": "One release of $27.7M left Multichain Fantom bridge (MPC address), Ethereum, 6 Jul 2023: 24.8% of its $111.3M escrow.",
+     "worst": "One release of $31.1M left Multichain Fantom bridge (MPC address), Ethereum, 6 Jul 2023: 58.2% of its $53.5M escrow.",
+     "acknowledged": false,
+     "confirmed_at": 1688667107.0,
+     "detected_at": 1688667120.0,
+     "incident": "multichain-2023-1688667035"
+    }
+   ],
+   "first_theft_ts": 1688667035,
+   "first_alert_ts": 1688667035,
+   "first_alert_detected_at": 1688667120.0,
+   "first_alert_rule": "escrow_drain",
+   "seconds_from_first_theft_to_alert": 0,
+   "detection_latency_s": 13.0,
+   "latency_target_s": 60,
+   "stolen_before_alert_usd": 27653471.0,
+   "stolen_after_alert_usd": 83617485.99,
+   "minutes_of_warning_for_later_thefts": [
+    2.2,
+    21.2,
+    29.2,
+    50.8,
+    56.0,
+    65.8
+   ],
+   "false_alarms_during_baseline": 0,
+   "false_alarms": [],
+   "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co/public/mainnet)",
+   "fetched": "2026-10-07T21:49:55+00:00",
+   "price_note": "Stablecoins and FRAX at $1; WBTC at Chainlink BTC / USD 30,419.40; WETH at Chainlink ETH / USD 1,888.63; LINK at Chainlink LINK / USD 6.18 (answers at block 17635954). Native ETH is not included except where it passed through WETH (rows with kind weth_wrap / weth_unwrap)."
+  },
+  {
+   "key": "nomad-2022",
+   "case": "Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022",
+   "dataset": "nomad-2022.json",
+   "vault": "0x88a69b4e698a4b090df6cf5bd7b2d47325ad30a3",
+   "escrow_usd_at_start": 170418753.53,
+   "baseline_days": 14.0,
+   "ordinary_transfers": 11021,
+   "stolen_usd_tracked": 168750470.64,
+   "thefts": [
+    {
+     "ts": 1659389551,
+     "token": "WBTC",
+     "amount": 100.0,
+     "usd": 2298772.5,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0x61497a1a8a8659a06358e130ea590e1eed8956edbd99dbb2048cfb46850a8f17"
+    },
+    {
+     "ts": 1659389551,
+     "token": "WBTC",
+     "amount": 100.0,
+     "usd": 2298772.5,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0x40163166dfeaab8ee80e7b0acc62768cef84b7047b42b09827b29a8d77f383a9"
+    },
+    {
+     "ts": 1659389551,
+     "token": "WBTC",
+     "amount": 100.0,
+     "usd": 2298772.5,
+     "to": "0xb5c55f76f90cc528b2609109ca14d8d84593590e",
+     "tx": "0xb1fe26cc8892f58eb468f5208baaf38bac422b5752cca0b9c8a871855d63ae28"
+    },
+    {
+     "ts": 1659389551,
+     "token": "WBTC",
+     "amount": 100.0,
+     "usd": 2298772.5,
+     "to": "0xa8c83b1b30291a3a1a118058b5445cc83041cd9d",
+     "tx": "0xa5fe9d044e4f3e5aa5bc4c0709333cd2190cba0f4e7f16bcf73f49f83e4a5460"
+    },
+    {
+     "ts": 1659389563,
+     "token": "WBTC",
+     "amount": 100.0,
+     "usd": 2298772.5,
+     "to": "0xd1a7feb0317bbe40ac2334c29579424942ad8f17",
+     "tx": "0x3f9083e432932d83e5b4560203b5a24395bcb24ae3eac0356ee3ca52665b518f"
+    },
+    {
+     "ts": 1659389563,
+     "token": "WBTC",
+     "amount": 100.0,
+     "usd": 2298772.5,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0xfff02d5797ae4d5737dc86b36f8ab30737d4a0f5febef2a221664c6641d5d35d"
+    },
+    {
+     "ts": 1659389600,
+     "token": "WBTC",
+     "amount": 100.0,
+     "usd": 2298772.5,
+     "to": "0xe4a4df7e1689589efb06ec8c7c601b1cb193c5b3",
+     "tx": "0x498a0778cc8448a10054d71508dee1a65b5f336daebba8ef859e712000391db9"
+    },
+    {
+     "ts": 1659390389,
+     "token": "WBTC",
+     "amount": 3.0,
+     "usd": 68963.17,
+     "to": "0x283949d7c2ad3c8bca304df6aa5d9a2a78e02b77",
+     "tx": "0x7db5e5f962347376521f4c7a1dcf0605c7bee2a2fce4106fca44becc3b280304"
+    },
+    {
+     "ts": 1659390389,
+     "token": "WBTC",
+     "amount": 3.0,
+     "usd": 68963.17,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0x1f81aeb9f1c8ee7c672552edd6e0d058afa8dc3d2010be6ee58bf1a9b762b9d4"
+    },
+    {
+     "ts": 1659390389,
+     "token": "WBTC",
+     "amount": 3.0,
+     "usd": 68963.17,
+     "to": "0xb5c55f76f90cc528b2609109ca14d8d84593590e",
+     "tx": "0x5c5f3325d212b8e0863c76995b5aa54aaf22723c3fbd68b38f33b1309c8b16bd"
+    },
+    {
+     "ts": 1659390389,
+     "token": "WBTC",
+     "amount": 3.0,
+     "usd": 68963.17,
+     "to": "0xa8c83b1b30291a3a1a118058b5445cc83041cd9d",
+     "tx": "0xb0447743d0d29c57565658ab5d1a2fe809d16f82816cc704ae67485a41f9888c"
+    },
+    {
+     "ts": 1659390408,
+     "token": "WBTC",
+     "amount": 3.0,
+     "usd": 68963.17,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x8ce141bfa83dd0f48de412bbe94e866bc6e9eeb3fab1ba1f1e19e719aebeb34d"
+    },
+    {
+     "ts": 1659390408,
+     "token": "WBTC",
+     "amount": 3.0,
+     "usd": 68963.17,
+     "to": "0xa5eff6157b44d7eba6b003b72044bcb58faba036",
+     "tx": "0x73ae1f3a7f81d140e2101058f539e012b5ce6b3210993af50a34e9a76d5413e9"
+    },
+    {
+     "ts": 1659390432,
+     "token": "WBTC",
+     "amount": 3.0,
+     "usd": 68963.17,
+     "to": "0xe4a4df7e1689589efb06ec8c7c601b1cb193c5b3",
+     "tx": "0x56b4ade16ad35792f0515da867c3124210ef233b4b18f047b470976da8034f61"
+    },
+    {
+     "ts": 1659390959,
+     "token": "WBTC",
+     "amount": 300.0,
+     "usd": 6896317.5,
+     "to": "0x0db09d04d33539e3366de2591e920eba71edc879",
+     "tx": "0x8c475bff9d0d2f459a603a34c6cdb0a60406fbb8d46c2abbc165b64d9e5997f2"
+    },
+    {
+     "ts": 1659391618,
+     "token": "WBTC",
+     "amount": 3.0,
+     "usd": 68963.17,
+     "to": "0xbf293d5138a2a1ba407b43672643434c43827179",
+     "tx": "0xef73e48c1be5f0254125db589e60b2854b90f98d369c9cf2aae49ba7d51f6257"
+    },
+    {
+     "ts": 1659392275,
+     "token": "WBTC",
+     "amount": 3.0,
+     "usd": 68963.17,
+     "to": "0x51841d9afe10fe55571bdb8f4af1060415003528",
+     "tx": "0xcd54193008330871d84c191bbf2f2fafa338420052b1523e157817536ac15d0e"
+    },
+    {
+     "ts": 1659392537,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0xecf73cdc50dcac2547a010155cad134d665951c5",
+     "tx": "0x470646732ebeffb48c4063b0aea00b5137174a47bcd22fe49b4ab6186cf9551f"
+    },
+    {
+     "ts": 1659392537,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x763e74d6361bb2103ffc1a76e431026a5bd21186226b2401903ffdb58704c6cd"
+    },
+    {
+     "ts": 1659392537,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0x9310639f61bb86b372b0d3cecf33151b41c11b6e2efb56246d9ca8505a1eb35f"
+    },
+    {
+     "ts": 1659392537,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0x29b67e0701ddd910ff6a069aa039015eb78b1ee6d99ad8da5d0ef63916f3fd57"
+    },
+    {
+     "ts": 1659392537,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0xb5c55f76f90cc528b2609109ca14d8d84593590e",
+     "tx": "0x39b107d43d88f1120e4310818c6c1e797125cf202faa299b81c8714e5c3d6691"
+    },
+    {
+     "ts": 1659392537,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0xa8c83b1b30291a3a1a118058b5445cc83041cd9d",
+     "tx": "0xe0112511747dd3b0c300925878a05f4c6b77065be79bb214a822f11505256e0a"
+    },
+    {
+     "ts": 1659392553,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0x283949d7c2ad3c8bca304df6aa5d9a2a78e02b77",
+     "tx": "0xb1d7a67de918761cdbe821b9ce2c887bea45da26841f8af851952c61e4680c60"
+    },
+    {
+     "ts": 1659392651,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0xa5eff6157b44d7eba6b003b72044bcb58faba036",
+     "tx": "0xa9ddf5f8c22c33f814aee70b2a86021c19af5f656423c5e14090fd0fe894361a"
+    },
+    {
+     "ts": 1659392651,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0xe7fd692fcfae783149b695fc908c865669cc2be808ab47faabfe672eb014158c"
+    },
+    {
+     "ts": 1659392651,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0x51841d9afe10fe55571bdb8f4af1060415003528",
+     "tx": "0xa304a513cc1b62da3d0237b90078f3f9f9e20fac38718e1c04dd2e589bef51bd"
+    },
+    {
+     "ts": 1659392724,
+     "token": "FRAX",
+     "amount": 201284.537032,
+     "usd": 201284.54,
+     "to": "0x044a9c43e95aa9fd28eea25131a62b602d304f1f",
+     "tx": "0x35ae01d3a3822a9060ccd1bb020fde78aa44dbd454ec76907363c554ff436b3c"
+    },
+    {
+     "ts": 1659392880,
+     "token": "WBTC",
+     "amount": 1.0,
+     "usd": 22987.72,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x1eaf063edb953ecc76eb318806efe71e8e52090f296a669a01162803f3ee10ac"
+    },
+    {
+     "ts": 1659393104,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0x9634445e293a87ab77ca3cf5b43da94aabc544b6",
+     "tx": "0x430056979cc900f4223eb02172d185dfc101ddc69af77c10f3aa550fd8b8195e"
+    },
+    {
+     "ts": 1659393130,
+     "token": "WETH",
+     "amount": 200.0,
+     "usd": 325487.91,
+     "to": "0x71d87aabb42de94a7214976a05134935f73e64aa",
+     "tx": "0x811a54270e38154c30e65bdb8ee484883f5a9659dd16f1a335f9ff8f7eee342f"
+    },
+    {
+     "ts": 1659393162,
+     "token": "WETH",
+     "amount": 10000.0,
+     "usd": 16274395.41,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0xc4938e6f6368061194d076d44f73a8cae3a318b1ee7cf8b026abe10b7c206c2a"
+    },
+    {
+     "ts": 1659393162,
+     "token": "WETH",
+     "amount": 10000.0,
+     "usd": 16274395.41,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0x56b4551dd7e8f475a2c70c7a7e53a5e9a1d5e09f33dac0d89b7816748a8caaf6"
+    },
+    {
+     "ts": 1659393318,
+     "token": "WETH",
+     "amount": 100.0,
+     "usd": 162743.95,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0x08f3202a22c92eda02e2068f854897bc335976797515c56a11fc8a1f25f035a4"
+    },
+    {
+     "ts": 1659393318,
+     "token": "WETH",
+     "amount": 100.0,
+     "usd": 162743.95,
+     "to": "0xb5c55f76f90cc528b2609109ca14d8d84593590e",
+     "tx": "0x696f33c5a1597d2c8529f5b45d49097a825a11f0a8b7226602f0a29b2384352a"
+    },
+    {
+     "ts": 1659393318,
+     "token": "WETH",
+     "amount": 100.0,
+     "usd": 162743.95,
+     "to": "0xa8c83b1b30291a3a1a118058b5445cc83041cd9d",
+     "tx": "0xf76e2dbdf258727b07d74eb329fa2cb001e4b3b4313df030c6191cffe811a749"
+    },
+    {
+     "ts": 1659393338,
+     "token": "WETH",
+     "amount": 100.0,
+     "usd": 162743.95,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x8807ec516e40c46b1de7b10a6387036ae80fdd63f41ae18181d5166fd96d76ac"
+    },
+    {
+     "ts": 1659393503,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xd1a7feb0317bbe40ac2334c29579424942ad8f17",
+     "tx": "0xe429faca7e0571d1931988e9ad42019502b1306dc3d700eea0ac0d1d32fba7a9"
+    },
+    {
+     "ts": 1659393503,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xf6c0d982be91131dacc2702605a6c341fb5a9d40",
+     "tx": "0xc2e6d1681111f72eae7b52fad1ceb86efe58a554020cd6d60b74742cd755fa03"
+    },
+    {
+     "ts": 1659393503,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb314fd4ac6e10a7e27929cbc8db96743739c82b6",
+     "tx": "0x54d9b3faa3031442337f6abfd0ff3b7bb83329f21e2d0896f1f146456697aa9d"
+    },
+    {
+     "ts": 1659393503,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0x1e215551c3107f3eef143b2db15e3f00ec187f067b5aba01741f915be94d0357"
+    },
+    {
+     "ts": 1659393503,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe4a4df7e1689589efb06ec8c7c601b1cb193c5b3",
+     "tx": "0x9605ad11e302e2c0916599917f6841e8c64f713dc5ee1df592f9b84c89e2827b"
+    },
+    {
+     "ts": 1659393503,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x65760288f19cff476b80a36a61f9dedab16bab49",
+     "tx": "0x65bb46dbf535b8779dd28fb5045aad736b8c456be2ed8275129622758554ee0e"
+    },
+    {
+     "ts": 1659393574,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x40240be1bf54ae0145249b7c590569f0d1ec18a557060529ab7e358dbad03dd1"
+    },
+    {
+     "ts": 1659393587,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x0db09d04d33539e3366de2591e920eba71edc879",
+     "tx": "0xfd8e6bad22affe5461ac78f316be782ad28bb975ff6f0942bbb983bb4a5f2a0b"
+    },
+    {
+     "ts": 1659393587,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xc9943f94142d81790ecf8eee2c879d47730cf599",
+     "tx": "0x2d533df5b482ca08889331f6ab7f641af4d81ccfe622afe646bded6f39daa464"
+    },
+    {
+     "ts": 1659393620,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0x63f216906ff7c0acc97f98ee4f649ddb267ed03be421119db106e11e1475c6e6"
+    },
+    {
+     "ts": 1659393652,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe3f40743cc18fd45d475fae149ce3ecc40af68c3",
+     "tx": "0x0a0d251178557f2c04fa9607e5ef65113dd651168bc5096629e3cc11eb9f05ee"
+    },
+    {
+     "ts": 1659393765,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb5c55f76f90cc528b2609109ca14d8d84593590e",
+     "tx": "0x84566b22a1389888f287be27b7cc073e25e9087133d29e1752e3d0ab16ce03ec"
+    },
+    {
+     "ts": 1659393765,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x71d87aabb42de94a7214976a05134935f73e64aa",
+     "tx": "0x846ec2dc63cf697ebec65ba035e8e18370ed786ebff3f2d1f5c04ad9ac9a6d61"
+    },
+    {
+     "ts": 1659393799,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xd5547965fe3af2004e1b687d38b870623064e16d",
+     "tx": "0x703d09d6ea6e5e1eb0c74a093be82d043727765008076b75e816b851f28c2dd7"
+    },
+    {
+     "ts": 1659393799,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0x867b8e81060bf9b06655c9bb020880797fd2588ef6476c45aff3c9bac24da29a"
+    },
+    {
+     "ts": 1659393799,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0x7b901108136067d142c6d4431f992c57fd51341eaac58fdf90de9400de573843"
+    },
+    {
+     "ts": 1659393799,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x65760288f19cff476b80a36a61f9dedab16bab49",
+     "tx": "0x358ea0b0519320055aed5773feec8d1869a641cb2d335936abcad68faef54db1"
+    },
+    {
+     "ts": 1659393812,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0xdc5a2b67bfc4220185c06d6d3d32f5dfe88326ad004d864aa86e56912ea4c571"
+    },
+    {
+     "ts": 1659393812,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0xae8df3202fd2174e11752ec18417aafd2990364263d5b8328b6bfcf627a0c94a"
+    },
+    {
+     "ts": 1659393812,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0xac77367e3772bfa769e8e1a54cd5062545cb2cb28ec591246893082d79e16ba1"
+    },
+    {
+     "ts": 1659393812,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xe4a4df7e1689589efb06ec8c7c601b1cb193c5b3",
+     "tx": "0xfd1df1ec1d959e3b303796e9360e817dd87f4bec4e530668ca02086847749f8e"
+    },
+    {
+     "ts": 1659393812,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe3f40743cc18fd45d475fae149ce3ecc40af68c3",
+     "tx": "0x6bef2d716307c550223f1ba99228ce43ce991aafda0089892f2e4dc8a947953c"
+    },
+    {
+     "ts": 1659393818,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x51841d9afe10fe55571bdb8f4af1060415003528",
+     "tx": "0x04318f01698bd6875a0b1707b2109d3f414e007c3535562bc90bcce79c6fa63e"
+    },
+    {
+     "ts": 1659393901,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xb5c55f76f90cc528b2609109ca14d8d84593590e",
+     "tx": "0x5bc5b943cfc0688cb1686cac7ed279fd0a8e0741acb3c88b2ca781304359c20c"
+    },
+    {
+     "ts": 1659393901,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x51841d9afe10fe55571bdb8f4af1060415003528",
+     "tx": "0xcc89082f5bd9e82a32ff215c8bea5a4b8fb657b5c2442e700e31736a45a89c9f"
+    },
+    {
+     "ts": 1659393933,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x1c875ba0ba236536c3401d42b7aef276b163608c",
+     "tx": "0x2d304c112e1ef9dc709cafc7948904282cbbb35348425bfc31a122d9caf90fc3"
+    },
+    {
+     "ts": 1659393957,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb70f7512893674ca6c6398214ea0aa6ad35f1a9c",
+     "tx": "0x9bab3beb8f9c9cd2318462c5abec17cb63fa24182a110d2c33f3a28a23a9990a"
+    },
+    {
+     "ts": 1659393957,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0x8b9c96bba9ef04571432e3acb2cdeee3c77176fb0769205a6a43de270cb7744c"
+    },
+    {
+     "ts": 1659393957,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0x1e8c51997083d93ef53bfeb844eb6baef7ffe297275f5fa61496c931a39e2cfe"
+    },
+    {
+     "ts": 1659393957,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0x409ec37dca7f9780304e10e5cea7c137b9e1a76908e06b8eca34bcc95ac03c8b"
+    },
+    {
+     "ts": 1659393957,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x76f455553e9ae6def235e2488cfc14959227852b",
+     "tx": "0x5584ec473d8d69b9d3035ccfd2c3bb598a40e3e430a197d3afa40c9fccba3ca2"
+    },
+    {
+     "ts": 1659393957,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfafbc6d9a4b227e8981e725cc4b277a1049f20a1",
+     "tx": "0xda0e1943f7e7dce705fa53c4852dcaafae19cfded6cbd7cc6f6b7e6301a4f1b2"
+    },
+    {
+     "ts": 1659393993,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe4a4df7e1689589efb06ec8c7c601b1cb193c5b3",
+     "tx": "0x7266d959977ee1dc7dcb291de9f47b61cd7bbefc40a6cabe037b8447b0e1ee38"
+    },
+    {
+     "ts": 1659393996,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x1c875ba0ba236536c3401d42b7aef276b163608c",
+     "tx": "0xa5a1190443c18527512fbc824f94d7a955160fa4dbe7445ba6e734521998fbcb"
+    },
+    {
+     "ts": 1659394030,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9634445e293a87ab77ca3cf5b43da94aabc544b6",
+     "tx": "0x9d938be810998e5ab88bf59d165cb89b4b2257871d61555c3e949de0118cb424"
+    },
+    {
+     "ts": 1659394030,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x72ccbb2002254bd8a0485d13a3a2faa9b0f992c6",
+     "tx": "0xa5f208ddc46df958514c3fe9c82dfe616af2c87ddce86a10b23cd1cd94ceddd4"
+    },
+    {
+     "ts": 1659394062,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x3c924c25751355aa11edfb4fcd388bfec7130f22d24dd3a9e22adf91a747cbcd"
+    },
+    {
+     "ts": 1659394062,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0x012babf0b93ec48bf046b138ade1ab788df65a7fae72163d41e1fb539021f868"
+    },
+    {
+     "ts": 1659394062,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x00000000c251faf2de8217ab64accd0070b97e47",
+     "tx": "0xd5990a4d1195de927a61c4259d295a6b4ab3719d72f681055d601d26d1cbfca8"
+    },
+    {
+     "ts": 1659394062,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x00000000c251faf2de8217ab64accd0070b97e47",
+     "tx": "0xdfd0a844e6eee910bb108a6ba42403596605667c72146065b2bba6292cae1081"
+    },
+    {
+     "ts": 1659394062,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xc9943f94142d81790ecf8eee2c879d47730cf599",
+     "tx": "0x9f0f033fd60fde031a59371e7760067c92efb359cbfef6403e3f57eabfa39372"
+    },
+    {
+     "ts": 1659394062,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x65760288f19cff476b80a36a61f9dedab16bab49",
+     "tx": "0x6836d2edb180c240d0623c57ca784ab0c0171fb132c0f92803ff676c91b69711"
+    },
+    {
+     "ts": 1659394067,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xb314fd4ac6e10a7e27929cbc8db96743739c82b6",
+     "tx": "0xed5cdb96e9971bb45640b5edb56ac8ffc478b596ab7a9820f5096f5e4e83d6d6"
+    },
+    {
+     "ts": 1659394067,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xf6c0d982be91131dacc2702605a6c341fb5a9d40",
+     "tx": "0x8472b4e0fda16b83ea19b01e4a8239850400ec60d40f5b9a29b0b0f93d07e49b"
+    },
+    {
+     "ts": 1659394067,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x71d87aabb42de94a7214976a05134935f73e64aa",
+     "tx": "0x46d66b217d0710676cfd076bb2e81b9c209ea43cdacd79472234480819ec1bef"
+    },
+    {
+     "ts": 1659394099,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xabc6062ed31a91f93936737702344bee1f2c3065",
+     "tx": "0x32baccf8eedb3f4ccca10daa2510eec9a149c5498611a4b013776dbb7565c7a0"
+    },
+    {
+     "ts": 1659394116,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xca4995e1c7af0e2713f0130275736fcc2e7ea553",
+     "tx": "0x779e7407ac6658bade8683189a2f7247e5d231e0645c6c7558432a0f15d5cfe0"
+    },
+    {
+     "ts": 1659394116,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xbe1d1019ada61ecdd71dd4330b08e9a745328c47",
+     "tx": "0x8d19b6acb5595806f599442fd87776529d1df99eec59cc781fc9eef72ef4dbf5"
+    },
+    {
+     "ts": 1659394139,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x0db09d04d33539e3366de2591e920eba71edc879",
+     "tx": "0xdcb81fd2935e2cfa576bf9a6be42e1c490777e6cb7c625714953563abc95b452"
+    },
+    {
+     "ts": 1659394139,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0x568ab1cff56a1d57a420cf37325ea0888de9234fc4d7ee9591af55340a1a5411"
+    },
+    {
+     "ts": 1659394160,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xf6c0d982be91131dacc2702605a6c341fb5a9d40",
+     "tx": "0x72ca82000db06e3c8f3672b6d53d375df2f0e7245948ff2ead061d2a23b39a06"
+    },
+    {
+     "ts": 1659394160,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe4a4df7e1689589efb06ec8c7c601b1cb193c5b3",
+     "tx": "0x01527e265e87f823bd82b68f3c0b12207f634a7fca10a745f67106b7e196df11"
+    },
+    {
+     "ts": 1659394180,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfafbc6d9a4b227e8981e725cc4b277a1049f20a1",
+     "tx": "0xc4cfdf1c839b6fada23d3c8ce2ece579ffd7fc1d910b72f049a6be39d2a256f7"
+    },
+    {
+     "ts": 1659394199,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xc7f991031f21f58759ae5cd4816993b7a55164e4",
+     "tx": "0x8f2d4ee2f31ad8faac113b9fbba6556098cbb93695169944cd1da38f8d3e7dc3"
+    },
+    {
+     "ts": 1659394215,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x283949d7c2ad3c8bca304df6aa5d9a2a78e02b77",
+     "tx": "0x59f84b94953e0f79177e9c66116a89a5e89066037ebe9195a7264f11be924be7"
+    },
+    {
+     "ts": 1659394215,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0x0d0fb915d7d0e4878574e3128bdbaabbf0d47e47f499fb482fbac3c51a112476"
+    },
+    {
+     "ts": 1659394215,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb5c55f76f90cc528b2609109ca14d8d84593590e",
+     "tx": "0x0dd9ce4b22b84bf183e183c58af7ee212daca654753585effb1dc3543e46d3ab"
+    },
+    {
+     "ts": 1659394215,
+     "token": "USDC",
+     "amount": 202483.282924,
+     "usd": 202483.28,
+     "to": "0x5180db0237291a6449dda9ed33ad90a38787621c",
+     "tx": "0x4aeffd13064db8dec15692101058412c4a54b4b951fde5c86b1ce8dd4baa28d4"
+    },
+    {
+     "ts": 1659394215,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xbe1d1019ada61ecdd71dd4330b08e9a745328c47",
+     "tx": "0x221781c6011bbf3122d45ee133cf6b47d72557b8ce32e11639d913f4778ec379"
+    },
+    {
+     "ts": 1659394250,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x7693c3545667309f112eb2d1a0d7bdfcfc536411",
+     "tx": "0x4cc07aa123626e806531060660c607bc3656b6c8a597fb9a5d83d0aff8f21e54"
+    },
+    {
+     "ts": 1659394250,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x9bc11940c313030ccfa3df4588ac5059fa4dcbbb",
+     "tx": "0x5c43d21735d45962bc2e855b3a9187b97d2b102d4adfbe5b7003cfeb49a2a349"
+    },
+    {
+     "ts": 1659394250,
+     "token": "WETH",
+     "amount": 9.0,
+     "usd": 14646.96,
+     "to": "0x5180db0237291a6449dda9ed33ad90a38787621c",
+     "tx": "0x0329466003f35c15c5acb12ef232c14a9c770b1dd535348c5c408b899ed4fc54"
+    },
+    {
+     "ts": 1659394272,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0xdf6bef0d8dee8b44863ac61092a711b877dcfe3d61da93d7289e0c6285af1b45"
+    },
+    {
+     "ts": 1659394272,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0x13eef53f72c9924755a0842edf50a0787bef5e9f1dfd0220c31a24d626141cdb"
+    },
+    {
+     "ts": 1659394272,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfafbc6d9a4b227e8981e725cc4b277a1049f20a1",
+     "tx": "0xba222b15d656da08d763524925423a1dee4424027caab452f636fd28156a826d"
+    },
+    {
+     "ts": 1659394291,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0xe403c7faf2c682846aa7c221b0b0b9b3cffa1d28",
+     "tx": "0xf5c83c74b438e0a5c8760ec9ea547c25077a348079fa8dbb5969cf0ea5ce6582"
+    },
+    {
+     "ts": 1659394291,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x5180db0237291a6449dda9ed33ad90a38787621c",
+     "tx": "0x03935ca23c022add938c423d2bfe8b2e108bfabb6c2990a452ea9a55b59f8563"
+    },
+    {
+     "ts": 1659394310,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe4a4df7e1689589efb06ec8c7c601b1cb193c5b3",
+     "tx": "0x18bf5df035360b754296f36528b24f8873c8a2155c84eb5bd0cc6cd3acee5512"
+    },
+    {
+     "ts": 1659394314,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x0abb295de6d65b69b1a56da9327536b467a0df0f37c68af902fb7c2af419cd60"
+    },
+    {
+     "ts": 1659394314,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x94359bd3f0fc4cd53b96054a23b05f531e127fa6cca644dfc870851af5e0e3dc"
+    },
+    {
+     "ts": 1659394314,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb314fd4ac6e10a7e27929cbc8db96743739c82b6",
+     "tx": "0x22e8a8767bdd73c29c8d91a7a11f8b23060da895fe3dbf4e56760c0903551df3"
+    },
+    {
+     "ts": 1659394314,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0x2c9f65f8375d76fc8477f192df4f4e39cf5ac3e9219467d7294b31dcedf8f431"
+    },
+    {
+     "ts": 1659394314,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe4a4df7e1689589efb06ec8c7c601b1cb193c5b3",
+     "tx": "0x21e0f925bab624a93623285609f67c9a42090baa8442d4309640d73be8735d08"
+    },
+    {
+     "ts": 1659394314,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x42f099f04f76d4f633deb173c24c2812202e6c71",
+     "tx": "0x5062970c064c3ebcf0d7d44e5dfa758efe69b8322770395412d8c538e1232984"
+    },
+    {
+     "ts": 1659394314,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x71d87aabb42de94a7214976a05134935f73e64aa",
+     "tx": "0xf0333af2222f0775871b39a3c0dcef30f0e0f63f0ee8afd30fd5af9e2e9d1d98"
+    },
+    {
+     "ts": 1659394340,
+     "token": "FRAX",
+     "amount": 250000.0,
+     "usd": 250000.0,
+     "to": "0x5180db0237291a6449dda9ed33ad90a38787621c",
+     "tx": "0xffd554685b9ec35bea26ac2e23683ebe0849c4b3d683e1a38b7e54eb3688f31f"
+    },
+    {
+     "ts": 1659394340,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfafbc6d9a4b227e8981e725cc4b277a1049f20a1",
+     "tx": "0x7a8048ad1ccb72ac9af26e952680b0cb8ad7c5fd830151535a0f9a01920681eb"
+    },
+    {
+     "ts": 1659394345,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0xac16de557aa2638a88ee8136d917860191128e42971bbf6b141502cc61c644e1"
+    },
+    {
+     "ts": 1659394358,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0xc1357753bd9c391044ccf29d42e3c9a1c3205a64ab1267892c401099f3e9af63"
+    },
+    {
+     "ts": 1659394358,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xb314fd4ac6e10a7e27929cbc8db96743739c82b6",
+     "tx": "0x0054ea08cf391be2dc879f0e55e63956be046a2da31ce6d9ccd11e74ae15554a"
+    },
+    {
+     "ts": 1659394358,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0x5562487c9c2425d92f12e672d3a0841500bfd2ddfa5ac501626d4ec96886c24a"
+    },
+    {
+     "ts": 1659394358,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xbe1d1019ada61ecdd71dd4330b08e9a745328c47",
+     "tx": "0xa0fd3cd31b28f977f0487ab5e6aae23d9bc1afb212d6c73353913377fb8b1b31"
+    },
+    {
+     "ts": 1659394377,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x070924ac7652dbbce9f4a1b8f3d824db942ebbea93a30eb38d76f8f9d92ddfeb"
+    },
+    {
+     "ts": 1659394377,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x267a5d577aa133cb4f6f3653863bccc8d761c039",
+     "tx": "0x3d7aac4388d0374c2ab46f23da61caa289761b0d976b27ea27d1390d78994823"
+    },
+    {
+     "ts": 1659394408,
+     "token": "USDC",
+     "amount": 1049947.188403,
+     "usd": 1049947.19,
+     "to": "0x5337122c6b5ce24d970ce771510d22aeaf038c44",
+     "tx": "0x28fe37526aeb2ba27348ffaa7e16227991b20b139ffb86f963e5d1f9cffddb45"
+    },
+    {
+     "ts": 1659394414,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb314fd4ac6e10a7e27929cbc8db96743739c82b6",
+     "tx": "0xe1cceee349a5315617a71615d467939800731bf92f4cbe55760511068a309aae"
+    },
+    {
+     "ts": 1659394414,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x7a380d1c185a520ae1ab29707bdbbe2fb081488d",
+     "tx": "0xc767ee4209276d8c77b97e924f6cfa79030f9258b414af68f31367adde7f2f6a"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0xf78443c5e1f0ffe08761c831b30aeee2160d11401dbd8c024c3a76d367a558a4"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfa0a622f028bf60a12932f9d2170debf2410ae83",
+     "tx": "0x22336a9c76a28b24bb9c74c3b238655d836d501b38ea129ce0515af3f4bbb117"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9c4a13675c38a28c30181efa03ac68b48a2ff2db",
+     "tx": "0x22336a9c76a28b24bb9c74c3b238655d836d501b38ea129ce0515af3f4bbb117"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2c73406a1463e34f4393267a652802f810695aa2",
+     "tx": "0x22336a9c76a28b24bb9c74c3b238655d836d501b38ea129ce0515af3f4bbb117"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0x22336a9c76a28b24bb9c74c3b238655d836d501b38ea129ce0515af3f4bbb117"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xf164ce5450e9362e269e9efbdbb11841744c03b2",
+     "tx": "0x22336a9c76a28b24bb9c74c3b238655d836d501b38ea129ce0515af3f4bbb117"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xbf2bdbfb505dd8d5269b75cee3282525cd621435",
+     "tx": "0x22336a9c76a28b24bb9c74c3b238655d836d501b38ea129ce0515af3f4bbb117"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x17eee115492507e40039f1b19d6ff93f33bbadc1",
+     "tx": "0x22336a9c76a28b24bb9c74c3b238655d836d501b38ea129ce0515af3f4bbb117"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x0d683079d989294c7990d3858e7f16571d6e8c23",
+     "tx": "0x22336a9c76a28b24bb9c74c3b238655d836d501b38ea129ce0515af3f4bbb117"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9b78bbf9ee0548739622449f0dbbebe06dd409ba",
+     "tx": "0x22336a9c76a28b24bb9c74c3b238655d836d501b38ea129ce0515af3f4bbb117"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x7524bc04dda5b52d56cc6c38e349552c23f16362",
+     "tx": "0x22336a9c76a28b24bb9c74c3b238655d836d501b38ea129ce0515af3f4bbb117"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x0db09d04d33539e3366de2591e920eba71edc879",
+     "tx": "0x0c1cdba855f8d3ed572ee23332b971bd1084ac8132e1f0e266edaf0f281b36d0"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x7c6dc1d3bc633b1672e0e84e881bc46403a49576",
+     "tx": "0x010a7443b29f9a619906ea99e577a45652d15c9f5970d2b884792bfb612668b7"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb0b7494d0e209797c9722e840503810c6f7d972d",
+     "tx": "0x010a7443b29f9a619906ea99e577a45652d15c9f5970d2b884792bfb612668b7"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2075911b959f4ebcceddc0196d9319025ccc3cd5",
+     "tx": "0x010a7443b29f9a619906ea99e577a45652d15c9f5970d2b884792bfb612668b7"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xd8d1d5eb73ebbaf411217902ee69332910705d4c",
+     "tx": "0x010a7443b29f9a619906ea99e577a45652d15c9f5970d2b884792bfb612668b7"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x58e2a48836e8db1425c490686e185055a9c65d89",
+     "tx": "0x010a7443b29f9a619906ea99e577a45652d15c9f5970d2b884792bfb612668b7"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x8484148fea2efcfcf55b8087855ee6d5cdbc427d",
+     "tx": "0x010a7443b29f9a619906ea99e577a45652d15c9f5970d2b884792bfb612668b7"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x3aec5f633ebcdfb9e917f321415d0ef3157f8b6d",
+     "tx": "0x010a7443b29f9a619906ea99e577a45652d15c9f5970d2b884792bfb612668b7"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x19504be5f4d0ad157e3700f7f4b79508fb477bac",
+     "tx": "0x010a7443b29f9a619906ea99e577a45652d15c9f5970d2b884792bfb612668b7"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x8d58a8de44b6ba0988bd8bb73f687a738b8bb433",
+     "tx": "0x010a7443b29f9a619906ea99e577a45652d15c9f5970d2b884792bfb612668b7"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x471bd5a2876f61ac9744a729759ac09c2ecdb7b6",
+     "tx": "0x010a7443b29f9a619906ea99e577a45652d15c9f5970d2b884792bfb612668b7"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x00c16ff0202c445140a97a4ee2d74f82641e9386",
+     "tx": "0x96a2cfadb19cac9ba2a21c1f32b6f21b6132afe1b4f4698dee563ca01ec20e01"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x874bc69e94e0fbcde68a22c484492785b83991d6",
+     "tx": "0x96a2cfadb19cac9ba2a21c1f32b6f21b6132afe1b4f4698dee563ca01ec20e01"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9ff78adf81db06a2895bee03492d61369249065a",
+     "tx": "0x96a2cfadb19cac9ba2a21c1f32b6f21b6132afe1b4f4698dee563ca01ec20e01"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x62163c327de6274f7b507ebcd57582800ea745b5",
+     "tx": "0x96a2cfadb19cac9ba2a21c1f32b6f21b6132afe1b4f4698dee563ca01ec20e01"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x98f828d9943e99118eeccaffdb175ef5a00f9131",
+     "tx": "0x96a2cfadb19cac9ba2a21c1f32b6f21b6132afe1b4f4698dee563ca01ec20e01"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa15c8b964e185057e3bab839cf1ba46a8a862700",
+     "tx": "0x96a2cfadb19cac9ba2a21c1f32b6f21b6132afe1b4f4698dee563ca01ec20e01"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x5453bb171f17d3c1b115ddab8ce0df4bbe9d1349",
+     "tx": "0x96a2cfadb19cac9ba2a21c1f32b6f21b6132afe1b4f4698dee563ca01ec20e01"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x55a9b13c72fe3e2c00280412c4f696b21bfa61c9",
+     "tx": "0x96a2cfadb19cac9ba2a21c1f32b6f21b6132afe1b4f4698dee563ca01ec20e01"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe2ab2ee30a01007c1922d5933561e05cdd7ad4d0",
+     "tx": "0x96a2cfadb19cac9ba2a21c1f32b6f21b6132afe1b4f4698dee563ca01ec20e01"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xaf60a9780d417655f6565a974a3cbbf9d6964fbe",
+     "tx": "0x96a2cfadb19cac9ba2a21c1f32b6f21b6132afe1b4f4698dee563ca01ec20e01"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2b800db7e403bb0f94200d851061f6d15725a003",
+     "tx": "0x75c09263eda1a2d4a0ffb99d6833f49015c35833b6bcb4d112efe2e286355b34"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x21eae9e1d65be79f931d6bccb08172bceb1104ae",
+     "tx": "0x75c09263eda1a2d4a0ffb99d6833f49015c35833b6bcb4d112efe2e286355b34"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x55150125b73c15af921d861452878576fd713318",
+     "tx": "0x75c09263eda1a2d4a0ffb99d6833f49015c35833b6bcb4d112efe2e286355b34"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x58679fdfa296df9cdef5b0ac188ec6c5d7ba1fba",
+     "tx": "0x75c09263eda1a2d4a0ffb99d6833f49015c35833b6bcb4d112efe2e286355b34"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xd81ede1d572f6a7619fd568e7ba5ba71b3584b00",
+     "tx": "0x75c09263eda1a2d4a0ffb99d6833f49015c35833b6bcb4d112efe2e286355b34"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2c98dc3a913f805e0e81ef1f44a71af41062d787",
+     "tx": "0x75c09263eda1a2d4a0ffb99d6833f49015c35833b6bcb4d112efe2e286355b34"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9f36dc8772da75f956f69575a6c764484cb4b9c5",
+     "tx": "0x75c09263eda1a2d4a0ffb99d6833f49015c35833b6bcb4d112efe2e286355b34"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2e330001e1cb1974ad5138f6869fea49772c909e",
+     "tx": "0x75c09263eda1a2d4a0ffb99d6833f49015c35833b6bcb4d112efe2e286355b34"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x4a30ee097bee0af86f0d91e2a694b13ff1fa135c",
+     "tx": "0x75c09263eda1a2d4a0ffb99d6833f49015c35833b6bcb4d112efe2e286355b34"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x88ff3e84b7d4e412372aed3772c1878721c59a7e",
+     "tx": "0x75c09263eda1a2d4a0ffb99d6833f49015c35833b6bcb4d112efe2e286355b34"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x03edae972163d812c8b060dd3a938048c102511f",
+     "tx": "0x045a2fb829876a39315007fc1c50b284500d077fec3541b6fd20de9dcc27284d"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xf09d768facf97fb2b583a877b4706778f3979cc8",
+     "tx": "0x045a2fb829876a39315007fc1c50b284500d077fec3541b6fd20de9dcc27284d"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x19d6d0498da938b5fca82ababccd505331dd352f",
+     "tx": "0x045a2fb829876a39315007fc1c50b284500d077fec3541b6fd20de9dcc27284d"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2bc27b9e77b3870532b59322fd9567e0b23a34d1",
+     "tx": "0x045a2fb829876a39315007fc1c50b284500d077fec3541b6fd20de9dcc27284d"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x56a118dcf5d5dfa736e9aec5d61cf580eb78d773",
+     "tx": "0x045a2fb829876a39315007fc1c50b284500d077fec3541b6fd20de9dcc27284d"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x887421c76e4eb99b4c32ff8202c36be4d2de35a3",
+     "tx": "0x045a2fb829876a39315007fc1c50b284500d077fec3541b6fd20de9dcc27284d"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x989d506cdf5bd82064a01ff0676f6d7db5a80f4a",
+     "tx": "0x045a2fb829876a39315007fc1c50b284500d077fec3541b6fd20de9dcc27284d"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x258ee782f67d270dd20315ba37dcdcb4ed4c5730",
+     "tx": "0x045a2fb829876a39315007fc1c50b284500d077fec3541b6fd20de9dcc27284d"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x6b0fc322c785bbd839ed7302c36db83dfc94baef",
+     "tx": "0x045a2fb829876a39315007fc1c50b284500d077fec3541b6fd20de9dcc27284d"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x5dfd3e24c19651abdcf878c5b379a3856cb04e52",
+     "tx": "0x045a2fb829876a39315007fc1c50b284500d077fec3541b6fd20de9dcc27284d"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xd01f4b1f1760b3d67c25e0626dc754f05a975891",
+     "tx": "0xa10ecd2689857046f4adc7c61fc62ed691a0d16cfc03d76cc5bdca2315f7cc6e"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x7a76db6e9056325eaaff9845b0879409c32b9a30",
+     "tx": "0xa10ecd2689857046f4adc7c61fc62ed691a0d16cfc03d76cc5bdca2315f7cc6e"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xbaaea7526aefdae4542e0e1a97660047725febc4",
+     "tx": "0xa10ecd2689857046f4adc7c61fc62ed691a0d16cfc03d76cc5bdca2315f7cc6e"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x13ffbaf3cf5ef302a77652a44c15f1e05c7878b5",
+     "tx": "0xa10ecd2689857046f4adc7c61fc62ed691a0d16cfc03d76cc5bdca2315f7cc6e"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x92a25337d3abde89409a58861d18b5f38e80f86f",
+     "tx": "0xa10ecd2689857046f4adc7c61fc62ed691a0d16cfc03d76cc5bdca2315f7cc6e"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x0c7b31b228a61c199f109ca82129c379433001b1",
+     "tx": "0xa10ecd2689857046f4adc7c61fc62ed691a0d16cfc03d76cc5bdca2315f7cc6e"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb3a57e9d77e8071ca1fa03afdf6743433fa0070d",
+     "tx": "0xa10ecd2689857046f4adc7c61fc62ed691a0d16cfc03d76cc5bdca2315f7cc6e"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xffeda7b7dcd1aa128ddfc644c4ed13273d0e4099",
+     "tx": "0xa10ecd2689857046f4adc7c61fc62ed691a0d16cfc03d76cc5bdca2315f7cc6e"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x32b5cdfdc621810205122376bfb5d93917aac5b9",
+     "tx": "0xa10ecd2689857046f4adc7c61fc62ed691a0d16cfc03d76cc5bdca2315f7cc6e"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x6ae9636b3b14e6413985b7aab2f914b43c0edfa3",
+     "tx": "0xa10ecd2689857046f4adc7c61fc62ed691a0d16cfc03d76cc5bdca2315f7cc6e"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xbbf4f816184acc31c0bfded56f87c3f234a48e1f",
+     "tx": "0x5ae6b010ff183ae826fc59d1d6e6cfdc0dda52448615c7f59f0a52908bc6da31"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb31131918fd9d2d2ab36185a6d76876ee777797f",
+     "tx": "0x5ae6b010ff183ae826fc59d1d6e6cfdc0dda52448615c7f59f0a52908bc6da31"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x1459a871c787df5747b5f55f72d408490cbd4e4f",
+     "tx": "0x5ae6b010ff183ae826fc59d1d6e6cfdc0dda52448615c7f59f0a52908bc6da31"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x6294c0c1a3aa2ff41cbced7f6cd022ad9ee90933",
+     "tx": "0x5ae6b010ff183ae826fc59d1d6e6cfdc0dda52448615c7f59f0a52908bc6da31"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xda8fe49555cc9672fb3641cb5e9b86c295de56fb",
+     "tx": "0x5ae6b010ff183ae826fc59d1d6e6cfdc0dda52448615c7f59f0a52908bc6da31"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x37dcbac8782bfe39a1f4905836e96ed65e29acd0",
+     "tx": "0x5ae6b010ff183ae826fc59d1d6e6cfdc0dda52448615c7f59f0a52908bc6da31"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x807a9a188b3956841af2f8a036cf5cc2c6e6d75d",
+     "tx": "0x5ae6b010ff183ae826fc59d1d6e6cfdc0dda52448615c7f59f0a52908bc6da31"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2f331eb05040b184e786979a9d6302e615aeec77",
+     "tx": "0x5ae6b010ff183ae826fc59d1d6e6cfdc0dda52448615c7f59f0a52908bc6da31"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xd1a5b886b92f7f7b1f1bf0be9030ae024e2dd94d",
+     "tx": "0x5ae6b010ff183ae826fc59d1d6e6cfdc0dda52448615c7f59f0a52908bc6da31"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x0e1cddae93101b8dd4464483f117701e3864d1d2",
+     "tx": "0x5ae6b010ff183ae826fc59d1d6e6cfdc0dda52448615c7f59f0a52908bc6da31"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xc57e53b43df118d4067b4542dc747076582d1f8f",
+     "tx": "0x1c812bb296abfa7e348acc842dd393227a6ac5881416e2dc7d967bab60534636"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfb811aa5c8d38376778e4466cbf796ad020ebfba",
+     "tx": "0x1c812bb296abfa7e348acc842dd393227a6ac5881416e2dc7d967bab60534636"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9d95e16ae9d5b70e873354682c452987fd8b1620",
+     "tx": "0x1c812bb296abfa7e348acc842dd393227a6ac5881416e2dc7d967bab60534636"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfe889ad7a9e6d04e2a5db8e30375f00ebdc02ada",
+     "tx": "0x1c812bb296abfa7e348acc842dd393227a6ac5881416e2dc7d967bab60534636"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x87b845f6d4106ab781a52a46d398523d07c16bce",
+     "tx": "0x1c812bb296abfa7e348acc842dd393227a6ac5881416e2dc7d967bab60534636"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfabe2c2a1151addd80b20885813160de34fed671",
+     "tx": "0x1c812bb296abfa7e348acc842dd393227a6ac5881416e2dc7d967bab60534636"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x17994c8070d6ecea93c63723bfa51e5517c66f69",
+     "tx": "0x1c812bb296abfa7e348acc842dd393227a6ac5881416e2dc7d967bab60534636"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfa16c92b93cfc9397f5fdc4c35e7c3e787d81344",
+     "tx": "0x1c812bb296abfa7e348acc842dd393227a6ac5881416e2dc7d967bab60534636"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x599e7482967ccb35a5ff09b8d1081244001ddfda",
+     "tx": "0x1c812bb296abfa7e348acc842dd393227a6ac5881416e2dc7d967bab60534636"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9b9de721e70c33ed56e2fd3d124f9b779c4f05ac",
+     "tx": "0x1c812bb296abfa7e348acc842dd393227a6ac5881416e2dc7d967bab60534636"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9c182a0a8fbc930e1c86628c8bab79fa5927aa92",
+     "tx": "0x1f5990ad8f4c9ded52c1df839d7ed3be8b6a01bbcaa35722863b0ff0a30227fb"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x003a749b59b8ba34cefe91330a2d036e4945fc55",
+     "tx": "0x1f5990ad8f4c9ded52c1df839d7ed3be8b6a01bbcaa35722863b0ff0a30227fb"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x0279a1cd96365e5578f62e097df4f4059b646d98",
+     "tx": "0x1f5990ad8f4c9ded52c1df839d7ed3be8b6a01bbcaa35722863b0ff0a30227fb"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x459294963bf4c6a11f708c7198c65024aca1988c",
+     "tx": "0x1f5990ad8f4c9ded52c1df839d7ed3be8b6a01bbcaa35722863b0ff0a30227fb"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb2f946ad19ac78247d57768a8fb59febe64446b0",
+     "tx": "0x1f5990ad8f4c9ded52c1df839d7ed3be8b6a01bbcaa35722863b0ff0a30227fb"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2fcfce6cd2e639604eb43586b06651a1e8b68abc",
+     "tx": "0x1f5990ad8f4c9ded52c1df839d7ed3be8b6a01bbcaa35722863b0ff0a30227fb"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x886174746decbb10670c40956e9d9dc1fc24864a",
+     "tx": "0x1f5990ad8f4c9ded52c1df839d7ed3be8b6a01bbcaa35722863b0ff0a30227fb"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x01495841f6b00215af42a352290473ccf3887af5",
+     "tx": "0x1f5990ad8f4c9ded52c1df839d7ed3be8b6a01bbcaa35722863b0ff0a30227fb"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x20a94ab649db8b7117419421b16d8f6ada0de1ad",
+     "tx": "0x1f5990ad8f4c9ded52c1df839d7ed3be8b6a01bbcaa35722863b0ff0a30227fb"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x6194e52d47b137a70e9e98876df5496676e28b0f",
+     "tx": "0x1f5990ad8f4c9ded52c1df839d7ed3be8b6a01bbcaa35722863b0ff0a30227fb"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x872cf23e406d2bb96c9f0873ec10c28620933e49",
+     "tx": "0x22d7c475cbac0ac92fe7dd2c9d8160e6ec57df83814f1488521795ba745b3a6b"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x66f6f2e119c20848d36fe67bf40684e602489be3",
+     "tx": "0x22d7c475cbac0ac92fe7dd2c9d8160e6ec57df83814f1488521795ba745b3a6b"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x78e7ac209de0ec55120f76ae917d1b546b116ddc",
+     "tx": "0x22d7c475cbac0ac92fe7dd2c9d8160e6ec57df83814f1488521795ba745b3a6b"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xaafec9cdd27ef741695028cfed5a37b1bb395fe3",
+     "tx": "0x22d7c475cbac0ac92fe7dd2c9d8160e6ec57df83814f1488521795ba745b3a6b"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xaf690076983b56d3c5ea79ce163241d199c55e80",
+     "tx": "0x22d7c475cbac0ac92fe7dd2c9d8160e6ec57df83814f1488521795ba745b3a6b"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x7f68337def1e42aec55a11159846e9461c193fdf",
+     "tx": "0x22d7c475cbac0ac92fe7dd2c9d8160e6ec57df83814f1488521795ba745b3a6b"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x156c42fc7d54089afac13b45b25624c2fce35c87",
+     "tx": "0x22d7c475cbac0ac92fe7dd2c9d8160e6ec57df83814f1488521795ba745b3a6b"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe1e9c96c04bfcbbcab5f99acf6b1b070fe0f6731",
+     "tx": "0x22d7c475cbac0ac92fe7dd2c9d8160e6ec57df83814f1488521795ba745b3a6b"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa5bb154b1009779eb9ba3bed64914e7142f2c9e3",
+     "tx": "0x22d7c475cbac0ac92fe7dd2c9d8160e6ec57df83814f1488521795ba745b3a6b"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xaa3238f5d80ab75c5bb997838a7eace974b76070",
+     "tx": "0x22d7c475cbac0ac92fe7dd2c9d8160e6ec57df83814f1488521795ba745b3a6b"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xff3a1dc5b8d7b34079a4afccf8efb4c5275bce1e",
+     "tx": "0x045dfe73dde8aa306d664568593d75552162d6aea42af49251cedf1781387131"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe03e573b8990cf2742662738f8bfcbdf59e2d381",
+     "tx": "0x045dfe73dde8aa306d664568593d75552162d6aea42af49251cedf1781387131"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x98e26fa31a40b0fd1d9a99afd47d7cfce0d966b8",
+     "tx": "0x045dfe73dde8aa306d664568593d75552162d6aea42af49251cedf1781387131"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb66f6da5e4c259e265f40424717be93951125cad",
+     "tx": "0x045dfe73dde8aa306d664568593d75552162d6aea42af49251cedf1781387131"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x47daed87700f6c3ae407f6b857c753ea6277c032",
+     "tx": "0x045dfe73dde8aa306d664568593d75552162d6aea42af49251cedf1781387131"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x36d2bf5317e2391776fc344022a8fa8709c4aade",
+     "tx": "0x045dfe73dde8aa306d664568593d75552162d6aea42af49251cedf1781387131"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xc3ef9094e3fa82e632131ffcbd48da0f7c13e574",
+     "tx": "0x045dfe73dde8aa306d664568593d75552162d6aea42af49251cedf1781387131"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x986bcad9abbeac7e3bc159743c6d8c32f653c2c6",
+     "tx": "0x045dfe73dde8aa306d664568593d75552162d6aea42af49251cedf1781387131"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x343a2b1274e7b23b071280e6b102b38b8eacadbb",
+     "tx": "0x045dfe73dde8aa306d664568593d75552162d6aea42af49251cedf1781387131"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe82459bee53a28024ecce7d87fbe6ee47c9530c0",
+     "tx": "0x045dfe73dde8aa306d664568593d75552162d6aea42af49251cedf1781387131"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x4d04b4244be406758912c4a536fe2d23051bd4d7",
+     "tx": "0xc25c14273203425510bde121c97ae6ad375abe2115136e7e297e7f8255c366bd"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x4975b6ee0257647008cc596037556588ffad7b6b",
+     "tx": "0xc25c14273203425510bde121c97ae6ad375abe2115136e7e297e7f8255c366bd"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x13eb26e3f3fe299b28e65c381b58f8020fa33b2a",
+     "tx": "0xc25c14273203425510bde121c97ae6ad375abe2115136e7e297e7f8255c366bd"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2b72339516fee8dbb6c80b8220fa4e39e0505e05",
+     "tx": "0xc25c14273203425510bde121c97ae6ad375abe2115136e7e297e7f8255c366bd"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x73efca5de69c50057994d89e55923dfe8c10f728",
+     "tx": "0xc25c14273203425510bde121c97ae6ad375abe2115136e7e297e7f8255c366bd"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xbbee9b3f98781ff41a47cdcbdecbb94971a198e6",
+     "tx": "0xc25c14273203425510bde121c97ae6ad375abe2115136e7e297e7f8255c366bd"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xd64c4738b04781f3e191ce78fa2e249b4bbacc6b",
+     "tx": "0xc25c14273203425510bde121c97ae6ad375abe2115136e7e297e7f8255c366bd"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa48c8602127384cd653a7757c718c7334f6608d4",
+     "tx": "0xc25c14273203425510bde121c97ae6ad375abe2115136e7e297e7f8255c366bd"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe30f9d8b89bd93c2114dd956df80d56f13a4b6d3",
+     "tx": "0xc25c14273203425510bde121c97ae6ad375abe2115136e7e297e7f8255c366bd"
+    },
+    {
+     "ts": 1659394448,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x7d5ff28636f54a9ea3c201d02bac5a8344073b2e",
+     "tx": "0xc25c14273203425510bde121c97ae6ad375abe2115136e7e297e7f8255c366bd"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xf6c0d982be91131dacc2702605a6c341fb5a9d40",
+     "tx": "0xccf4e1032e7d50ec5a749e21edb897a7c8fa097ff85d10a6b539044c477d8104"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x7896cedb786d0b809b8199f733506f63ffe0a8d8",
+     "tx": "0xaf4c4c389d9d7ff434115aedd7a5715b650ff1c8664a5610dc3228a05abc5342"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0x6be7a640ea9c9d2080027ef3ab2aaab008e7366757765ca52ef520245c84aba2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2b104528ad50d4bb188ba40e2789d937d8f73891",
+     "tx": "0xa7adfcc5101ede08ebfa4920180f52f717e737c2715c681b443f383a45c3837f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xb5c55f76f90cc528b2609109ca14d8d84593590e",
+     "tx": "0xf291df018585dea41afa359fbc2c4e2ad991d3893f9e13137191935279c6cb1f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xbbb6c34b9b8577f143721bcb8bea541e032a0d39",
+     "tx": "0xcd6d4e545639da7c14ba11705721e9cd83bb741f3d0554145a6cf392f992496e"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe634cf6097320c1ffd4ca7539ad416b85315648b",
+     "tx": "0xcd6d4e545639da7c14ba11705721e9cd83bb741f3d0554145a6cf392f992496e"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x90029bd6f4b9f23067feb26e5f1877a6ace44d9e",
+     "tx": "0xcd6d4e545639da7c14ba11705721e9cd83bb741f3d0554145a6cf392f992496e"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x762f2571eef186739df7cea74e76e910b0bdd35b",
+     "tx": "0xcd6d4e545639da7c14ba11705721e9cd83bb741f3d0554145a6cf392f992496e"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x2bfc368a502d14fc2730a19bb4d936bd10091963",
+     "tx": "0xcd6d4e545639da7c14ba11705721e9cd83bb741f3d0554145a6cf392f992496e"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfe26e1f8109ed23fd39bc997907bd2e0fdf409ee",
+     "tx": "0xcd6d4e545639da7c14ba11705721e9cd83bb741f3d0554145a6cf392f992496e"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x179a02b667fa69076a79702b448b1221c21f4f06",
+     "tx": "0xcd6d4e545639da7c14ba11705721e9cd83bb741f3d0554145a6cf392f992496e"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9885132457d997cdda22b4ebf568be26188b8a3d",
+     "tx": "0xcd6d4e545639da7c14ba11705721e9cd83bb741f3d0554145a6cf392f992496e"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x0bc5dc5f7974cce8f58ddb34e7ea38fe6628a186",
+     "tx": "0xcd6d4e545639da7c14ba11705721e9cd83bb741f3d0554145a6cf392f992496e"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe3b57d9651b1fc140c933be18cd701c6e10cb3c0",
+     "tx": "0xcd6d4e545639da7c14ba11705721e9cd83bb741f3d0554145a6cf392f992496e"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x35e78f0b3862e5de580a37c04b68c39e4648ef65",
+     "tx": "0x33350f7288b6a210e7becc460ddd15943134baccc56c7de03bd060fd1c9cd723"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb57f5638e89e3f3aa459fb70a4b0c7fb54e3b9f6",
+     "tx": "0x33350f7288b6a210e7becc460ddd15943134baccc56c7de03bd060fd1c9cd723"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xda702470bd2f5f8f6cf1203a690d533519723b79",
+     "tx": "0x33350f7288b6a210e7becc460ddd15943134baccc56c7de03bd060fd1c9cd723"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x47ddc48e1b94651a6d6ad49a2b89517d6f872408",
+     "tx": "0x33350f7288b6a210e7becc460ddd15943134baccc56c7de03bd060fd1c9cd723"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xae8d38b7b8c1a87be1f1fa953cea867d3c164bb5",
+     "tx": "0x33350f7288b6a210e7becc460ddd15943134baccc56c7de03bd060fd1c9cd723"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xbb50875c9aa332f3f32c3f7729b706a6bfa8d312",
+     "tx": "0x33350f7288b6a210e7becc460ddd15943134baccc56c7de03bd060fd1c9cd723"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x69f793510973c59b6f70526089194119134c744b",
+     "tx": "0x33350f7288b6a210e7becc460ddd15943134baccc56c7de03bd060fd1c9cd723"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb11d35211b827d9cb457637966b9f6648909cd99",
+     "tx": "0x33350f7288b6a210e7becc460ddd15943134baccc56c7de03bd060fd1c9cd723"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xc918e8aa036a17b30019c6467299dacc85b46961",
+     "tx": "0x33350f7288b6a210e7becc460ddd15943134baccc56c7de03bd060fd1c9cd723"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xbf21f4403762fedb34e816ce73a44a9a73e07cb5",
+     "tx": "0x33350f7288b6a210e7becc460ddd15943134baccc56c7de03bd060fd1c9cd723"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x33e82edd9f33476ff617f84d0c4be05076b72ae1",
+     "tx": "0xa2f6fcbe4d639efb7d3a478b1d0788484df56509c97bbdc32cdfec17755dcc44"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb120a569496322b3b2bf54f7983c7d6cfaae530a",
+     "tx": "0xa2f6fcbe4d639efb7d3a478b1d0788484df56509c97bbdc32cdfec17755dcc44"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa32e144f73f811c91f9c367f1a454e09b4e14c89",
+     "tx": "0xa2f6fcbe4d639efb7d3a478b1d0788484df56509c97bbdc32cdfec17755dcc44"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x92b4fdd52367797f7b1904d6126c8bb3e884bc23",
+     "tx": "0xa2f6fcbe4d639efb7d3a478b1d0788484df56509c97bbdc32cdfec17755dcc44"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x3f716d0802e162f90aaf8d7eec2725b8fbebb047",
+     "tx": "0xa2f6fcbe4d639efb7d3a478b1d0788484df56509c97bbdc32cdfec17755dcc44"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x70f2dfa3490fd89ab0520a504faf33e0c803c66a",
+     "tx": "0xa2f6fcbe4d639efb7d3a478b1d0788484df56509c97bbdc32cdfec17755dcc44"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x25987ddf154c38f4ced5ff7620ad0d2424453461",
+     "tx": "0xa2f6fcbe4d639efb7d3a478b1d0788484df56509c97bbdc32cdfec17755dcc44"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb7cc42044e5f3a0e902224747c7ce58c1849b483",
+     "tx": "0xa2f6fcbe4d639efb7d3a478b1d0788484df56509c97bbdc32cdfec17755dcc44"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x060ba44cfbad65d4c33e7e2d2e93c9f8a962c2c6",
+     "tx": "0xa2f6fcbe4d639efb7d3a478b1d0788484df56509c97bbdc32cdfec17755dcc44"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa6976cfd505b5b547575944b7e87e9162ab80f44",
+     "tx": "0xa2f6fcbe4d639efb7d3a478b1d0788484df56509c97bbdc32cdfec17755dcc44"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe47ed5047f153a2a3cd851569dfe4da69fb611df",
+     "tx": "0xc79ec5e8ad9e1a27956731833feefa2d5915e63a7105cacdc0530ff7dafbbec2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x278d88e3de043cc46459ec6ee5a28e9ccc2cdd9c",
+     "tx": "0xc79ec5e8ad9e1a27956731833feefa2d5915e63a7105cacdc0530ff7dafbbec2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x1e17331270982a91d6f96bbb7780e9c15299b435",
+     "tx": "0xc79ec5e8ad9e1a27956731833feefa2d5915e63a7105cacdc0530ff7dafbbec2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x8f755576ab384ec8669cad6eebd9c88294446cfd",
+     "tx": "0xc79ec5e8ad9e1a27956731833feefa2d5915e63a7105cacdc0530ff7dafbbec2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x335708ee0ae15f59a5088bee935d8dbb15adf112",
+     "tx": "0xc79ec5e8ad9e1a27956731833feefa2d5915e63a7105cacdc0530ff7dafbbec2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa436b867bcf1b5b4e9286faed29320d73eba1f75",
+     "tx": "0xc79ec5e8ad9e1a27956731833feefa2d5915e63a7105cacdc0530ff7dafbbec2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xf475625e3344e1db3775cfb05bcce77ba6e98b6c",
+     "tx": "0xc79ec5e8ad9e1a27956731833feefa2d5915e63a7105cacdc0530ff7dafbbec2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x0689b78a3b147e300d0d8db72ee9017399d143d4",
+     "tx": "0xc79ec5e8ad9e1a27956731833feefa2d5915e63a7105cacdc0530ff7dafbbec2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa1452f1d25d90b9a5c9695024d8ff2f71247e28d",
+     "tx": "0xc79ec5e8ad9e1a27956731833feefa2d5915e63a7105cacdc0530ff7dafbbec2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xcfe15d21b66c02cb711253563e0abfd5ff211078",
+     "tx": "0xc79ec5e8ad9e1a27956731833feefa2d5915e63a7105cacdc0530ff7dafbbec2"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xd4e265758bbfcf7182a7a490605c3b6f7dc127ae",
+     "tx": "0xa2ec4c335320f96895cdd9be78f78dd78c11340f7cb54d18f5cf126a31d2196a"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xdbea0f5d610a6cff2f141dabd7a929af070c53c5",
+     "tx": "0xa2ec4c335320f96895cdd9be78f78dd78c11340f7cb54d18f5cf126a31d2196a"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa4638f9042033258780aab4c8710abe1a56b20a0",
+     "tx": "0xa2ec4c335320f96895cdd9be78f78dd78c11340f7cb54d18f5cf126a31d2196a"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x79d4d1c248d4c37e24c0db09dca87e3642cc1e42",
+     "tx": "0xa2ec4c335320f96895cdd9be78f78dd78c11340f7cb54d18f5cf126a31d2196a"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xbb08bb41197874d4c1b7f4505fb5e3cd1fdc15f9",
+     "tx": "0xa2ec4c335320f96895cdd9be78f78dd78c11340f7cb54d18f5cf126a31d2196a"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xca8abd70854610c83d3b9dacf4fb50b8db8441fd",
+     "tx": "0xa2ec4c335320f96895cdd9be78f78dd78c11340f7cb54d18f5cf126a31d2196a"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xfffe40c91e476ed00ae1bb0c46bffba2f9ac013c",
+     "tx": "0xa2ec4c335320f96895cdd9be78f78dd78c11340f7cb54d18f5cf126a31d2196a"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x38179fe25753fddd1fab1bcfa62cdff53e6f8358",
+     "tx": "0xa2ec4c335320f96895cdd9be78f78dd78c11340f7cb54d18f5cf126a31d2196a"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x96354e907f0d26f287b7c5cbfcc3467c68663b8d",
+     "tx": "0xa2ec4c335320f96895cdd9be78f78dd78c11340f7cb54d18f5cf126a31d2196a"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x15365392afd553374dc4f9af2a612cf1ff97f081",
+     "tx": "0xa2ec4c335320f96895cdd9be78f78dd78c11340f7cb54d18f5cf126a31d2196a"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x57b4a0244b4ef06c2899a2524ca33604b13c0f5b",
+     "tx": "0x67eadc7efea9ea1f5271e9f02d7cc18440d3354b6a32d4f4fbd49ef46615a10f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x4a4c8be6efce65fe827ba57b739a8ef126a0b227",
+     "tx": "0x67eadc7efea9ea1f5271e9f02d7cc18440d3354b6a32d4f4fbd49ef46615a10f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x8b935f29122febb1091c32488ea9d8ff32167837",
+     "tx": "0x67eadc7efea9ea1f5271e9f02d7cc18440d3354b6a32d4f4fbd49ef46615a10f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xd0d1db24ccbf80eb12a8c66bfa19c7a0cf3d4fcf",
+     "tx": "0x67eadc7efea9ea1f5271e9f02d7cc18440d3354b6a32d4f4fbd49ef46615a10f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xeeb668d528166597aeefa0238c45ba43358d7b45",
+     "tx": "0x67eadc7efea9ea1f5271e9f02d7cc18440d3354b6a32d4f4fbd49ef46615a10f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x319f6abaa8f8baeff2b1256e45a676b80c36b299",
+     "tx": "0x67eadc7efea9ea1f5271e9f02d7cc18440d3354b6a32d4f4fbd49ef46615a10f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x862598aeca9a548478d7a18e08c7c6966e049c4d",
+     "tx": "0x67eadc7efea9ea1f5271e9f02d7cc18440d3354b6a32d4f4fbd49ef46615a10f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xdeec2d3d1e10b57743326a9fa8e37955d9719aed",
+     "tx": "0x67eadc7efea9ea1f5271e9f02d7cc18440d3354b6a32d4f4fbd49ef46615a10f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xccb05f96de3928b845d21608d194b6af663f6bfd",
+     "tx": "0x67eadc7efea9ea1f5271e9f02d7cc18440d3354b6a32d4f4fbd49ef46615a10f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x213d71af4b05bee95a712f0fe76c9afee1ccfd44",
+     "tx": "0x67eadc7efea9ea1f5271e9f02d7cc18440d3354b6a32d4f4fbd49ef46615a10f"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x164e8118972b584192e1a43914cdaa6d48e29c0b",
+     "tx": "0xd66ddb38f38eb15645c4c894ede62f57936e358cb369dfcd9bae9aca9255af04"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xc012043995c1c08839a10f1c3754d53e0edf7e10",
+     "tx": "0xd66ddb38f38eb15645c4c894ede62f57936e358cb369dfcd9bae9aca9255af04"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xab69f6e5f5c45f17bc0f71954aae206868876456",
+     "tx": "0xd66ddb38f38eb15645c4c894ede62f57936e358cb369dfcd9bae9aca9255af04"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x78ecfbe0b200b5e5b6fa546f2afe0d29fcd27426",
+     "tx": "0xd66ddb38f38eb15645c4c894ede62f57936e358cb369dfcd9bae9aca9255af04"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9c8d13ef51a876c00b8dee6a3ba0c2c9cd524394",
+     "tx": "0xd66ddb38f38eb15645c4c894ede62f57936e358cb369dfcd9bae9aca9255af04"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x7c293d39f783600a94392990977de004409af614",
+     "tx": "0xd66ddb38f38eb15645c4c894ede62f57936e358cb369dfcd9bae9aca9255af04"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x1385c33649e92dd61819b68676af7686df3481bd",
+     "tx": "0xd66ddb38f38eb15645c4c894ede62f57936e358cb369dfcd9bae9aca9255af04"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa601675d4b86d02a24bdd8a2969ddc0df3db1541",
+     "tx": "0xd66ddb38f38eb15645c4c894ede62f57936e358cb369dfcd9bae9aca9255af04"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xf72432b2f26ff42e85a582fe37a24302a21aa3d3",
+     "tx": "0xd66ddb38f38eb15645c4c894ede62f57936e358cb369dfcd9bae9aca9255af04"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x5d90935a44474db42d12feed069cac21b3e93b37",
+     "tx": "0xd66ddb38f38eb15645c4c894ede62f57936e358cb369dfcd9bae9aca9255af04"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x9f43659a966d7f51cc016d9109ac0f5934e22b0a",
+     "tx": "0x792f51176d6e302ad4c65ac6091663007b864a2c149edc74cd61ee6d7a33e5fa"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe4b871bfa0e4e86fd00aaf4c9c83ab30d70fbfcd",
+     "tx": "0x792f51176d6e302ad4c65ac6091663007b864a2c149edc74cd61ee6d7a33e5fa"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x3649f9b34de705951020196d281349bad25ca2ac",
+     "tx": "0x792f51176d6e302ad4c65ac6091663007b864a2c149edc74cd61ee6d7a33e5fa"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x3b9b6d2a9779d1db46bf2d30848ec063e786a0be",
+     "tx": "0x792f51176d6e302ad4c65ac6091663007b864a2c149edc74cd61ee6d7a33e5fa"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xe7e722e6a8654131d59f744b65dcdb975b398ac4",
+     "tx": "0x792f51176d6e302ad4c65ac6091663007b864a2c149edc74cd61ee6d7a33e5fa"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xeb8a2e9e904b6d088c3eae59824d488f20e7d047",
+     "tx": "0x792f51176d6e302ad4c65ac6091663007b864a2c149edc74cd61ee6d7a33e5fa"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x6e30f707481f213a2caafb9b91bbb0ae06d05bfb",
+     "tx": "0x792f51176d6e302ad4c65ac6091663007b864a2c149edc74cd61ee6d7a33e5fa"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x7a528b882f2a2a28233d6ccae15bf5f00347ce6a",
+     "tx": "0x792f51176d6e302ad4c65ac6091663007b864a2c149edc74cd61ee6d7a33e5fa"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x4e66f4fd452bdcb6e078057fcfa00c8b07d741fa",
+     "tx": "0x792f51176d6e302ad4c65ac6091663007b864a2c149edc74cd61ee6d7a33e5fa"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xdb43516b995e2cce78ce03318290591511b3ddc1",
+     "tx": "0x792f51176d6e302ad4c65ac6091663007b864a2c149edc74cd61ee6d7a33e5fa"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x17b4c7c8ba6abf754906ff08b15747352969a669",
+     "tx": "0xd00a7918d296a8bda17370a3306a950c99942f9f991d933321844fda5b2b24e0"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb7ea32aa8a6dd7ba33b51acf5120f6acfe5fd93e",
+     "tx": "0xd00a7918d296a8bda17370a3306a950c99942f9f991d933321844fda5b2b24e0"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xce6da7867fa2ff25c02fc33071d36b3fab0edaff",
+     "tx": "0xd00a7918d296a8bda17370a3306a950c99942f9f991d933321844fda5b2b24e0"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xb1bc0f1a8ec58830cefb006734c54be1d35b03c0",
+     "tx": "0xd00a7918d296a8bda17370a3306a950c99942f9f991d933321844fda5b2b24e0"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x736371df106abbb27ba202463787cd26864d0330",
+     "tx": "0xd00a7918d296a8bda17370a3306a950c99942f9f991d933321844fda5b2b24e0"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x3fecc175d9ad5e897b4bdccd1846a0e097e6134f",
+     "tx": "0xd00a7918d296a8bda17370a3306a950c99942f9f991d933321844fda5b2b24e0"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x846e43fce0de41ce5b1345ef8996ee715fa7a091",
+     "tx": "0xd00a7918d296a8bda17370a3306a950c99942f9f991d933321844fda5b2b24e0"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x89fbd4fc6759c4e64f49f13f0a433ef4d2678816",
+     "tx": "0xd00a7918d296a8bda17370a3306a950c99942f9f991d933321844fda5b2b24e0"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xc49f636c7a3ffca06d53307af674122083e0f1e3",
+     "tx": "0xd00a7918d296a8bda17370a3306a950c99942f9f991d933321844fda5b2b24e0"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x0ae420d3342dd090a4e0f9b58ee975f372821533",
+     "tx": "0xd00a7918d296a8bda17370a3306a950c99942f9f991d933321844fda5b2b24e0"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x96d6b6156a156adf4d53d4c829bc4fc59555646c",
+     "tx": "0xbdcdf504de7cdf9bebb4f597da400bff25c9fb1b8aa277b7c7789049a4ab95e8"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xa3a4ccfe429953cfc62b6a27b51af00622552661",
+     "tx": "0xbdcdf504de7cdf9bebb4f597da400bff25c9fb1b8aa277b7c7789049a4ab95e8"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x308391164e9fa9b8012a6f94009e3439353bf79f",
+     "tx": "0xbdcdf504de7cdf9bebb4f597da400bff25c9fb1b8aa277b7c7789049a4ab95e8"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x96a1b64dbe6dbef0d4d6f5795a8ab9a3e6e6cf7d",
+     "tx": "0xbdcdf504de7cdf9bebb4f597da400bff25c9fb1b8aa277b7c7789049a4ab95e8"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x4a63f2ed5c51005293788e13cf9e671a96aedb8a",
+     "tx": "0xbdcdf504de7cdf9bebb4f597da400bff25c9fb1b8aa277b7c7789049a4ab95e8"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x698b8161084537a2d7ce40df79496fcf9aeb03ac",
+     "tx": "0xbdcdf504de7cdf9bebb4f597da400bff25c9fb1b8aa277b7c7789049a4ab95e8"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x18aaf7eb1eec10c377aceb738bf5a28307b1b34e",
+     "tx": "0xbdcdf504de7cdf9bebb4f597da400bff25c9fb1b8aa277b7c7789049a4ab95e8"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0xdb4d7c70f0d5816973593c68bd2097be955e5fca",
+     "tx": "0xbdcdf504de7cdf9bebb4f597da400bff25c9fb1b8aa277b7c7789049a4ab95e8"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x8cf0d36966fad8d543778679801cf57b44c79799",
+     "tx": "0xbdcdf504de7cdf9bebb4f597da400bff25c9fb1b8aa277b7c7789049a4ab95e8"
+    },
+    {
+     "ts": 1659394485,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x8837adbf19c454b5d6cc72ee10b0de0cb942c0de",
+     "tx": "0xbdcdf504de7cdf9bebb4f597da400bff25c9fb1b8aa277b7c7789049a4ab95e8"
+    },
+    {
+     "ts": 1659394510,
+     "token": "USDC",
+     "amount": 202440.725413,
+     "usd": 202440.73,
+     "to": "0x3ce4b5f1e92cfa4f39eb5f4661afcbafdd3505c9",
+     "tx": "0xed53c70d1338099fd4089f7eae9d20d699e54ee64ce206b52bca0b6247cb12d8"
+    },
+    {
+     "ts": 1659394583,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x71d87aabb42de94a7214976a05134935f73e64aa",
+     "tx": "0xc7f245da1fbf61f21d7ed88ef40b62c34708a1f105bb6d0136194acb2bb5e84c"
+    },
+    {
+     "ts": 1659394682,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0x136aa1321374b6623b028a50f5cb9b6246d8645339f3ee0aff1ba9af88c9e27e"
+    },
+    {
+     "ts": 1659394719,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xe3f40743cc18fd45d475fae149ce3ecc40af68c3",
+     "tx": "0x9922c9167850905e986a9667351ae55996263d0257bc08a4abe0fcd358272055"
+    },
+    {
+     "ts": 1659394760,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xe43aa34ee3bf322a680c708eea5e64a9e4a99ed3",
+     "tx": "0x2e915ac56a14e365e1ac94929246d48f143f11c37cc60a84261031c521d293e4"
+    },
+    {
+     "ts": 1659394760,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x25c77aafbccce15ceec211b483928be70efc2bad",
+     "tx": "0xf0e406a883f8221fd95d8a05eab5f0ab4c39bf1912ab5215324c8a8dcd4f2715"
+    },
+    {
+     "ts": 1659394800,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xca4995e1c7af0e2713f0130275736fcc2e7ea553",
+     "tx": "0x22041055b7a0791871d8128e398406a70184f33502fa2da2a3ad783846329d4b"
+    },
+    {
+     "ts": 1659394821,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xf6c0d982be91131dacc2702605a6c341fb5a9d40",
+     "tx": "0xf7436b446044a430c24e500681c732f570e3aec98280b8f4a20778fd75fc5659"
+    },
+    {
+     "ts": 1659394821,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x666bed4762790fab9fb6d9635ab5a009d4d5d216",
+     "tx": "0x8df070dac714b15a347f80c3edb353b991af3cd5fab9ee8cae8a45316e0b0f25"
+    },
+    {
+     "ts": 1659394837,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xe403c7faf2c682846aa7c221b0b0b9b3cffa1d28",
+     "tx": "0x96218965cd916f1978c165be6da46ecc1745664c74890fe5188a227a7b4de6bc"
+    },
+    {
+     "ts": 1659394837,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x666bed4762790fab9fb6d9635ab5a009d4d5d216",
+     "tx": "0x8721c7f5789e29866ec86bd0f983b13e6f1cad5ae2a385d8c9b815373fa0a026"
+    },
+    {
+     "ts": 1659394858,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x12efbc03ecc8d56ebbadd637dbfc30c0d709b463e2c831034233427dfaecf777"
+    },
+    {
+     "ts": 1659394858,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x283949d7c2ad3c8bca304df6aa5d9a2a78e02b77",
+     "tx": "0x2eea1c412efaa67783216fc69072ec5f834c4b309765829eafee9c0ef81f6bf5"
+    },
+    {
+     "ts": 1659394887,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xe43aa34ee3bf322a680c708eea5e64a9e4a99ed3",
+     "tx": "0xe05be4b5590ab54211c3c48f782c8568bdec07f9186815ba85ca05ac5673ab36"
+    },
+    {
+     "ts": 1659394910,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0x91e34cda40d42ef410b66fe2ec68fd1a7722912930880e7b5eeaf92a5a5d85f3"
+    },
+    {
+     "ts": 1659394910,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x11b3544828b358cd528e72a9f7ffb7212fc3fb85",
+     "tx": "0xc26eab50b4f89554f0246e5244c7d95d42c74c2296c989a3c49bf9b56c56f301"
+    },
+    {
+     "ts": 1659394910,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x139e3338c204609e6dcffab0ee53a553e63c49f0",
+     "tx": "0x4596d2c228bcec6b20462d88ac0d825611b35bb86ff3c3039d47f6182d74b496"
+    },
+    {
+     "ts": 1659394924,
+     "token": "USDT",
+     "amount": 3001000.0,
+     "usd": 3001000.0,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x755d937557e026f2dd348495ee94f8b0a324f8d7a67981b6b6374c4716e5be71"
+    },
+    {
+     "ts": 1659394924,
+     "token": "USDT",
+     "amount": 3001000.0,
+     "usd": 3001000.0,
+     "to": "0xb6b93e7e3e6619234a2c3280cc77fe752e7e792c",
+     "tx": "0x724b38c1dca3e6150b71391117b2c0bf1ae1abf18ccbd2ebf03825d0a746046c"
+    },
+    {
+     "ts": 1659394924,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x00000000c251faf2de8217ab64accd0070b97e47",
+     "tx": "0x96db9fa3d725328408da5e973a0644ff0b82efd382d1e9b6cc590dc1d5372571"
+    },
+    {
+     "ts": 1659394924,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x7ec1734fdc65fc3c310f38781a0427bb65b82107",
+     "tx": "0x5e2e4f6c7ff2ec9c06134805c3760adac0be616e96482292cc6fafda258794cc"
+    },
+    {
+     "ts": 1659394924,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x7951e5e78857055c46ddec770178e13c263e62a1",
+     "tx": "0x470823fb13e30c07a4a97c8b1b0189ff531397996905365fd0d036588d52550f"
+    },
+    {
+     "ts": 1659394985,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xb314fd4ac6e10a7e27929cbc8db96743739c82b6",
+     "tx": "0x17f70c59964b7244e2ae36f1951f20d69bf7ebafcb47aa04f03f77ec7b049be3"
+    },
+    {
+     "ts": 1659394985,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x2d3a838701c301b3c402c91b3b3f852b7adc0418",
+     "tx": "0xba3d86638176156efb667e18b40f357e782f736f6aa784320e82576b66176cdd"
+    },
+    {
+     "ts": 1659394985,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xc1a4aa4a4ed635210bc0a352d36720ab7872bdbb",
+     "tx": "0x1a7e8efffe3db62a34f307bf6d970f95da68d124d0c4908bcc99945d76ed14a3"
+    },
+    {
+     "ts": 1659395009,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xf6c0d982be91131dacc2702605a6c341fb5a9d40",
+     "tx": "0x296acc66862fa080770b3b8228257731d9eb177012437ebb4d2107c2711c5efd"
+    },
+    {
+     "ts": 1659395009,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x9634445e293a87ab77ca3cf5b43da94aabc544b6",
+     "tx": "0x9d8298bc5a1a496e51ae5be6c75c194ab951e14ba1cf4196b5d58aff4deb5fd9"
+    },
+    {
+     "ts": 1659395009,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xc9943f94142d81790ecf8eee2c879d47730cf599",
+     "tx": "0xf40e17ef35e1526296ceae2871aa5e1c873aaeb5c301761097317ccd81ebc58e"
+    },
+    {
+     "ts": 1659395059,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x7a380d1c185a520ae1ab29707bdbbe2fb081488d",
+     "tx": "0x27a1483bbc3d6408d63e5fddc999b7f2b44c2fc1de57fadbbf8acf114fcb5494"
+    },
+    {
+     "ts": 1659395059,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x8f0b53d08c1f67849bc7ba649086316b43022738",
+     "tx": "0x4686fe2c31c4ee3abb3234f02b53fdee8c7f849d3c69ee6505ebc5fbf81ad513"
+    },
+    {
+     "ts": 1659395063,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0x49eb90f1b2aec991b4224e4544c1509b82cf304cdc5500465aa6c59abf3dda89"
+    },
+    {
+     "ts": 1659395063,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x35679e61e5946f711ca1288255b1f32376c416d7",
+     "tx": "0xc8a889360ba5d35734da46ce9b2701e941b1a9633526be32d89729e1b9a160e3"
+    },
+    {
+     "ts": 1659395084,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xb5c55f76f90cc528b2609109ca14d8d84593590e",
+     "tx": "0xe13dae8b8e10c4bc25fe1b7c1f6d2b47e380d4ba97d6fd79cda8515e8d08138e"
+    },
+    {
+     "ts": 1659395084,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x00000000c251faf2de8217ab64accd0070b97e47",
+     "tx": "0xe8eca295ea673c7286c4e1fa1d09bd5f3fed8ed2137e2c25d5cc9f3d7fbe66bb"
+    },
+    {
+     "ts": 1659395084,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x0000000052e0b16081d489a9e60e9182a86e6761",
+     "tx": "0x9faf005668d344cc7c4539593cfab090c3c5ffd269bf06a2c4fdc8bec523f6e8"
+    },
+    {
+     "ts": 1659395084,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x1a6bbeacb9eb39701d9c08f0a48b1c89ffc8ab0e",
+     "tx": "0x490c7eb92304beafa17697e07dfc162e03e0064968dc51fdd9767da0ed501c05"
+    },
+    {
+     "ts": 1659395084,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x8dec128c0baa3405dd529d84a91874b641d299a3",
+     "tx": "0x046e83722e59c6b5ab46325ce5c4dffa63813115adf0e90d37d9b7c1a5ed0003"
+    },
+    {
+     "ts": 1659395084,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x998a5d74223ec9f848c5946db26aa73db42ec33b",
+     "tx": "0xc0f92740024df55ae467d2a91b8a1771be125b5e531d67c706eddd9b6703b33f"
+    },
+    {
+     "ts": 1659395084,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xfe6ac63f0bd9ffee3988c5e6a2b8f047105f9c50",
+     "tx": "0x01336d2670456023042463af9752dda966433abb22c85ee46416242a2b136a42"
+    },
+    {
+     "ts": 1659395104,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x5a27a63832b9066be4aba5075a029d0e32001cc0",
+     "tx": "0x68e71c68c19bcee78cdb2bc78e972dd738c4872b1cd548463c992b90b5a2f35a"
+    },
+    {
+     "ts": 1659395124,
+     "token": "FRAX",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x32ce9e964e83388765b29867f98f9e8fe75c08e9",
+     "tx": "0x75f129b7db6f36cc06d04f08c332bbfa66360a21a8f56634cce78c5f63110846"
+    },
+    {
+     "ts": 1659395216,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x283949d7c2ad3c8bca304df6aa5d9a2a78e02b77",
+     "tx": "0xb391cd0fc2ed3e2027f487529bf6adb73a7fb03c9152a71c5eed5618eacb9a57"
+    },
+    {
+     "ts": 1659395216,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x73ea2c7e25f378ae2ef494835f34dd25f165ad2999f2f264c1e1686b75034e02"
+    },
+    {
+     "ts": 1659395216,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x000000000000660def84e69995117c0176ba446e",
+     "tx": "0x52e23ab0ee8423a0abfb441d3c41c70d9812c16c5039ee7f884312bd596c412d"
+    },
+    {
+     "ts": 1659395216,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xb314fd4ac6e10a7e27929cbc8db96743739c82b6",
+     "tx": "0x4a68e8c0256dc4b142fe8c6f3e65c591de55f5470e26126d8436bc5440c5736c"
+    },
+    {
+     "ts": 1659395216,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xf6c0d982be91131dacc2702605a6c341fb5a9d40",
+     "tx": "0x5da82147c7e19f9d85a493b3cd0e10f576aef6616ddb019c5bf39c6c5e5de7cb"
+    },
+    {
+     "ts": 1659395216,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x00000cc0a3d2430b13894624bcdee0b2bb3628e1",
+     "tx": "0x8d4d5a22cda58ad60198be24953642141972dbdd71f2006bd0cd8e9874831c0c"
+    },
+    {
+     "ts": 1659395216,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x56d8b635a7c88fd1104d23d632af40c1c3aac4e3",
+     "tx": "0x748d0c65259a7196667f9696b927389788a250869007cee118fb4f115929f880"
+    },
+    {
+     "ts": 1659395216,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x11b3544828b358cd528e72a9f7ffb7212fc3fb85",
+     "tx": "0x22b78bc332d04dba8c3507016eab4470453ed610821fa24b067197e28c7ab51b"
+    },
+    {
+     "ts": 1659395230,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xe43aa34ee3bf322a680c708eea5e64a9e4a99ed3",
+     "tx": "0x08006a853d800c6494aba2ed21fee267c8689a9091df6ddc41059e07c1e883f8"
+    },
+    {
+     "ts": 1659395282,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x35679e61e5946f711ca1288255b1f32376c416d7",
+     "tx": "0xc24066484467dc902ee8ee7d8f4de4a2f094e2ba3a4aa072bd6a0d024cc43625"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0xc275ab005910e6fb4406cbc823dcbd18900a2d978d078eab6f691750514aeb65"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0xe43aa34ee3bf322a680c708eea5e64a9e4a99ed3",
+     "tx": "0x7e10d1536e4d5f3bf488dfb8c6e15de21ed39cae09619067ee47f35a4dacdb02"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0xc9d21f523f577f0754a6d23243b7bd2b46114092",
+     "tx": "0xd1a7cec67bbd4a37b3957bf2f2cce0e9a83a2c213a03013b48d10a38ab3ac3dd"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x0db09d04d33539e3366de2591e920eba71edc879",
+     "tx": "0x1344d628d963ba34e8df821f416f2d472208d5c545cff3f7cffed259a74dede1"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x9c4a13675c38a28c30181efa03ac68b48a2ff2db",
+     "tx": "0x1344d628d963ba34e8df821f416f2d472208d5c545cff3f7cffed259a74dede1"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0xf164ce5450e9362e269e9efbdbb11841744c03b2",
+     "tx": "0x1344d628d963ba34e8df821f416f2d472208d5c545cff3f7cffed259a74dede1"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0xbf2bdbfb505dd8d5269b75cee3282525cd621435",
+     "tx": "0x1344d628d963ba34e8df821f416f2d472208d5c545cff3f7cffed259a74dede1"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x7524bc04dda5b52d56cc6c38e349552c23f16362",
+     "tx": "0x1344d628d963ba34e8df821f416f2d472208d5c545cff3f7cffed259a74dede1"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x0d683079d989294c7990d3858e7f16571d6e8c23",
+     "tx": "0x1344d628d963ba34e8df821f416f2d472208d5c545cff3f7cffed259a74dede1"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0xfa0a622f028bf60a12932f9d2170debf2410ae83",
+     "tx": "0x1344d628d963ba34e8df821f416f2d472208d5c545cff3f7cffed259a74dede1"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x9b78bbf9ee0548739622449f0dbbebe06dd409ba",
+     "tx": "0x1344d628d963ba34e8df821f416f2d472208d5c545cff3f7cffed259a74dede1"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0xf57113d8f6ff35747737f026fe0b37d4d7f42777",
+     "tx": "0x1344d628d963ba34e8df821f416f2d472208d5c545cff3f7cffed259a74dede1"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x2c73406a1463e34f4393267a652802f810695aa2",
+     "tx": "0x1344d628d963ba34e8df821f416f2d472208d5c545cff3f7cffed259a74dede1"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x17eee115492507e40039f1b19d6ff93f33bbadc1",
+     "tx": "0x8c65b2b25be2c929d86f1fb556aa0b981bd54c2ad54d8de63d3876c4c833293e"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 150039.999661,
+     "usd": 150040.0,
+     "to": "0x00000000c251faf2de8217ab64accd0070b97e47",
+     "tx": "0x0ee5c198042c881a58fb444f14b1206a964a9c1b4d64888a6f25b8d04bc37e97"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x742591afd76c991f214b13dd0988421d4db0a0fa",
+     "tx": "0xfe330dcc25110e3999c9813ea9933a216e64f6d5d1579be103122a53b1d2407a"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x86c9524b6e87ab46c39544df551594a189b5c181",
+     "tx": "0xfe330dcc25110e3999c9813ea9933a216e64f6d5d1579be103122a53b1d2407a"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x003ec32b150f9c6725ddad9cf5ae22fae3d8d3bc",
+     "tx": "0xfe330dcc25110e3999c9813ea9933a216e64f6d5d1579be103122a53b1d2407a"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x961d2ed3f0dd347d9df3d36ea1c5af52775ced8d",
+     "tx": "0xfe330dcc25110e3999c9813ea9933a216e64f6d5d1579be103122a53b1d2407a"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x2ba70d98cc0f79c4f01c489d814e68b4f02b2b2b",
+     "tx": "0xfe330dcc25110e3999c9813ea9933a216e64f6d5d1579be103122a53b1d2407a"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x08ceeec36e78aee4a014fedb77c9981918f06841",
+     "tx": "0xfe330dcc25110e3999c9813ea9933a216e64f6d5d1579be103122a53b1d2407a"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x192b5b11d6c6518ad6c9e8d29362944de88943b1",
+     "tx": "0xfe330dcc25110e3999c9813ea9933a216e64f6d5d1579be103122a53b1d2407a"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x0086cffb4f3d88160c468d381daf3425d1a8f896",
+     "tx": "0xfe330dcc25110e3999c9813ea9933a216e64f6d5d1579be103122a53b1d2407a"
+    },
+    {
+     "ts": 1659395290,
+     "token": "DAI",
+     "amount": 121387.701073,
+     "usd": 121387.7,
+     "to": "0x2f55dd962580fd8d0ce5cbd267b98f03f3bcf6d7",
+     "tx": "0xfe330dcc25110e3999c9813ea9933a216e64f6d5d1579be103122a53b1d2407a"
+    },
+    {
+     "ts": 1659395318,
+     "token": "USDT",
+     "amount": 2001000.0,
+     "usd": 2001000.0,
+     "to": "0xb55c8d12ceb742e0744a0cd4218a8c1d9da247bc",
+     "tx": "0xb500b832890db4393604f6b5d8c0d076c8bf2b85755e36635ced2d0da22462e7"
+    },
+    {
+     "ts": 1659395633,
+     "token": "USDT",
+     "amount": 602391.0,
+     "usd": 602391.0,
+     "to": "0x65760288f19cff476b80a36a61f9dedab16bab49",
+     "tx": "0x1cc8c7579dda72f887f294ff8a5d42b9d88ef7333a4203d52c05d582e4918e77"
+    },
+    {
+     "ts": 1659396146,
+     "token": "WETH",
+     "amount": 50.0,
+     "usd": 81371.98,
+     "to": "0x283949d7c2ad3c8bca304df6aa5d9a2a78e02b77",
+     "tx": "0x10cb2fa73d97b812b790db22ad8fd3e903090f465c3580463f96a6593570a1b4"
+    },
+    {
+     "ts": 1659396403,
+     "token": "USDC",
+     "amount": 77000.0,
+     "usd": 77000.0,
+     "to": "0xb5c55f76f90cc528b2609109ca14d8d84593590e",
+     "tx": "0x6514a52a52978e482b7115850ede39656fb1175a38f8317bf55ef9c98ce2712b"
+    },
+    {
+     "ts": 1659396634,
+     "token": "USDT",
+     "amount": 20000.0,
+     "usd": 20000.0,
+     "to": "0xf6c0d982be91131dacc2702605a6c341fb5a9d40",
+     "tx": "0x383e7e2b15a47bf1206fe21dbb8f71a2ec04bc430cd7d8656444754f96ed9ae9"
+    },
+    {
+     "ts": 1659396886,
+     "token": "DAI",
+     "amount": 60367.09,
+     "usd": 60367.09,
+     "to": "0x65760288f19cff476b80a36a61f9dedab16bab49",
+     "tx": "0xa27880cfc47b8bce27fa5a431843cc90e57a7d2dfc4c3daf2e97fc9bde2c38a6"
+    },
+    {
+     "ts": 1659396962,
+     "token": "FRAX",
+     "amount": 79204.50241795531,
+     "usd": 79204.5,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0xcbaae74ae8c3933ca711877da1a4e9f5664134148b9c05f7081ad420c5b75502"
+    },
+    {
+     "ts": 1659397088,
+     "token": "WETH",
+     "amount": 9.0,
+     "usd": 14646.96,
+     "to": "0xa8ecaf8745c56d5935c232d2c5b83b9cd3de1f6a",
+     "tx": "0x63b3a87a2dbc3bb414191f0647b1d1541e1d0319093bbde8457e51c070befd50"
+    },
+    {
+     "ts": 1659397088,
+     "token": "WETH",
+     "amount": 9.0,
+     "usd": 14646.96,
+     "to": "0xb314fd4ac6e10a7e27929cbc8db96743739c82b6",
+     "tx": "0x6576f45ce96d3fd28928ad381d6ee2c5c7bd3a1fb46ddbeac844fe02beef314d"
+    }
+   ],
+   "alerts": [
+    {
+     "id": 20,
+     "bridge": "nomad-2022",
+     "rule": "outflow_spike",
+     "severity": "critical",
+     "started": 1659389551,
+     "last_seen": 1659395728,
+     "observed": 78747401.13780923,
+     "expected": 0.0,
+     "message": "$2.3M left Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; normally nothing leaves at this hour.",
+     "worst": "$78.7M left Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about $321 is normal at this hour.",
+     "acknowledged": false,
+     "confirmed_at": 1659389623.0,
+     "detected_at": 1659389625.0,
+     "incident": "nomad-2022-1659389551"
+    },
+    {
+     "id": 21,
+     "bridge": "nomad-2022",
+     "rule": "escrow_drain",
+     "severity": "critical",
+     "started": 1659389551,
+     "last_seen": 1659398079,
+     "observed": 0.9999995336091788,
+     "expected": 0.05,
+     "message": "Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 lost $9.2M net in the last hour: 5% of its $168.8M escrow.",
+     "worst": "Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 lost $40.5M net in the last hour: 100% of its $40.5M escrow.",
+     "acknowledged": false,
+     "confirmed_at": 1659389623.0,
+     "detected_at": 1659389625.0,
+     "incident": "nomad-2022-1659389551"
+    },
+    {
+     "id": 22,
+     "bridge": "nomad-2022",
+     "rule": "large_withdrawal",
+     "severity": "critical",
+     "started": 1659390959,
+     "last_seen": 1659395318,
+     "observed": 16274395.411400001,
+     "expected": 3043956.1136183296,
+     "message": "One release of $6.9M left Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022: 4.5% of its $152.2M escrow.",
+     "worst": "One release of $16.3M left Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022: 11.5% of its $141.0M escrow.",
+     "acknowledged": false,
+     "confirmed_at": 1659391031.0,
+     "detected_at": 1659391035.0,
+     "incident": "nomad-2022-1659389551"
+    },
+    {
+     "id": 23,
+     "bridge": "nomad-2022",
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "started": 1659392724,
+     "last_seen": 1659398079,
+     "observed": 294,
+     "expected": 1.0,
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 1 is normal at this hour.",
+     "worst": "294 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 1 is normal at this hour.",
+     "acknowledged": false,
+     "confirmed_at": 1659392796.0,
+     "detected_at": 1659392805.0,
+     "incident": "nomad-2022-1659389551"
+    }
+   ],
+   "first_theft_ts": 1659389551,
+   "first_alert_ts": 1659389551,
+   "first_alert_detected_at": 1659389625.0,
+   "first_alert_rule": "outflow_spike",
+   "seconds_from_first_theft_to_alert": 0,
+   "detection_latency_s": 2.0,
+   "latency_target_s": 60,
+   "stolen_before_alert_usd": 16091407.5,
+   "stolen_after_alert_usd": 152659063.14,
+   "minutes_of_warning_for_later_thefts": [
+    12.7,
+    12.7,
+    12.7,
+    12.7,
+    13.1,
+    13.1,
+    13.4,
+    22.2,
+    33.2,
+    44.2,
+    48.5,
+    48.5,
+    48.5,
+    48.5,
+    48.5,
+    48.5,
+    48.8,
+    50.4,
+    50.4,
+    50.4,
+    51.6,
+    54.2,
+    58.0,
+    58.4,
+    59.0,
+    59.0,
+    61.5,
+    61.5,
+    61.5,
+    61.9,
+    64.6,
+    64.6,
+    64.6,
+    64.6,
+    64.6,
+    64.6,
+    65.8,
+    66.0,
+    66.0,
+    66.6,
+    67.1,
+    69.0,
+    69.0,
+    69.6,
+    69.6,
+    69.6,
+    69.6,
+    69.8,
+    69.8,
+    69.8,
+    69.8,
+    69.8,
+    69.9,
+    71.3,
+    71.3,
+    71.8,
+    72.2,
+    72.2,
+    72.2,
+    72.2,
+    72.2,
+    72.2,
+    72.8,
+    72.8,
+    73.4,
+    73.4,
+    74.0,
+    74.0,
+    74.0,
+    74.0,
+    74.0,
+    74.0,
+    74.0,
+    74.0,
+    74.0,
+    74.6,
+    74.8,
+    74.8,
+    75.2,
+    75.2,
+    75.6,
+    75.6,
+    75.9,
+    76.2,
+    76.5,
+    76.5,
+    76.5,
+    76.5,
+    76.5,
+    77.1,
+    77.1,
+    77.1,
+    77.5,
+    77.5,
+    77.5,
+    77.8,
+    77.8,
+    78.1,
+    78.2,
+    78.2,
+    78.2,
+    78.2,
+    78.2,
+    78.2,
+    78.2,
+    78.6,
+    78.6,
+    78.7,
+    78.9,
+    78.9,
+    78.9,
+    78.9,
+    79.2,
+    79.2,
+    79.7,
+    79.8,
+    79.8,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    80.4,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.0,
+    81.4,
+    82.6,
+    84.3,
+    84.9,
+    85.6,
+    85.6,
+    86.2,
+    86.6,
+    86.6,
+    86.9,
+    86.9,
+    87.2,
+    87.2,
+    87.7,
+    88.1,
+    88.1,
+    88.1,
+    88.3,
+    88.3,
+    88.3,
+    88.3,
+    88.3,
+    89.3,
+    89.3,
+    89.3,
+    89.7,
+    89.7,
+    89.7,
+    90.6,
+    90.6,
+    90.6,
+    90.6,
+    91.0,
+    91.0,
+    91.0,
+    91.0,
+    91.0,
+    91.0,
+    91.0,
+    91.3,
+    91.7,
+    93.2,
+    93.2,
+    93.2,
+    93.2,
+    93.2,
+    93.2,
+    93.2,
+    93.2,
+    93.4,
+    94.3,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.4,
+    94.9,
+    100.1,
+    108.7,
+    113.0,
+    116.8,
+    121.0,
+    122.3,
+    124.4,
+    124.4
+   ],
+   "false_alarms_during_baseline": 19,
+   "false_alarms": [
+    {
+     "started": 1658581200,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 0 is normal at this hour."
+    },
+    {
+     "started": 1658639404,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 0 is normal at this hour."
+    },
+    {
+     "started": 1658660384,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 1 is normal at this hour."
+    },
+    {
+     "started": 1658688722,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 0 is normal at this hour."
+    },
+    {
+     "started": 1658716336,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$1.3M left Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about $137 is normal at this hour."
+    },
+    {
+     "started": 1658727727,
+     "rule": "outflow_spike",
+     "severity": "critical",
+     "message": "$4.6M left Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about $5 is normal at this hour."
+    },
+    {
+     "started": 1658727727,
+     "rule": "large_withdrawal",
+     "severity": "critical",
+     "message": "One release of $4.6M left Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022: 2.5% of its $180.1M escrow."
+    },
+    {
+     "started": 1658728224,
+     "rule": "escrow_drain",
+     "severity": "critical",
+     "message": "Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 lost $14.1M net in the last hour: 8% of its $180.1M escrow."
+    },
+    {
+     "started": 1658825701,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$1.2M left Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about $320 is normal at this hour."
+    },
+    {
+     "started": 1658955725,
+     "rule": "outflow_spike",
+     "severity": "critical",
+     "message": "$1.6M left Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about $3 is normal at this hour."
+    },
+    {
+     "started": 1658956299,
+     "rule": "escrow_drain",
+     "severity": "critical",
+     "message": "Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 lost $8.9M net in the last hour: 6% of its $160.7M escrow."
+    },
+    {
+     "started": 1659055067,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 0 is normal at this hour."
+    },
+    {
+     "started": 1659083310,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 2 is normal at this hour."
+    },
+    {
+     "started": 1659238701,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 1 is normal at this hour."
+    },
+    {
+     "started": 1659243430,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 1 is normal at this hour."
+    },
+    {
+     "started": 1659259585,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 2 is normal at this hour."
+    },
+    {
+     "started": 1659275746,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 1 is normal at this hour."
+    },
+    {
+     "started": 1659282295,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 0 is normal at this hour."
+    },
+    {
+     "started": 1659348379,
+     "rule": "withdrawal_burst",
+     "severity": "warning",
+     "message": "12 releases from Nomad token bridge (BridgeRouter proxy), Ethereum, 1-2 Aug 2022 in the last 10 minutes; about 2 is normal at this hour."
+    }
+   ],
+   "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co/public/mainnet)",
+   "fetched": "2026-10-07T21:49:07+00:00",
+   "price_note": "Stablecoins and FRAX at $1; WBTC at Chainlink BTC / USD 22,987.72; WETH at Chainlink ETH / USD 1,627.44 (answers at block 15259101). Native ETH is not included except where it passed through WETH (rows with kind weth_wrap / weth_unwrap)."
+  },
+  {
+   "key": "orbit-2023",
+   "case": "Orbit Chain bridge, Ethereum vault, 31 Dec 2023",
+   "dataset": "orbit-2023.json",
+   "vault": "0x1bf68a9d1eaee7826b3593c20a0ca93293cb489a",
+   "escrow_usd_at_start": 70321852.31,
+   "baseline_days": 14.0,
+   "ordinary_transfers": 250,
+   "stolen_usd_tracked": 59826262.73,
+   "thefts": [
+    {
+     "ts": 1704056879,
+     "token": "DAI",
+     "amount": 10000000.0,
+     "usd": 10000000.0,
+     "to": "0x3a886a63c768665a9830886e608d6f9dc6b4f730",
+     "tx": "0xafdc36278fcef8d54824b09ec019147cfe2afd995abf6754e52d273a2c1b07ca"
+    },
+    {
+     "ts": 1704057059,
+     "token": "WBTC",
+     "amount": 230.879,
+     "usd": 9826262.73,
+     "to": "0x9ca536d01b9e78dd30de9d7457867f8898634049",
+     "tx": "0xe0bada18fdc56dec125c31b1636490f85ba66016318060a066ed7050ff7271f9"
+    },
+    {
+     "ts": 1704057911,
+     "token": "USDC",
+     "amount": 10000000.0,
+     "usd": 10000000.0,
+     "to": "0xa70f8917a957757f5505a5535df1591c54f65b9d",
+     "tx": "0x64a6f486c20671e1389b3c7948d46733325c407245a86bf510cb69ef401a3f0e"
+    },
+    {
+     "ts": 1704057935,
+     "token": "USDT",
+     "amount": 30000000.0,
+     "usd": 30000000.0,
+     "to": "0xdadfa3ccd40fc3d5a0164c6f9444f60163ccbf3b",
+     "tx": "0xd8ca42941a0a2c25669267ad8d61f7f9f4118252cb502316602fe16624b80ac8"
+    }
+   ],
+   "alerts": [
+    {
+     "id": 1,
+     "bridge": "orbit-2023",
+     "rule": "escrow_drain",
+     "severity": "critical",
+     "started": 1704056879,
+     "last_seen": 1704061127,
+     "observed": 0.8589733132635853,
+     "expected": 0.05,
+     "message": "Orbit Chain bridge, Ethereum vault, 31 Dec 2023 lost $10.0M net in the last hour: 14% of its $69.6M escrow.",
+     "worst": "Orbit Chain bridge, Ethereum vault, 31 Dec 2023 lost $59.8M net in the last hour: 86% of its $69.6M escrow.",
+     "acknowledged": false,
+     "confirmed_at": 1704056951.0,
+     "detected_at": 1704056955.0,
+     "incident": "orbit-2023-1704056879"
+    },
+    {
+     "id": 2,
+     "bridge": "orbit-2023",
+     "rule": "outflow_spike",
+     "severity": "critical",
+     "started": 1704056879,
+     "last_seen": 1704057935,
+     "observed": 40000000.0,
+     "expected": 0.0,
+     "message": "$10.0M left Orbit Chain bridge, Ethereum vault, 31 Dec 2023 in the last 10 minutes; normally nothing leaves at this hour.",
+     "worst": "$40.0M left Orbit Chain bridge, Ethereum vault, 31 Dec 2023 in the last 10 minutes; normally nothing leaves at this hour.",
+     "acknowledged": false,
+     "confirmed_at": 1704056951.0,
+     "detected_at": 1704056955.0,
+     "incident": "orbit-2023-1704056879"
+    },
+    {
+     "id": 3,
+     "bridge": "orbit-2023",
+     "rule": "large_withdrawal",
+     "severity": "critical",
+     "started": 1704056879,
+     "last_seen": 1704057935,
+     "observed": 30000000.0,
+     "expected": 1392974.7737915025,
+     "message": "One release of $10.0M left Orbit Chain bridge, Ethereum vault, 31 Dec 2023: 14.4% of its $69.6M escrow.",
+     "worst": "One release of $30.0M left Orbit Chain bridge, Ethereum vault, 31 Dec 2023: 75.3% of its $39.8M escrow.",
+     "acknowledged": false,
+     "confirmed_at": 1704056951.0,
+     "detected_at": 1704056955.0,
+     "incident": "orbit-2023-1704056879"
+    }
+   ],
+   "first_theft_ts": 1704056879,
+   "first_alert_ts": 1704056879,
+   "first_alert_detected_at": 1704056955.0,
+   "first_alert_rule": "escrow_drain",
+   "seconds_from_first_theft_to_alert": 0,
+   "detection_latency_s": 4.0,
+   "latency_target_s": 60,
+   "stolen_before_alert_usd": 10000000.0,
+   "stolen_after_alert_usd": 49826262.73,
+   "minutes_of_warning_for_later_thefts": [
+    1.7,
+    15.9,
+    16.3
+   ],
+   "false_alarms_during_baseline": 0,
+   "false_alarms": [],
+   "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co/public/mainnet)",
+   "fetched": "2026-09-28T23:01:58+00:00",
+   "price_note": "Stablecoins at $1; WBTC at the Chainlink BTC/USD answer at block 18908000. Native ETH is not included (not visible in token logs)."
+  },
+  {
+   "key": "ronin-2022",
+   "case": "Ronin bridge (MainchainGateway), Ethereum, 23 Mar 2022",
+   "dataset": "ronin-2022.json",
+   "vault": "0x1a2a1c938ce3ec39b6d47113c7955baa9dd454f2",
+   "escrow_usd_at_start": 543897314.41,
+   "baseline_days": 14.0,
+   "ordinary_transfers": 7128,
+   "stolen_usd_tracked": 539564294.57,
+   "thefts": [
+    {
+     "ts": 1648042149,
+     "token": "WETH",
+     "amount": 173600.0,
+     "usd": 514064294.57,
+     "to": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+     "tx": "0xc28fad5e8d5e0ce6a2eaf67b6687be5d58113e16be590824d6cfa1a94467d0b7"
+    },
+    {
+     "ts": 1648042264,
+     "token": "USDC",
+     "amount": 25500000.0,
+     "usd": 25500000.0,
+     "to": "0x098b716b8aaf21512996dc57eb0615e2383e2f96",
+     "tx": "0xed2c72ef1a552ddaec6dd1f5cddf0b59a8f37f82bdda5257d9c7c37db7bb9b08"
+    }
+   ],
+   "alerts": [
+    {
+     "id": 2,
+     "bridge": "ronin-2022",
+     "rule": "escrow_drain",
+     "severity": "critical",
+     "started": 1648042149,
+     "last_seen": 1648055161,
+     "observed": 0.9999168614006634,
+     "expected": 0.05,
+     "message": "Ronin bridge (MainchainGateway), Ethereum, 23 Mar 2022 lost $514.1M net in the last hour: 95% of its $539.6M escrow.",
+     "worst": "Ronin bridge (MainchainGateway), Ethereum, 23 Mar 2022 lost $539.6M net in the last hour: 100% of its $539.6M escrow.",
+     "acknowledged": false,
+     "confirmed_at": 1648042221.0,
+     "detected_at": 1648042230.0,
+     "incident": "ronin-2022-1648042149"
+    },
+    {
+     "id": 3,
+     "bridge": "ronin-2022",
+     "rule": "outflow_spike",
+     "severity": "critical",
+     "started": 1648042149,
+     "last_seen": 1648042583,
+     "observed": 539566495.7545571,
+     "expected": 852.4617128676693,
+     "message": "$514.1M left Ronin bridge (MainchainGateway), Ethereum, 23 Mar 2022 in the last 10 minutes; about $852 is normal at this hour.",
+     "worst": "$539.6M left Ronin bridge (MainchainGateway), Ethereum, 23 Mar 2022 in the last 10 minutes; about $1.0K is normal at this hour.",
+     "acknowledged": false,
+     "confirmed_at": 1648042221.0,
+     "detected_at": 1648042230.0,
+     "incident": "ronin-2022-1648042149"
+    },
+    {
+     "id": 4,
+     "bridge": "ronin-2022",
+     "rule": "large_withdrawal",
+     "severity": "critical",
+     "started": 1648042149,
+     "last_seen": 1648042264,
+     "observed": 514064294.56586397,
+     "expected": 10792183.188408365,
+     "message": "One release of $514.1M left Ronin bridge (MainchainGateway), Ethereum, 23 Mar 2022: 95.3% of its $539.6M escrow.",
+     "worst": "",
+     "acknowledged": false,
+     "confirmed_at": 1648042221.0,
+     "detected_at": 1648042230.0,
+     "incident": "ronin-2022-1648042149"
+    }
+   ],
+   "first_theft_ts": 1648042149,
+   "first_alert_ts": 1648042149,
+   "first_alert_detected_at": 1648042230.0,
+   "first_alert_rule": "escrow_drain",
+   "seconds_from_first_theft_to_alert": 0,
+   "detection_latency_s": 9.0,
+   "latency_target_s": 60,
+   "stolen_before_alert_usd": 514064294.57,
+   "stolen_after_alert_usd": 25500000.0,
+   "minutes_of_warning_for_later_thefts": [
+    0.6
+   ],
+   "false_alarms_during_baseline": 1,
+   "false_alarms": [
+    {
+     "started": 1647262041,
+     "rule": "outflow_spike",
+     "severity": "warning",
+     "message": "$3.1M left Ronin bridge (MainchainGateway), Ethereum, 23 Mar 2022 in the last 10 minutes; about $1.3K is normal at this hour."
+    }
+   ],
+   "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co/public/mainnet)",
+   "fetched": "2026-10-07T21:48:05+00:00",
+   "price_note": "Stablecoins and FRAX at $1; WETH at Chainlink ETH / USD 2,961.20 (answers at block 14442835). Native ETH is not included except where it passed through WETH (rows with kind weth_wrap / weth_unwrap)."
+  }
+ ]
+}

@@ -1,0 +1,312 @@
+{
+ "case": {
+  "key": "verus-2026",
+  "title": "Verus-Ethereum bridge (delegator proxy), Ethereum, 17 May 2026",
+  "chain": "ethereum",
+  "vault": "0x71518580f36feceffe0721f06ba4703218cd7f63",
+  "tokens": [
+   [
+    "0x18084fba666a33d37592fa2633fd49a74dd93a88",
+    "tBTC",
+    18
+   ],
+   [
+    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "USDC",
+    6
+   ],
+   [
+    "0x6b175474e89094c44da98b954eedeac495271d0f",
+    "DAI",
+    18
+   ],
+   [
+    "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "USDT",
+    6
+   ],
+   [
+    "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "WETH",
+    18
+   ]
+  ],
+  "start_block": 25017890,
+  "end_block": 25120000,
+  "price_block": 25118335,
+  "period": "hack: baseline before the incident, then the drain",
+  "eth_usd_feed": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+  "btc_usd_feed": "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+  "hack_window": [
+   25118335,
+   25120000
+  ],
+  "first_theft_any_block": 25118335,
+  "first_theft_tx": "0x6990f01720f57fc515d0e976a0c4f8157e0a9529194c4c15d190e98d087eb321",
+  "first_theft_block": 25118335,
+  "theft_min_usd": 100000,
+  "attacker_addresses": [
+   "0x5abb91b9c01a5ed3ae762d32b236595b459d5777",
+   "0x65cb8b128bf6e690761044cceca422bb239c25f9"
+  ],
+  "references": [
+   "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/src/test/2026-05/VerusBridge_exp.sol",
+   "https://x.com/VerusCoin/status/2057465214975492358",
+   "https://etherscan.io/tx/0x6990f01720f57fc515d0e976a0c4f8157e0a9529194c4c15d190e98d087eb321"
+  ],
+  "notes": "Insufficient validation in submitImports: one tx (23:55:23 UTC) released 1,625.37 native ETH, 103.5677 tBTC and 147,658.84 USDC to 0x65cb8b12....",
+  "coverage": "Tracked: tBTC (Chainlink TBTC/USD), USDC, DAI, USDT, WETH: ~$8.2M of the ~$11.6M. Not tracked: 1,625 native ETH. Ordinary traffic on this vault is very sparse (a few transfers a week)."
+ },
+ "fetched": "2026-10-08T04:00:51+00:00",
+ "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co); built by research/bridge-hacks/03-onchain-data/fetch_more.py",
+ "prices_usd": {
+  "tBTC": 78167.871273,
+  "USDC": 1.0,
+  "DAI": 1.0,
+  "USDT": 1.0,
+  "WETH": 2126.37
+ },
+ "price_note": "tBTC at Chainlink TBTC / USD 78,167.9; USDC fixed $1; DAI fixed $1; USDT fixed $1; WETH at Chainlink ETH / USD 2,126.37 (answers at block 25118335). Native ETH is not included except where it passed through WETH (rows with kind weth_wrap / weth_unwrap).",
+ "start_ts": 1777852523,
+ "end_ts": 1779082139,
+ "balances_at_start": {
+  "tBTC": 105.09287999,
+  "USDC": 109057.49671,
+  "DAI": 0.005749885,
+  "USDT": 79273.076773,
+  "WETH": 1e-07
+ },
+ "transfers": [
+  {
+   "ts": 1777871099,
+   "block": 25019430,
+   "token": "DAI",
+   "direction": "in",
+   "amount": 13197.0,
+   "usd": 13197.0,
+   "tx": "0xfaa399f74d6aa45bb86144cb6beca7f2f85d4bdc0420eadecd2c30a07ff81d81",
+   "log_index": 407,
+   "counterparty": "0x16770eafcdbeff2ae73ccd680694f53a8d40df55"
+  },
+  {
+   "ts": 1777871099,
+   "block": 25019430,
+   "token": "DAI",
+   "direction": "out",
+   "amount": 13197.0,
+   "usd": 13197.0,
+   "tx": "0xfaa399f74d6aa45bb86144cb6beca7f2f85d4bdc0420eadecd2c30a07ff81d81",
+   "log_index": 411,
+   "counterparty": "0x0000000000000000000000000000000000000000"
+  },
+  {
+   "ts": 1777987043,
+   "block": 25029049,
+   "token": "tBTC",
+   "direction": "out",
+   "amount": 0.01979548,
+   "usd": 1547.370532427246,
+   "tx": "0x62df4f8de567e33571d44597e6c7f243dc177bf07edbc1a263c634810a60a63d",
+   "log_index": 451,
+   "counterparty": "0x2c1d60ea645c4ba90bf55c64abb0a3f540602fae"
+  },
+  {
+   "ts": 1778139011,
+   "block": 25041674,
+   "token": "tBTC",
+   "direction": "out",
+   "amount": 0.02486576,
+   "usd": 1943.7035267853125,
+   "tx": "0x10db0335f1beb30c0811467b686a32bd66720ad401a43c50e28c2709c8448ce4",
+   "log_index": 940,
+   "counterparty": "0xc229ea150f397c423df9818deaa7e4c12a80ca0b"
+  },
+  {
+   "ts": 1778268071,
+   "block": 25052403,
+   "token": "tBTC",
+   "direction": "out",
+   "amount": 0.00940259,
+   "usd": 734.9804447527971,
+   "tx": "0x5e4216769acc84886d9f6131559626133aa55fa95f31c57c7f3ec20eba0f8f5d",
+   "log_index": 292,
+   "counterparty": "0xc229ea150f397c423df9818deaa7e4c12a80ca0b"
+  },
+  {
+   "ts": 1778306651,
+   "block": 25055609,
+   "token": "USDC",
+   "direction": "in",
+   "amount": 20100.0,
+   "usd": 20100.0,
+   "tx": "0xb56bdf7030444f5025f19d1bfa313cb5255939425626885b68c25e05fb059c06",
+   "log_index": 919,
+   "counterparty": "0x2b1334ccfc5eeba933838cfc006d88cc630513cb"
+  },
+  {
+   "ts": 1778332979,
+   "block": 25057795,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 1.840355,
+   "usd": 1.840355,
+   "tx": "0x3d87b194f73fe715ea9ba25919c656e5eab4e6e6e7a2bd7b36d42fd62f27c7b2",
+   "log_index": 375,
+   "counterparty": "0x119af2e806579c0e2e8de3a1719014eaa4d6dc1d"
+  },
+  {
+   "ts": 1778420279,
+   "block": 25065040,
+   "token": "tBTC",
+   "direction": "out",
+   "amount": 0.01480487,
+   "usd": 1157.2651723734994,
+   "tx": "0x84d033d6cc5b61196135607930cd37645e8a326673aebb43330777d5c2846c3c",
+   "log_index": 128,
+   "counterparty": "0xc229ea150f397c423df9818deaa7e4c12a80ca0b"
+  },
+  {
+   "ts": 1778433551,
+   "block": 25066142,
+   "token": "tBTC",
+   "direction": "out",
+   "amount": 0.09594436,
+   "usd": 7499.766381850371,
+   "tx": "0xb4c8dc79a9cf7f65f1641320254198abff010f15312cdb66759bf94781a68602",
+   "log_index": 728,
+   "counterparty": "0x158e2cd8678799f3a9fa7cbfd3f1df695406208c"
+  },
+  {
+   "ts": 1778438375,
+   "block": 25066543,
+   "token": "USDC",
+   "direction": "in",
+   "amount": 100.0,
+   "usd": 100.0,
+   "tx": "0x85bebde8e97cd354da75fe5adeb5d8dd215b5eca8f4bcdd9bfa1dc9a826ef6dd",
+   "log_index": 782,
+   "counterparty": "0x2c1d60ea645c4ba90bf55c64abb0a3f540602fae"
+  },
+  {
+   "ts": 1778462915,
+   "block": 25068579,
+   "token": "USDC",
+   "direction": "in",
+   "amount": 18403.180449,
+   "usd": 18403.180449,
+   "tx": "0x5f26991610270639238e83c13c6034db27fe57b3a1cc83c0f90370a59e97f34a",
+   "log_index": 951,
+   "counterparty": "0x2b1334ccfc5eeba933838cfc006d88cc630513cb"
+  },
+  {
+   "ts": 1778493215,
+   "block": 25071093,
+   "token": "tBTC",
+   "direction": "out",
+   "amount": 1.11879495,
+   "usd": 87453.81963248247,
+   "tx": "0xa6c911b1b27b6b3c7e08cae15898c2f1874ff3a90ca8d9fc6a86e5a1fd36d139",
+   "log_index": 367,
+   "counterparty": "0xd6db3b41c959b9cb8aa72aaad867005bebf5f1ce"
+  },
+  {
+   "ts": 1778601023,
+   "block": 25080042,
+   "token": "tBTC",
+   "direction": "out",
+   "amount": 0.2,
+   "usd": 15633.5742546,
+   "tx": "0x1cddce9da3195b0f04eb2325521e7850aec4071aa7b9e15af2877e6655f5531c",
+   "log_index": 294,
+   "counterparty": "0x16770eafcdbeff2ae73ccd680694f53a8d40df55"
+  },
+  {
+   "ts": 1778658095,
+   "block": 25084789,
+   "token": "tBTC",
+   "direction": "out",
+   "amount": 0.0220877,
+   "usd": 1726.5484903166418,
+   "tx": "0x9062d915d3ded1a81c293ba09a1cddb7b7d1dc2c92f742e6983747820809f975",
+   "log_index": 281,
+   "counterparty": "0x2c1d60ea645c4ba90bf55c64abb0a3f540602fae"
+  },
+  {
+   "ts": 1778924303,
+   "block": 25106883,
+   "token": "DAI",
+   "direction": "in",
+   "amount": 10782.1222435,
+   "usd": 10782.1222435,
+   "tx": "0x67dbdda11dce338011b1335fdae5033b2abc37fcacd39b7ee69f39c44b16a033",
+   "log_index": 638,
+   "counterparty": "0x16770eafcdbeff2ae73ccd680694f53a8d40df55"
+  },
+  {
+   "ts": 1778924303,
+   "block": 25106883,
+   "token": "DAI",
+   "direction": "out",
+   "amount": 10782.1222435,
+   "usd": 10782.1222435,
+   "tx": "0x67dbdda11dce338011b1335fdae5033b2abc37fcacd39b7ee69f39c44b16a033",
+   "log_index": 642,
+   "counterparty": "0x0000000000000000000000000000000000000000"
+  },
+  {
+   "ts": 1779029675,
+   "block": 25115638,
+   "token": "tBTC",
+   "direction": "out",
+   "amount": 0.01952411,
+   "usd": 1526.158117199892,
+   "tx": "0xb0c494c8899061d1ee2e94642f03baad89f74679c2abd9499544d024e21e9556",
+   "log_index": 615,
+   "counterparty": "0xc229ea150f397c423df9818deaa7e4c12a80ca0b"
+  },
+  {
+   "ts": 1779062123,
+   "block": 25118335,
+   "token": "tBTC",
+   "direction": "out",
+   "amount": 103.56766017,
+   "usd": 8095663.528214369,
+   "tx": "0x6990f01720f57fc515d0e976a0c4f8157e0a9529194c4c15d190e98d087eb321",
+   "log_index": 547,
+   "counterparty": "0x65cb8b128bf6e690761044cceca422bb239c25f9"
+  },
+  {
+   "ts": 1779062123,
+   "block": 25118335,
+   "token": "USDC",
+   "direction": "out",
+   "amount": 147658.836798,
+   "usd": 147658.836798,
+   "tx": "0x6990f01720f57fc515d0e976a0c4f8157e0a9529194c4c15d190e98d087eb321",
+   "log_index": 548,
+   "counterparty": "0x65cb8b128bf6e690761044cceca422bb239c25f9"
+  },
+  {
+   "ts": 1779068531,
+   "block": 25118868,
+   "token": "DAI",
+   "direction": "in",
+   "amount": 7.0,
+   "usd": 7.0,
+   "tx": "0x1772e15732ce9fdc5d47b59beb0a3da120f9a22eeef2f5adb89ae16a0df80d1f",
+   "log_index": 366,
+   "counterparty": "0x3f06912a2ccb133d06694954e6945fee2efbe805"
+  },
+  {
+   "ts": 1779068531,
+   "block": 25118868,
+   "token": "DAI",
+   "direction": "out",
+   "amount": 7.0,
+   "usd": 7.0,
+   "tx": "0x1772e15732ce9fdc5d47b59beb0a3da120f9a22eeef2f5adb89ae16a0df80d1f",
+   "log_index": 370,
+   "counterparty": "0x0000000000000000000000000000000000000000"
+  }
+ ]
+}

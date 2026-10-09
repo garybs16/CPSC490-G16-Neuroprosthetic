@@ -1,0 +1,15 @@
+key,floor_share,current (any rule pages) | before_share,current (any rule pages) | families,REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile) | before_share,REC: recommended (huge|size page alone; else >=2 of fresh/net1h/conc/crowd/spike in 30 min; pool profile) | families,"current, z 10, $1M floor, burst n30 | before_share","current, z 10, $1M floor, burst n30 | families","current rules, page only if >=2 agree | before_share","current rules, page only if >=2 agree | families"
+force-bridge-2025,0.724,0.724,net1h+spike,0.724,conc+fresh+huge+net1h,0.724,net1h,0.724,net1h+spike
+heco-2023,0.644,0.644,net1h+size+spike,0.644,conc+fresh+huge+net1h+size+spike,0.644,net1h+size+spike,0.644,net1h+size+spike
+kelp-2026,1.0,1.0,net1h+size+spike,1.0,conc+fresh+huge+net1h+size+spike,1.0,net1h+size+spike,1.0,net1h+size+spike
+poly-2021,0.369,0.369,net1h+size+spike,0.369,conc+fresh+net1h+size+spike,0.369,net1h+size+spike,0.369,net1h+size+spike
+poly-2023,0.981,0.981,net1h+size+spike,0.981,conc+fresh+net1h+size,0.981,net1h+size,0.981,net1h+size+spike
+ronin-2024,1.0,1.0,net1h+size+spike,1.0,conc+fresh,1.0,net1h+size,1.0,net1h+size+spike
+shibarium-2025,0.619,0.619,net1h+size+spike,0.619,conc+fresh+huge+net1h+size,0.619,net1h+size,0.619,net1h+size+spike
+verus-2026,1.0,1.0,net1h+size+spike,1.0,conc+fresh+huge+net1h+size,1.0,net1h+size,1.0,net1h+size+spike
+xbridge-2024,1.0,1.0,net1h+spike,1.0,conc+fresh+huge+net1h,1.0,net1h,1.0,net1h+spike
+harmony-2022,0.541,0.541,net1h+size+spike,0.541,conc+fresh+huge+net1h+size+spike,0.541,net1h+size+spike,0.541,net1h+size+spike
+multichain-2023,0.249,0.249,net1h+size+spike,0.249,conc+fresh+net1h+size+spike,0.249,net1h+size+spike,0.249,net1h+size+spike
+nomad-2022,0.095,0.095,spike,0.095,fresh+spike,0.095,net1h,0.095,net1h+spike
+orbit-2023,0.167,0.167,net1h+size+spike,0.167,conc+fresh+net1h+size+spike,0.167,net1h+size+spike,0.167,net1h+size+spike
+ronin-2022,0.953,0.953,net1h+size+spike,0.953,fresh+huge+net1h+size+spike,0.953,net1h+size+spike,0.953,net1h+size+spike

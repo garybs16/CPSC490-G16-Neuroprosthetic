@@ -1,0 +1,134 @@
+{
+ "rule": "choose on 13 hacks + FA windows minus the held-out hack's baseline; objective (misses, excess $, FA) subject to pooled pages/bridge-week <= 0.5 and every non-pool window <= 1/week",
+ "detected": 14,
+ "at_floor": 13,
+ "n": 14,
+ "cases": [
+  {
+   "held_out": "force-bridge-2025",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 0.724,
+   "floor_share": 0.724,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  },
+  {
+   "held_out": "heco-2023",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 0.644,
+   "floor_share": 0.644,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  },
+  {
+   "held_out": "kelp-2026",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 1.0,
+   "floor_share": 1.0,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  },
+  {
+   "held_out": "poly-2021",
+   "chosen": "size 0.05 fresh 0.01 net1h 0.1 crowd 5 spike None win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 0.369,
+   "floor_share": 0.369,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 1.28
+  },
+  {
+   "held_out": "poly-2023",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 0.981,
+   "floor_share": 0.981,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  },
+  {
+   "held_out": "ronin-2024",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 1.0,
+   "floor_share": 1.0,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  },
+  {
+   "held_out": "shibarium-2025",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 0.619,
+   "floor_share": 0.619,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  },
+  {
+   "held_out": "verus-2026",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 1.0,
+   "floor_share": 1.0,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  },
+  {
+   "held_out": "xbridge-2024",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 1.0,
+   "floor_share": 1.0,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  },
+  {
+   "held_out": "harmony-2022",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 0.541,
+   "floor_share": 0.541,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.64
+  },
+  {
+   "held_out": "multichain-2023",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 0.249,
+   "floor_share": 0.249,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  },
+  {
+   "held_out": "nomad-2022",
+   "chosen": "size 0.05 fresh None net1h 0.1 crowd None spike None win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 0.357,
+   "floor_share": 0.095,
+   "at_floor": false,
+   "held_out_baseline_pages_per_week": 0.64
+  },
+  {
+   "held_out": "orbit-2023",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 0.167,
+   "floor_share": 0.167,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  },
+  {
+   "held_out": "ronin-2022",
+   "chosen": "size 0.05 fresh 0.005 net1h 0.1 crowd None spike 10.0 win 600 floor 1e+06",
+   "detected": true,
+   "before_share": 0.953,
+   "floor_share": 0.953,
+   "at_floor": true,
+   "held_out_baseline_pages_per_week": 0.0
+  }
+ ]
+}

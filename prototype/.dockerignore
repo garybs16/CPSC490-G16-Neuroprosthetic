@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+tests/
+run.py
+run_report.txt
+.env
+.env.*
+bridgewatch.db*
+*.db-wal
+*.db-shm
+Dockerfile*
+results/

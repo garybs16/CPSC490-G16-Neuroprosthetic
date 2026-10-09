@@ -1,0 +1,523 @@
+{
+ "case": {
+  "key": "xbridge-2024",
+  "title": "XBridge, Ethereum, 24 Apr 2024 (listToken logic flaw)",
+  "chain": "ethereum",
+  "vault": "0x47ddb6a433b76117a98fbeab5320d8b67d468e31",
+  "tokens": [
+   [
+    "0x19ae49b9f38dd836317363839a5f6bfbfa7e319a",
+    "STC",
+    9
+   ],
+   [
+    "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "USDT",
+    6
+   ],
+   [
+    "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "USDC",
+    6
+   ],
+   [
+    "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "WETH",
+    18
+   ]
+  ],
+  "start_block": 19623698,
+  "end_block": 19725000,
+  "price_block": 19723706,
+  "period": "hack: baseline before the incident, then the drain",
+  "eth_usd_feed": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+  "btc_usd_feed": "0xF4030086522a5bEEa4988F8cA5B36dbC97BeE88c",
+  "hack_window": [
+   19723706,
+   19725000
+  ],
+  "first_theft_any_block": 19723706,
+  "first_theft_tx": "0x903d88a92cbc0165a7f662305ac1bff97430dbcccaa0fe71e101e18aa9109c92",
+  "first_theft_block": 19723706,
+  "theft_min_usd": 50000,
+  "attacker_addresses": [
+   "0x0cfc28d16d07219249c6d6d6ae24e7132ee4caa7"
+  ],
+  "references": [
+   "https://github.com/SunWeb3Sec/DeFiHackLabs/blob/main/src/test/2024-04/XBridge_exp.sol",
+   "https://twitter.com/CyversAlerts/status/1783045506471432610"
+  ],
+  "notes": "Attacker re-listed STC (tx 0xe09d350d...) then withdrew 482,589,887 STC (block 19,723,706), 1,372,522,851 SRLTY (19,723,805) and 18,450,672 Mazi (19,723,925).",
+  "coverage": "Tracked: STC (priced from its Uniswap-V2 WETH pair: thin-market estimate), USDT, USDC, WETH. Not tracked: SRLTY (no V2 pair) and Mazi (empty pair) - no defensible price. Small case (~$0.8M tracked)."
+ },
+ "fetched": "2026-10-08T04:01:52+00:00",
+ "source": "Ethereum mainnet via public JSON-RPC (https://rpc.mevblocker.io, https://gateway.tenderly.co); built by research/bridge-hacks/03-onchain-data/fetch_more.py",
+ "prices_usd": {
+  "STC": 0.0016464458847562909,
+  "USDT": 1.0,
+  "USDC": 1.0,
+  "WETH": 3258.5173
+ },
+ "price_note": "STC ESTIMATE from V2 pair 0x3b6ab288f82a3972b9d71bd49552cc9ff649b543 (77.0 WETH reserve): 5.05275e-07 ETH x ETH/USD 3,258.52 = $0.00164645; USDT fixed $1; USDC fixed $1; WETH at Chainlink ETH / USD 3,258.52 (answers at block 19723706). Native ETH is not included except where it passed through WETH (rows with kind weth_wrap / weth_unwrap).",
+ "start_ts": 1712733575,
+ "end_ts": 1713958823,
+ "balances_at_start": {
+  "STC": 8432075.72295263,
+  "USDT": 0.0,
+  "USDC": 0.0,
+  "WETH": 0.0
+ },
+ "transfers": [
+  {
+   "ts": 1712747339,
+   "block": 19624836,
+   "token": "STC",
+   "direction": "out",
+   "amount": 111688.70526,
+   "usd": 183.8894091490853,
+   "tx": "0x56874e23ceec8d1613d6a927753e56087f5e73eeffaa29afb1ffe38793abf7a4",
+   "log_index": 7,
+   "counterparty": "0xcdcaf019c41e2d72eb4b5052189cf3bcec2dc57a"
+  },
+  {
+   "ts": 1712869727,
+   "block": 19634958,
+   "token": "STC",
+   "direction": "in",
+   "amount": 40840.793,
+   "usd": 67.24215556503353,
+   "tx": "0x087caa8f91c10e814d7a27c77d305104963ee3532a975586908e492ab19d64ad",
+   "log_index": 366,
+   "counterparty": "0x80caa0248ae62117b83626615ca543a6c7781d58"
+  },
+  {
+   "ts": 1712893799,
+   "block": 19636953,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1994232.24,
+   "usd": 3283.3954647963196,
+   "tx": "0xb912730235d2726744c90324793fa3d69d711877e5874bdd35e97fa0015f1edf",
+   "log_index": 57,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1712899571,
+   "block": 19637427,
+   "token": "STC",
+   "direction": "out",
+   "amount": 2043271.89,
+   "usd": 3364.1365947287086,
+   "tx": "0x502f97fbd4c7cf334b8736fd78ea5d14e3b935656d8890e4526e23fa9f685a5a",
+   "log_index": 18,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1712991671,
+   "block": 19645031,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1812706.83,
+   "usd": 2984.5237005231215,
+   "tx": "0x5ed14d7558e37bc25d2319a2450c0cae76e873cb9a15572505c71d652c1ee48c",
+   "log_index": 67,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1712991671,
+   "block": 19645031,
+   "token": "STC",
+   "direction": "out",
+   "amount": 60723.86066,
+   "usd": 99.97855049017143,
+   "tx": "0x5ed14d7558e37bc25d2319a2450c0cae76e873cb9a15572505c71d652c1ee48c",
+   "log_index": 69,
+   "counterparty": "0x3b6ab288f82a3972b9d71bd49552cc9ff649b543"
+  },
+  {
+   "ts": 1713014087,
+   "block": 19646882,
+   "token": "STC",
+   "direction": "in",
+   "amount": 1000.0,
+   "usd": 1.6464458847562908,
+   "tx": "0x81f955668118873f0df0f4323107794d5fb2421f3b44ad5a5918db5eebfa2f41",
+   "log_index": 60,
+   "counterparty": "0x642c616082dcdb2d8d11c4d690973ec841815515"
+  },
+  {
+   "ts": 1713016307,
+   "block": 19647064,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1910700.0,
+   "usd": 3145.864152003845,
+   "tx": "0x5b5d2fe7ebe7acc2c95a8d580ad31fd54279326cd1e180fd7d48f35ed771c81c",
+   "log_index": 243,
+   "counterparty": "0xb34f709d19b66454909058fd62ce0507804a9197"
+  },
+  {
+   "ts": 1713092855,
+   "block": 19653371,
+   "token": "STC",
+   "direction": "out",
+   "amount": 990.0,
+   "usd": 1.629981425908728,
+   "tx": "0x79f0b2163df24743f0a0240b791ec19372f40566f512e843003a797b3c403672",
+   "log_index": 65,
+   "counterparty": "0x4b93f2c1234a7b61038f457bf5573372855ce49a"
+  },
+  {
+   "ts": 1713093203,
+   "block": 19653400,
+   "token": "STC",
+   "direction": "in",
+   "amount": 1980.0,
+   "usd": 3.259962851817456,
+   "tx": "0x9c5f6ecf37dfc611fe830951f1b0137e1c58809c20ad557fb02a9e1a0ada93fc",
+   "log_index": 219,
+   "counterparty": "0x4b93f2c1234a7b61038f457bf5573372855ce49a"
+  },
+  {
+   "ts": 1713109451,
+   "block": 19654747,
+   "token": "STC",
+   "direction": "out",
+   "amount": 42131.0,
+   "usd": 69.3664115706673,
+   "tx": "0x7c6a07a5006bce713e006eca9c4d696b5bac2bbdcde35d3a8b338bc85ba15e76",
+   "log_index": 499,
+   "counterparty": "0x35ab35628b60046a407432e74c333dffe040dd36"
+  },
+  {
+   "ts": 1713109955,
+   "block": 19654787,
+   "token": "STC",
+   "direction": "in",
+   "amount": 42131.0,
+   "usd": 69.3664115706673,
+   "tx": "0x953ecfcdca3bbf86e11d9c40ef3d676a86581f643d7a2e39a5c6691b4fb47c24",
+   "log_index": 666,
+   "counterparty": "0x35ab35628b60046a407432e74c333dffe040dd36"
+  },
+  {
+   "ts": 1713269135,
+   "block": 19667928,
+   "token": "STC",
+   "direction": "in",
+   "amount": 500000000.0,
+   "usd": 823222.9423781454,
+   "tx": "0xde5feee0c76019e1d98aa11740d76a23d4e9ae1fb6953d2fdb1db9d07d08f4d7",
+   "log_index": 141,
+   "counterparty": "0xfe6bb1654227fa21b8a65a6a89f6489fc3cc2fcd"
+  },
+  {
+   "ts": 1713269495,
+   "block": 19667958,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1611095.31,
+   "usd": 2652.5812430996607,
+   "tx": "0xfddc2c1c640ce8a9583c7ce6109d979f14ff7a1fe32ef9adc95e8b4115ba1286",
+   "log_index": 65,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1713269663,
+   "block": 19667972,
+   "token": "STC",
+   "direction": "in",
+   "amount": 10.0,
+   "usd": 0.01646445884756291,
+   "tx": "0x98a68af32f64e1bbc964e2027e73c4a644ac51f4983d42ded82f73d56b37507c",
+   "log_index": 83,
+   "counterparty": "0x20e60f88608824dba3b3acdc66fd30763ade7108"
+  },
+  {
+   "ts": 1713433703,
+   "block": 19681550,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1815782.76,
+   "usd": 2989.58805281342,
+   "tx": "0x651ba27365a35bfb13ec2f23ba693f9444d98d1617385a4d2a381f7910a965cf",
+   "log_index": 69,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1713469415,
+   "block": 19684502,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1636153.2,
+   "usd": 2693.8377029708363,
+   "tx": "0x134ca61126348b976fa762e25fce06613d8e186b052e96b40164528f62acb04d",
+   "log_index": 199,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1713469415,
+   "block": 19684502,
+   "token": "STC",
+   "direction": "out",
+   "amount": 70451.73,
+   "usd": 115.99496093246131,
+   "tx": "0x134ca61126348b976fa762e25fce06613d8e186b052e96b40164528f62acb04d",
+   "log_index": 201,
+   "counterparty": "0x3b6ab288f82a3972b9d71bd49552cc9ff649b543"
+  },
+  {
+   "ts": 1713509303,
+   "block": 19687801,
+   "token": "STC",
+   "direction": "out",
+   "amount": 22232.7,
+   "usd": 36.60493742202119,
+   "tx": "0x12b7be610eb688e8b2fe3145d2f19ac3101e02d32bff120163f4e0d23738e1dc",
+   "log_index": 113,
+   "counterparty": "0x7f0a3d357ca31417c6172dbf01a3990c17daf746"
+  },
+  {
+   "ts": 1713584315,
+   "block": 19693997,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1126782.36,
+   "usd": 1855.1861796379817,
+   "tx": "0xc63ca12f9a63d5122bacb78ebbfca075765df6ae9308f0100fa36d0471f8c59d",
+   "log_index": 397,
+   "counterparty": "0x64a70dda780efb7b766bf138e1106fc67760891e"
+  },
+  {
+   "ts": 1713622607,
+   "block": 19697162,
+   "token": "STC",
+   "direction": "in",
+   "amount": 305999.806,
+   "usd": 503.81212132492334,
+   "tx": "0xe02a3a669696a3266aa9162f23428595166e60dd34403c39a8dfdd53d8b84c7e",
+   "log_index": 428,
+   "counterparty": "0x1f230e0cdada92b180afbc9ec60feb6b29ae0d7e"
+  },
+  {
+   "ts": 1713630995,
+   "block": 19697857,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1148697.99,
+   "usd": 1891.269078463323,
+   "tx": "0x000a04115ccf749adbcb388b17645177c5dadd4eb78d41cbd23cda905871673b",
+   "log_index": 165,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1713636851,
+   "block": 19698342,
+   "token": "STC",
+   "direction": "out",
+   "amount": 748756.72476,
+   "usd": 1232.7874281647007,
+   "tx": "0x4fe883e38e6bc32037c5ec2180d4efe41990b036e15563ef85f9c6ddc4c5fde4",
+   "log_index": 196,
+   "counterparty": "0x80caa0248ae62117b83626615ca543a6c7781d58"
+  },
+  {
+   "ts": 1713637187,
+   "block": 19698370,
+   "token": "STC",
+   "direction": "in",
+   "amount": 770618.492,
+   "usd": 1268.7816448704987,
+   "tx": "0x5e7e5509814e74d0bcccbdd604ae1c1cbbf20c086b4fd5fd426d051c4da28faf",
+   "log_index": 522,
+   "counterparty": "0x80caa0248ae62117b83626615ca543a6c7781d58"
+  },
+  {
+   "ts": 1713638219,
+   "block": 19698456,
+   "token": "STC",
+   "direction": "out",
+   "amount": 268533.75582,
+   "usd": 442.1262971879897,
+   "tx": "0xf86fe07bc94bde5daf370709ef66450b97fb7e5ea3a6e12e5322308eafe0ed40",
+   "log_index": 408,
+   "counterparty": "0x53fe284f21e0453c4672c82bfabe3f6c3a4b503f"
+  },
+  {
+   "ts": 1713643955,
+   "block": 19698933,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1856902.41,
+   "usd": 3057.2893313385384,
+   "tx": "0xdc54406cec75f771ebb0312e739c1a9a4ba7274bea9102bb4d7d100ad246498f",
+   "log_index": 214,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1713698603,
+   "block": 19703456,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1199729.52,
+   "usd": 1975.28973102464,
+   "tx": "0x40d9cd32280c731ea347971356d0a29d5410dc61e493d038224b47a5f9b4e7f9",
+   "log_index": 1327,
+   "counterparty": "0x2f834d6e17fc700dc4044f69b3d24862e85e6e6d"
+  },
+  {
+   "ts": 1713753995,
+   "block": 19708049,
+   "token": "STC",
+   "direction": "out",
+   "amount": 990000.0,
+   "usd": 1629.981425908728,
+   "tx": "0x952e120da9bf895619a84749d198a64a95929e21a8b649205019652dcef4fd19",
+   "log_index": 125,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1713753995,
+   "block": 19708049,
+   "token": "STC",
+   "direction": "out",
+   "amount": 74135.38142,
+   "usd": 122.05989365379699,
+   "tx": "0x952e120da9bf895619a84749d198a64a95929e21a8b649205019652dcef4fd19",
+   "log_index": 127,
+   "counterparty": "0x3b6ab288f82a3972b9d71bd49552cc9ff649b543"
+  },
+  {
+   "ts": 1713836195,
+   "block": 19714852,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1425618.81,
+   "usd": 2347.2042229556605,
+   "tx": "0xd544f3a13d2e5e37e62ff4981749bd3900fdc4bd78fd524600ab6ddf8e314ce1",
+   "log_index": 62,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1713844475,
+   "block": 19715541,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1392783.48,
+   "usd": 2293.1426290025456,
+   "tx": "0x6bcb07665335f9de1e7d5a113032ee70fb4eb40a9396719d390139254724f7fa",
+   "log_index": 153,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1713876731,
+   "block": 19718212,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1520393.49,
+   "usd": 2503.245604820755,
+   "tx": "0x5e82264b08987c464872d4257f93c922223797f5c0bf6b98c226215c36852649",
+   "log_index": 151,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1713879275,
+   "block": 19718423,
+   "token": "STC",
+   "direction": "out",
+   "amount": 1089000.0,
+   "usd": 1792.9795684996006,
+   "tx": "0xe5dfc8b57222c9e7b5202ff64d0f3d029f5e5457231790da016d82192b58f790",
+   "log_index": 285,
+   "counterparty": "0xc5babc97d7754bd28a0ae811272c980979b3d976"
+  },
+  {
+   "ts": 1713881075,
+   "block": 19718570,
+   "token": "STC",
+   "direction": "out",
+   "amount": 966187.07856,
+   "usd": 1590.7747393998152,
+   "tx": "0xfd1ec10b9bc7ada55fc1d69544142ca8120e24cd94f1f6de979a54acf1e7c7c1",
+   "log_index": 94,
+   "counterparty": "0x1e5dd3ba93e4ce470eab6f573156864de0e3efc0"
+  },
+  {
+   "ts": 1713881075,
+   "block": 19718570,
+   "token": "STC",
+   "direction": "out",
+   "amount": 64585.68544,
+   "usd": 106.3368360068523,
+   "tx": "0xfd1ec10b9bc7ada55fc1d69544142ca8120e24cd94f1f6de979a54acf1e7c7c1",
+   "log_index": 96,
+   "counterparty": "0x3b6ab288f82a3972b9d71bd49552cc9ff649b543"
+  },
+  {
+   "ts": 1713901355,
+   "block": 19720252,
+   "token": "STC",
+   "direction": "out",
+   "amount": 2.0,
+   "usd": 0.0032928917695125817,
+   "tx": "0x2a9e77ab48af72f794e58bfa7ef38c173a29ade22907ab249e91fe883f3be10b",
+   "log_index": 58,
+   "counterparty": "0x2ccf0b4317a52d44b83c2425903b0f9669e84646"
+  },
+  {
+   "ts": 1713901595,
+   "block": 19720272,
+   "token": "STC",
+   "direction": "out",
+   "amount": 2.0,
+   "usd": 0.0032928917695125817,
+   "tx": "0xc84f0f017db27157979f6993d964576e43dc26b865edf07fa7e5b57c5ed861d8",
+   "log_index": 46,
+   "counterparty": "0x2ccf0b4317a52d44b83c2425903b0f9669e84646"
+  },
+  {
+   "ts": 1713901967,
+   "block": 19720303,
+   "token": "STC",
+   "direction": "in",
+   "amount": 2.0,
+   "usd": 0.0032928917695125817,
+   "tx": "0x8eee11e993f1fe347f5dedfff61acea7cdcbcaa3169aae89324d0e2cbfd6c5af",
+   "log_index": 112,
+   "counterparty": "0xfe6bb1654227fa21b8a65a6a89f6489fc3cc2fcd"
+  },
+  {
+   "ts": 1713905891,
+   "block": 19720625,
+   "token": "STC",
+   "direction": "out",
+   "amount": 500.0,
+   "usd": 0.8232229423781454,
+   "tx": "0x959791e67f8b38d81c10c4083daac6099498beabdfd18886ff939a1e30f3128a",
+   "log_index": 15,
+   "counterparty": "0x2ccf0b4317a52d44b83c2425903b0f9669e84646"
+  },
+  {
+   "ts": 1713912971,
+   "block": 19721213,
+   "token": "STC",
+   "direction": "in",
+   "amount": 0.001,
+   "usd": 1.646445884756291e-06,
+   "tx": "0x821bba2bec123b9a3e725dd1dd031fc88c0f8305e25036369e01b9e58107650e",
+   "log_index": 86,
+   "counterparty": "0x0ac6924ea443ac45ee9cbf44be16c1dfdf08c42c"
+  },
+  {
+   "ts": 1713943175,
+   "block": 19723706,
+   "token": "STC",
+   "direction": "out",
+   "amount": 482589886.90303266,
+   "usd": 794558.133316502,
+   "tx": "0x903d88a92cbc0165a7f662305ac1bff97430dbcccaa0fe71e101e18aa9109c92",
+   "log_index": 397,
+   "counterparty": "0x0cfc28d16d07219249c6d6d6ae24e7132ee4caa7"
+  }
+ ]
+}
