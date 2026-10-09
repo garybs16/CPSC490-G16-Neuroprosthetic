@@ -1,303 +1,637 @@
-# Project Proposal — Phenoscope
+# Project Proposal — BridgeWatch: Real-Time Detection of Cross-Chain Bridge Exploits
 
 **Department of Computer Science**
 **CPSC 490 Undergraduate Seminar in Computer Science — Proposal for Capstone Project**
 
-**Group 〈N〉 — neuroprosthetic** · Sponsor: 〈RTX-3 / EL-1 / SNX-n / independent〉
+**Group 16 — Neuroprosthetic** · Sponsor: SonarX, project SNX-3 · Mentor: Erel Saul
 Authors: Samuel, Gary Bennet (garybs16); Bowen, Jake (JakeBowen2005);
-Jaglam, Avni (Avnijaglan19); Acuna, Isaac (1600isad)
-Date: 〈YYYY-MM-DD〉
+Jaglan, Avni (Avnijaglan19); Acuna, Isaac (1600isad)
+Faculty advisor: Kyoung Shin · Semester: Fall 2026
+Proposal date: 2026-10-04
+Repository: https://github.com/garybs16/CPSC490-G16-Neuroprosthetic
 
-> **This file is the proposal document, not a README.** Its section numbers,
-> titles, and guidance are copied from the course Word template, so it
-> converts cleanly for Canvas submission. Write continuous academic prose —
-> no task lists, no emoji, no repo jargon.
->
-> Each section below opens with the template's own guidance in a quote block.
-> **Delete the quote blocks and every 〈bracket〉 before submitting.**
->
-> **Getting this into the Word template for Canvas.** The template numbers
-> its headings **automatically** (a multilevel list: top-level sections at
-> level 1, *Related Work* and *Problem Statements* at level 2). The numbers
-> typed below exist so the repo copy is readable and checkable — so when you
-> move the text into Word, do not end up with both sets.
->
-> The reliable route, and the one most teams should use: **open the course
-> template and paste your prose section by section**, leaving Word's own
-> numbering to do the numbering. Ten minutes, no surprises.
->
-> If you prefer to convert, `pandoc` can do it (install with
-> `winget install pandoc`):
->
->     pandoc proposal/proposal.md -o proposal.docx --reference-doc="CPSC 490 Project Proposal Template Fall 2026.docx"
->
-> Then in Word: delete the typed `0.` / `1.` / `1.1` prefixes (Word re-adds
-> them from the list), and set *Related Work* and *Problem Statements* to the
-> template's level-2 heading so they number as 1.1 and 1.2. Check figure
-> placement, then submit.
->
-> Either way, keep this Markdown copy current — it is what peer review and CI
-> can actually read. If your team writes in Word instead, commit the `.docx`
-> here as well.
+> **This file is the proposal document, not a README.** It is the Markdown
+> copy of the proposal the team submitted on 4 October 2026, with the course
+> template's section numbering. The only additions are the issue links in
+> Section 2 and the filed tasks in Section 4 (Table 10), which tie the
+> document to the project board. Keep this copy current: it is what peer
+> review and CI can read.
 
 ---
 
 ## 0. Abstract
 
-> The primary purpose of abstract is to help the reader understand the main
-> message of current document (proposal in this case) without reading the
-> entire document. Therefore an abstract should include at least one or two
-> paragraph of background (or motivation) information for the project, a
-> brief description of the problem you are trying to solve in this proposal,
-> a proposed ideas or solutions, the significance of your proposed idea
-> elaborating why the proposed idea is non-trivial, significant, or
-> beneficial in one or two paragraphs, the project goals and outcomes in one
-> paragraph, and a brief description of what you will discuss in this
-> proposal, giving a brief outline of this document in 1-2 sentences in one
-> paragraph. Abstract should not exceed one page. Any abstract exceeded
-> one-page limit must be shortened.
+Bridges in crypto settings allow people to move cryptocurrency from one
+blockchain to another. Each bridge keeps everyone’s deposited money in one
+place on the blockchain, called the vault. Vaults often hold hundreds of
+millions of dollars at a time, so hackers target them deliberately. Bridge
+hacks had cost about $2 billion by August 2022 [1], and the Orbit Chain
+bridge lost about $82 million on 31 December 2023 [2], a sign of a much
+deeper problem in cryptocurrency security.
 
-〈Your abstract. Write it last.〉
+Every blockchain transaction is public, so a hack can be seen while it
+happens, which is beneficial. The problem is spotting a hack/breach quickly
+without raising a false alarm every time someone makes a large, honest
+withdrawal. This is non-trivial because normal activity varies widely by
+bridge and by hour, and a detector that raises alarms too often is ignored
+while one that waits too long is useless. Our sponsor, SonarX, which indexes
+data from more than 130 blockchains [3], asked for a tool that does this
+efficiently.
+
+We propose BridgeWatch, an alarm system for bridge vaults to protect against
+these types of vulnerabilities. Our application will learn how much money
+normally leaves each vault at each hour of the day. It will then notice when
+withdrawals jump far above normal, and will send an alert that explains the
+problem in one sentence so that it stays uncluttered and gets straight to
+the point.
+
+Our goals are to learn what normal activity looks like for each major
+bridge, to catch hacks early with few false alarms, and to give the operator
+a dashboard they can act on, while making sure the system works correctly
+with few bugs. We will test BridgeWatch by replaying real past hacks, such
+as the Orbit Chain hack, and measure how quickly it alerts and how often it
+raises false alarms on normal days. By the end of CPSC 491, we will deliver
+a working alert dashboard for the major bridges, tested on past hacks, with
+a measured false-alarm rate for the application.
+
+The rest of this proposal explains how bridges work and why they are
+attacked, reviews existing work, states the problems we address, and then
+presents our goals, approach, required resources, expected outcomes, and
+timeline.
 
 ## 1. Introduction
 
-> Describe the necessary background on the project field to help the reader
-> understand the field. Assume the reader has B.S. degree in computer science
-> but not necessary knowledgeable in the selected area. You may also briefly
-> describe motivation of the project if any.
->
-> Specify the problem identified and to be solved in this project, the
-> importance or usefulness of the problem solving or project. Further
-> describes what makes your proposal different from existing ones.
+**Blockchains and bridges.** The main definition of a blockchain is that it
+is a public record of transactions that no single company controls.
+Ethereum, Arbitrum, Base and OP Mainnet are separate blockchains, and money
+on one cannot be used directly on another. A bridge solves this. To move
+1 ETH from Ethereum to Arbitrum, a user deposits it into the bridge’s vault
+on Ethereum and receives 1 ETH on Arbitrum. When the user moves it back, the
+vault releases the original ETH.
 
-〈Your introduction.〉
+The programs that run on a blockchain are called smart contracts. A bridge
+vault is a smart contract, and every time tokens enter or leave it, the
+blockchain keeps a permanent, public record of the transfer: which token
+moved, how much, from which address and to which address. These records are
+the raw material for BridgeWatch. Anyone can read them, but reading them
+across many blockchains at once is a large data problem. Our sponsor,
+SonarX, collects and organizes this data for more than 130 blockchains [3]
+and delivers it to its customers through data warehouses, files and
+real-time streams [4].
+
+Bridges differ in how they decide that a withdrawal is legitimate. In many
+bridges, a small group of approvers, called signers or validators, must sign
+off before the vault pays out. In others, the bridge relies on a program
+that checks a mathematical proof that a deposit really happened on the other
+blockchain [5]. Either way, the vault holds real assets on one side and
+trusts a message about the other side. The largest bridges each hold
+billions of dollars in this way [6].
+
+**Why vaults get hacked.** Thousands of people use the same bridge, so the
+vault holds everyone’s money in one place. The vault pays out only when the
+bridge approves a withdrawal. A hacker who steals the approval keys, or
+finds a bug in the approval check, can make the vault pay them instead [5].
+Table 1 lists several well-known bridge hacks. About half of them were
+caused by stolen keys rather than by a bug in the code, which means that
+reviewing the bridge’s code could not have caught them, but watching the
+money leave the vault could have revealed them.
+
+**What a hack looks like.** In the Orbit Chain hack, attackers who
+reportedly had stolen the bridge’s keys took about $82 million [2]. The
+attackers withdrew about 9,500 ETH, 30 million USDT, 10 million USDC,
+10 million DAI and 231 WBTC from the bridge’s Ethereum vault [2]. Every one
+of these withdrawals was public, so anyone watching could have seen it
+happen. The Ronin hack shows the cost of not watching: the stolen funds left
+the vault in only two transactions, yet nobody noticed for about six
+days [7].
+
+*Table 1. Notable cross-chain bridge hacks.*
+
+| Bridge | Date | Approx. loss | What happened |
+|---|---|---|---|
+| Ronin | Mar 2022 | $625 million | Attackers controlled five of nine validator keys and withdrew ETH and USDC; the theft was noticed about six days later [7]. |
+| Wormhole | Feb 2022 | $320 million | A flaw in signature checking on Solana let the attacker create 120,000 wrapped ETH with nothing locked behind it [8]. |
+| Nomad | Aug 2022 | $190 million | A faulty upgrade made any message look valid, and many copycat addresses drained the bridge [9]. |
+| Harmony Horizon | Jun 2022 | $100 million | Two of the five keys of a two-of-five multisignature wallet were compromised [10]. |
+| BNB Bridge | Oct 2022 | $570 million | Forged proofs let the attacker create two million BNB [11]. |
+| Multichain | Jul 2023 | $130 million | Large unannounced outflows left several of its vaults [12]. |
+| Orbit Chain | Dec 2023 | $82 million | Compromised private keys were used to empty the Ethereum vault [2]. |
+| KelpDAO (LayerZero) | Apr 2026 | $292 million | A fake message released tokens on Ethereum with no matching burn on the source chain [13]. |
+
+**Why hacks are hard to catch.** Normal activity changes by bridge, by hour
+and by day. A large, honest withdrawal can look exactly like the start of a
+hack. An alarm that goes off too often gets ignored, and one that waits too
+long is useless. The operators who need this tool are those who respond to
+attacks, such as a bridge’s security team. Our sponsor names the same two
+difficulties as the heart of the project: deciding what counts as normal,
+and keeping the false-alarm rate low enough that a person will keep paying
+attention.
+
+**What BridgeWatch does differently.** Unlike volunteer-written Forta
+monitoring bots [14] or closed commercial services such as Hypernative [15]
+and Hexagate [16], BridgeWatch will combine four properties. It will learn
+each bridge’s own normal pattern for each hour of the day. It will check
+every withdrawal as soon as it is confirmed. It will explain every alert in
+one plain sentence. Finally, it will measure and report how often it raises
+false alarms, so an operator can judge whether to trust it.
+
+Table 2 defines the key terms used throughout this proposal.
+
+*Table 2. Key terms.*
+
+| Term | Meaning in this proposal |
+|---|---|
+| Blockchain | A public, permanent record of transactions (e.g., Ethereum) |
+| Smart contract | A program on a blockchain that runs automatically |
+| Bridge | A service that moves tokens between two blockchains |
+| Vault | The bridge’s smart contract that holds all deposited tokens |
+| Release (withdrawal) | Tokens leaving the vault |
+| Signers / keys | The approvers whose sign-off lets the vault release tokens |
+| Stablecoin | A token designed to stay worth $1 (USDT, USDC, DAI) |
+| WBTC | Wrapped Bitcoin: a token on Ethereum worth 1 Bitcoin |
+| Whale | A holder who legitimately moves very large amounts |
+| Drain | An attacker emptying a vault |
+| Baseline | What normal activity looks like for a bridge at a given hour |
+| False alarm | An alert when no attack is happening |
+| Operator | The person who watches BridgeWatch and responds to alerts |
 
 ### 1.1 Related Work
 
-> Describe the related or existing work in detail. This section is like a
-> survey on the selected problem or topic.
+**Research.** A survey by Zhang et al. lists 12 ways bridges can be attacked
+and 10 types of real attacks [5]. We use it to choose which attacks to test.
+Xscope [17] scans bridge transactions for three known types of bugs and
+found all known attacks on four bridges. It is a tool for finding known bug
+patterns rather than a live alarm, and it does not report a false-alarm
+rate. Liu et al. [18] showed that checking whether money in on one chain
+equals money out on the other would have identified every known attack in
+their dataset. This check needs data from both chains, and using it live
+requires bridges to change their code.
 
-〈Your survey. Cite with bracketed numbers matching §8 — every reference must
-be a source your team has actually read.〉
+XChainWatcher [19] is the closest research to our project. It matches each
+deposit on one chain with the corresponding withdrawal on the other and
+applies a set of rules to the matched pairs. When run on historical data
+from the Ronin and Nomad bridges, it flagged the attack transactions. Its
+strength is precision, because a withdrawal with no matching deposit is
+almost certainly an attack. Its cost is that each bridge must be decoded and
+matched on both chains, which is a large engineering effort per bridge.
 
-**Do a comparative analysis, not a list of summaries.** Find the existing
-ideas, products, papers, or tools that attack the same problem and compare
-them against each other on the dimensions that matter for your project, with
-honest pros and cons. Then say plainly what your project does differently and
-why that difference is worth the effort.
+**Free community tools.** Forta [14] offers bots written by volunteers that
+watch for draining and unusual activity, including a bot that compares the
+balances on the two sides of a bridge. Users must choose and adjust the bots
+themselves, and false-alarm rates are not reported.
 
-| Existing approach | What it does | Pros | Cons | Why ours differs |
+**Paid services.** Hypernative [15] and Hexagate [16] use machine learning
+and can spot an attack before its transactions are confirmed. They will
+likely perform better than a student project. However, they cost money,
+their methods are secret, and their accuracy claims cannot be checked by
+outsiders.
+
+*Table 3. Existing approaches compared with BridgeWatch.*
+
+| Approach | What it does | Pros | Cons | How BridgeWatch differs |
 |---|---|---|---|---|
-| 〈product / paper [1]〉 | 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 |
-| 〈product / paper [2]〉 | 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 |
-| 〈product / paper [3]〉 | 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 |
+| Bridge security survey [5] | Lists bridge attack types | Broad, organized view of attacks | Not a tool | We use it to pick attacks to test |
+| Xscope [17] | Scans for three known bug types | Found all known attacks on four bridges | Only finds bugs it knows; no live alerts | Watches money flow, so no bug list is needed; live alerts |
+| Accounting check [18] | Checks money in equals money out | Would have identified every attack in its dataset | Needs both chains’ data; bridges must change code | Uses this check where possible; otherwise watches one vault |
+| XChainWatcher [19] | Matches deposits to withdrawals across chains | Very precise; flagged Ronin and Nomad attacks | Heavy per-bridge decoding on both chains | Starts with one-sided vault monitoring that works for any vault |
+| Forta [14] | Volunteer-written monitoring bots | Free and open | User must set up bots; no false-alarm rates | Ready to use; measured false-alarm rate |
+| Hypernative [15] | Paid, machine learning, warns before funds move | Earliest warning | Paid, secret, unverifiable claims | Free, open, results anyone can check |
+| Hexagate [16] | Paid, machine learning, warns before funds move | Earliest warning | Paid, secret, unverifiable claims | Free, open, results anyone can check |
 
-〈Discuss the table in prose — the table is evidence, the paragraph is the
-argument. "Nothing like this exists" is almost never true and reads as a
-missing survey; if a close competitor exists, say so and explain why you are
-still building this.〉
+Taken together, these approaches either find known bugs, require heavy
+per-bridge engineering, leave tuning to the user, or keep their methods and
+accuracy private. We did not find a free, open tool that combines learning
+each bridge’s normal activity, live plain-language alerts, and a published
+false-alarm rate. BridgeWatch aims to fill that gap. It will not warn
+earlier than paid services that check transactions before they are
+confirmed, and it borrows the cross-chain accounting idea from Liu et al.
+and XChainWatcher wherever data from both chains is available.
 
 ### 1.2 Problem Statements
 
-> Briefly state the problem to solve in this project.
+SonarX describes the project as follows:
 
-〈Your problem statement(s), **concise** — a few sentences each, no
-background (that was §1) and no solution (that is §3). Number them P1, P2, …
-so later sections can refer back.〉
+> *Monitor cross-chain bridge activity across SonarX’s 130-plus chains and
+> detect the early signals of an exploit or drain in real time. Ingest
+> bridge transaction data, establish baseline flow patterns for the major
+> bridges, and build detection logic that fires the moment withdrawals or
+> liquidity movements deviate. Deliverable: an alerting dashboard that could
+> have caught recent bridge hacks as they unfolded. Note the two things that
+> make this hard and belong in your objectives: a baseline of normal, and a
+> false-alarm rate a human would tolerate.*
 
-**Every problem here must connect to the goals and objectives in §2, and
-every goal in §2 must trace back to a problem here.** A goal with no problem
-behind it is scope you invented; a problem with no goal is a problem you are
-not actually solving. Check both directions before you submit — this mapping
-is what the final project report is graded against.
+Our mentor at SonarX is Erel Saul. From this description, we identify four
+problems, summarized in Table 4.
 
-| Problem | Addressed by |
-|---|---|
-| P1 〈one line〉 | 〈Goal 1 (#n)〉 |
-| P2 〈one line〉 | 〈Goal 2 (#n)〉 |
+*Table 4. Problems and the goals that solve them.*
+
+| Problem | Why it matters | Solved by |
+|---|---|---|
+| P1. Nobody knows what “normal” looks like | A withdrawal is only suspicious compared with what is usual for that bridge at that hour. | Goal 1 |
+| P2. Hacks happen faster than people notice | A drain can empty a vault in a handful of withdrawals, and the Ronin theft went unnoticed for about six days [7]. Tomorrow’s report is too late. | Goal 2 |
+| P3. Too many false alarms get the tool ignored | Large honest withdrawals look like attacks. If the alarm rings too often, people stop listening. | Goal 2 |
+| P4. A warning only helps if someone understands it | The alert must reach a person who can act and say clearly what happened. | Goal 3 |
 
 ## 2. Goals and Objectives
 
-> Describe goals and objectives. Goals are general statements of what you are
-> trying to accomplish with the project or problems to solve. Objectives are
-> specific, measurable statements of what you want to complete to reach the
-> project goals. Most projects have 2-3 goals.
->
-> List the objectives for each goal. To write objectives, look at the goal
-> statement and list what you need to complete using action words like use
-> case names in order to meet the goal.
->
-> Note that the goals and objectives in a proposal will be an important
-> metric to evaluate whether or not you successfully finished your project
-> when you turn in your final project report.
+Each goal is tracked on the team’s GitHub board as an epic, and each
+objective as a user story. The numbers in the objectives are our proposed
+targets; we will confirm them with our SonarX mentor and update this section
+if they change. Throughout, *real time* means that BridgeWatch evaluates a
+withdrawal within one minute of the block that contains it being confirmed
+six blocks deep, which protects against short chain reorganizations.
 
-Each **goal** is tracked as an **Epic** issue and each **objective** as a
-**User Story** issue in the team repository (see the setup guide's *Epics and user stories* section).
-**Every epic and user story in the repository is linked from this section** —
-CI gate G8 fails if one exists that this section does not link. That is what
-keeps the goals in this document and the work on the board from drifting
-apart.
+**Goal 1: Learn what normal bridge activity looks like (P1).** Epic #11.
 
-Write each objective the way the guidance above asks — **an action word plus
-the measure that says it is done**, not a role-play sentence:
+- **Objective 1.1.** Collect every deposit and withdrawal for three major
+  bridges from SonarX’s real-time stream, no more than five minutes behind
+  the latest block. (#14)
+- **Objective 1.2.** Compute the normal outflow range for each bridge and
+  each hour of the day from the past seven days, and show that at least 95%
+  of normal 10-minute periods fall inside this range. This objective
+  measures how well the baseline describes normal days and allows alerts to
+  fire only far above this range, so it does not set the alert rate. (#15)
 
-- **Goal 1: 〈e.g. Secure account management〉** (Epic #〈n〉)
-  - Objective 1.1: 〈Implement member registration and login with hashed
-    credentials, session expiry, and rejection of malformed input.〉 (#〈n〉)
-  - Objective 1.2: 〈Demonstrate the login round-trip in a runnable prototype
-    at the Week-8 in-class check.〉 (#〈n〉)
-- **Goal 2: 〈your second goal〉** (Epic #〈n〉)
-  - Objective 2.1: 〈Action word + what you will complete + how it will be
-    measured〉 (#〈n〉)
+**Goal 2: Catch hacks early with few false alarms (P2, P3).** Epic #12.
 
-〈Replace the brackets with your own 2–3 goals and their objectives, and put
-the **real issue numbers** in as you file them — gate G8 checks that every
-epic and story in your repository is linked from this section. A fully worked
-version of this, with live issues and a populated board, is in the course
-example repository.〉
+- **Objective 2.0.** Build a first prototype and demonstrate it on live
+  Ethereum data and on one real past hack, making sure all results are
+  valid. (#5)
+- **Objective 2.1.** Build three alert rules: a sudden jump in money
+  leaving, an unusual burst of withdrawals, and the vault losing more than a
+  set share of its money in one hour. Each alert explains itself in plain
+  words. (#16)
+- **Objective 2.2.** Replay five past hacks in which tokens left an Ethereum
+  vault (for example, Orbit, Multichain and Harmony). For each, report the
+  minutes from the first theft to the first alert and how much money was
+  already gone, with the proposed target of alerting before half of the
+  stolen funds had left in at least four of the five replays. (#17)
+- **Objective 2.3.** Count false alarms per bridge over at least 30 normal
+  days, and set the alert level to meet a proposed target of no more than
+  one false alarm per bridge per week, to be confirmed with the
+  mentor. (#18)
+- **Objective 2.4 (stretch).** Where SonarX provides data from both sides of
+  a bridge, add the cross-chain accounting check and report how many
+  replayed hacks it detects. (#19)
+
+**Goal 3: Give the operator a dashboard they can act on (P4).** Epic #13.
+
+- **Objective 3.1.** Build a live dashboard showing each bridge’s status,
+  its money flow compared with normal, and a list of alerts the operator
+  can mark as seen, which is useful for seeing activity at a glance. (#20)
+- **Objective 3.2.** Test the dashboard with four users on a replayed hack,
+  and record whether they notice and understand the alert within five
+  minutes. (#21)
+
+These objectives map directly onto the sponsor’s two difficulties.
+Objectives 1.2 and 2.3 turn “a baseline of normal” and “a false-alarm rate
+a human would tolerate” into numbers that can be checked, and Objective 2.2
+measures whether BridgeWatch could have caught real hacks as they unfolded.
 
 ## 3. Proposed Approaches
 
-> Describe your proposed approach to solve the problem, specifying how you
-> will achieve the stated goals. List some possible strategies.
+BridgeWatch will watch every deposit into and withdrawal from each bridge’s
+vault, and compare it with what is normal for that bridge at that hour. The
+approach has three steps.
 
-〈Your approach — **clear and concise**. State the strategy you chose, the
-alternatives you considered, and the reasoning that decided between them.
-Think of this as the argument, not the manual: a reader should finish this
-section understanding *what* you will do and *why that* rather than the
-alternatives.〉
+**Step 1: Learn what is normal.** For each hour of the day, BridgeWatch will
+record how much money left each vault over the past week. It will use the
+median (the middle value) instead of the average, because one huge
+withdrawal can pull the average up but barely moves the median [20]. To
+measure how much activity normally varies, it will use the median absolute
+deviation, which is the median distance of each value from the median. A
+new 10-minute period is then scored by how many of these typical deviations
+it sits above the median for that hour. Because many hours have no outflow
+at all, the median and the deviation can both be zero, so BridgeWatch will
+use a minimum spread (for example, $100,000) and a separate size rule for
+single large withdrawals. We chose hour-of-day buckets because bridge
+traffic follows daily cycles; during Sprint 3 we will check whether
+day-of-week patterns also matter.
 
-**Keep the details out of this section.** Tooling, platforms, frameworks,
-DBMS choices, environment setup, diagrams, and the work breakdown all belong
-in §4 (Required Environment, Resources, and Planned Activities). If a
-sentence here names a version number, a library, or a configuration, it
-probably belongs in §4 — leave a pointer instead ("the implementation stack
-is detailed in §4").
+**Step 2: Check new withdrawals against three rules.** The first rule,
+*outflow spike*, fires when far more money left in the last 10 minutes than
+is normal for this hour. The second rule, *withdrawal burst*, fires when
+there are far more withdrawals than usual in a short time, which is the
+pattern of copycat drains such as Nomad [9]. The third rule, *vault drain*,
+fires when the vault lost more than a set share of its money within one
+hour, whatever the time of day. When data from both blockchains is
+available, a fourth rule can check that money leaving one side matches money
+entering the other [18] [19], which is the signal that would have exposed
+the Ronin, Wormhole and KelpDAO thefts [7] [8] [13].
 
-〈A few paragraphs, or a short list of candidate strategies with one line of
-trade-off each. If it runs past a page, you are writing §4.〉
+**Step 3: Explain the alert.** Every alert will name the bridge, the amount,
+the time window and the comparison with normal. For example, an alert might
+read: “$10.0M left the Orbit bridge vault in the last 10 minutes; normally
+nothing leaves at this hour.” Repeated alerts for the same event will be
+grouped, so an operator receives one message per incident rather than one
+per transaction.
+
+**Why not machine learning?** There have been too few real bridge hacks to
+train a model, and people ignore alerts they cannot understand. Simple rules
+can be explained, need little data, and are controlled by one setting that
+we can tune on purpose. Table 5 summarizes the alternatives we considered.
+
+*Table 5. Alternatives considered.*
+
+| Alternative | Why we did not choose it |
+|---|---|
+| Machine-learning model trained on past hacks | Too few hacks to learn from; alerts hard to explain |
+| Machine learning without examples (anomaly detection) | Harder to explain; may test later as an extra layer |
+| Average-based “normal” | Easily thrown off by one large withdrawal [20] |
+| Checking transactions before they are confirmed | Needs data SonarX does not provide; out of scope |
+
+**How we will test it.** To show that BridgeWatch could have caught real
+hacks, we will replay saved transaction history through the same detector
+that watches live data. The replay will feed transactions in time order on a
+simulated clock, so the detector can never see the future. Each replay will
+start with several normal days, so the baseline is learned before the hack
+begins. For each hack, we will record the time from the first theft to the
+first alert and the money already lost by then. We will also replay long
+stretches of normal activity and count every alert as a false alarm, which
+gives the false-alarm rate per bridge per week required by Objective 2.3.
+
+We will also test three kinds of simulated attack that the real hacks do not
+fully cover: a large, fast theft; stolen keys used for one huge first
+withdrawal; and a slow theft in many small amounts. We expect most false
+alarms to come from large honest withdrawals by whales, so the alert level
+will be tuned against them.
+
+**Limitations.** BridgeWatch only sees withdrawals after they happen. It
+cannot stop a hacker who takes most of the vault in the first withdrawal. In
+the first version it will also track tokens only (USDT, USDC, DAI and WBTC),
+not native ETH, which does not produce the same token transfer records. This
+gap matters: the roughly 9,500 ETH stolen in the Orbit hack [2] would be
+invisible to the first version, so adding native ETH is planned for
+CPSC 491. Finally, the canonical rollup bridges in our starting scope make
+withdrawals wait about a week before the vault pays out, so for them the
+request to withdraw is an earlier signal than the payout itself; we will
+evaluate watching those requests as an extension.
 
 ## 4. Required Environment, Resources, and Planned Activities
 
-> Review the required and available resources and environment to complete
-> your project. For example, server, platform, software tools, operating
-> systems, DBMS, or any required skills.
->
-> Describe the expected activities to achieve the stated goals, e.g.,
-> software development process.
+Table 6 lists the resources we need and their current status.
 
-〈Your environment, resources, and planned activities.〉
+*Table 6. What we need.*
 
-**Diagrams belong in this section.** Include at minimum a high-level
-architecture diagram and a system (context) diagram; add the ER/EER model and
-a data-flow diagram where they help the reader understand what you are
-building and what it depends on. Draw them with any graphical tool
-(Lucidchart, draw.io, Miro, Mermaid, ERDPlus, Figma), keep the authoritative
-copies in `docs/design/` with both editable source and exported image, and
-reference them here.
+| Resource | What we plan to use | Status |
+|---|---|---|
+| Bridge data | SonarX transfer, balance and price data; real-time stream for live data [4] | To request from mentor |
+| Temporary data | Public Ethereum nodes anyone can query | Planned |
+| Prices and balances | SonarX USD prices and vault balances; stablecoins at $1 and a Chainlink feed for WBTC as a fallback [21] | Planned |
+| Software | Python 3.12, FastAPI, SQLite database (enough for a dozen vault-token pairs; a data warehouse if we scale beyond one chain) | Planned |
+| Dashboard | A web page with charts | Planned |
+| Alerts | Messages sent to Slack or similar apps | Planned |
+| Testing | Automated tests on GitHub for every change | Planned |
+| Hosting | Packaged with Docker; host not chosen | Not decided |
 
-〈Number every figure, caption it, and point at it from the prose — "Figure 1
-shows the three deployment tiers and the trust boundary between them." A
-figure the text never mentions is decoration. See `docs/design/DIAGRAMS.md`
-for tools, conventions, and the rule that every box and arrow must be
-verified against reality.〉
+**Planned starting scope.** The first version will watch the Ethereum
+vaults of three bridges (Arbitrum One, Base and OP Mainnet) for four tokens
+(USDT, USDC, DAI and WBTC), because their vault addresses are public and
+their traffic is steady enough to learn a baseline. Replays will use the
+Ethereum vaults of drained bridges such as Orbit. We will add bridges once
+SonarX data is available. A demo mode will run simulated bridges with a
+button that simulates a hack, so the alerts can be shown without waiting for
+a real attack.
 
-### Specification and design documents
+**How the system will work.** BridgeWatch will collect every transfer in and
+out of each vault, save it, and check it against that bridge’s normal
+pattern. Alerts will be sent to Slack and shown on the dashboard. Figure 1,
+at the end of this section, shows the system design. Because the detector
+reads only common event records, switching from public Ethereum nodes to
+SonarX will change only the first step. Figure 2 shows BridgeWatch in its
+environment: the data sources it reads, and the people and tools that
+receive its alerts.
 
-**Every specification and design document the team writes is listed here**
-with the objective it serves. This section is the index of the project's
-technical detail: §3 holds the argument, §4 holds the documents that make it
-buildable. CI gate G9 fails if a document exists in `docs/specs/` or
-`docs/design/` that this section does not link.
+**Required skills.** The team will need to learn how blockchain transactions
+and token transfers are recorded, how to query SonarX data, basic
+statistics for the baseline, Python web development for the dashboard, and
+automated testing. We will build these skills during the fall semester
+through the course readings, the sources cited in this proposal, and short
+practice tasks tracked on our board.
 
-| Document | Kind | Covers | Issues |
-|---|---|---|---|
-| 〈docs/specs/account-management.md〉 | specification | 〈account management requirements〉 | 〈#n, #n〉 |
-| 〈docs/design/architecture.md〉 | design | 〈system architecture + data model〉 | 〈#n〉 |
+**How we work.** We work in two-week sprints. Each task is a GitHub issue.
+Every change goes through a pull request that a second teammate must
+approve, and automated tests run on every change. Work is organized as epics
+(our goals) and user stories (our objectives) on the team’s project board,
+and each sprint ends with a review and a demo. Table 7 shows the planned
+activities for this semester.
 
-〈The scaffold ships `docs/specs/example-spec.md` and
-`docs/design/example-design.md` as worked examples — read them, then delete
-them once you have your own, and list yours here.〉
+*Table 7. Planned activities for CPSC 490 (Fall 2026).*
 
-〈Replace these rows with your own. Each document names its epic and stories
-in its own first lines too (gate G2), so the trail runs both ways.〉
+| Sprint | Dates | Main activities |
+|---|---|---|
+| 1 | Sep 28 – Oct 11 | Brief proposal and survey of related work; goals and objectives filed as epics and stories; first questions to the SonarX mentor |
+| 2 | Oct 12 – Oct 25 | Specification document per epic; first prototype (Objective 2.0) and first prototype demo |
+| 3 | Oct 26 – Nov 8 | Design documents with diagrams; prototype tests the riskiest choice, the baseline and alert rules |
+| 4 | Nov 9 – Nov 22 | Proposal finalized; prototype stable and ready to demonstrate |
 
-### Planned activities — the work items
+**Risks.** Table 8 lists the main risks and how we will respond to them.
 
-The goals and objectives live in §2 as epics and user stories. **This section
-links every *other* work item: features, enhancements, bugs, tasks, and
-sub-tasks** — the concrete activities that deliver those objectives. CI gate
-G8 fails if such an issue exists that this section does not link.
+*Table 8. Main risks.*
 
-| Issue | Type | Activity | Parent | Owner | Sprint |
+| Risk | Response |
+|---|---|
+| SonarX data access is late | Keep building on public Ethereum nodes; the design isolates the data source in one step |
+| Too many false alarms | Tune the alert level against whale withdrawals; report the rate openly |
+| Too few labeled hacks for testing | Use the hacks in Table 1 and simulated attacks |
+| Team is new to blockchain data | Schedule learning tasks early and review each other’s work |
+
+Design documents will be listed in Table 9 as they are written, and the
+tasks under each objective in Table 10 as they are filed on our board.
+
+*Table 9. Design documents.*
+
+| Document | Covers | Issue |
+|---|---|---|
+| docs/design/architecture.md | System design (Figures 1 and 2) | To be filed |
+
+*Table 10. Planned tasks.*
+
+| Issue | Type | Task | Parent | Owner | Sprint |
 |---|---|---|---|---|---|
-| 〈#n〉 | 〈task〉 | 〈stand up the prototype login endpoint〉 | 〈#story〉 | 〈owner〉 | 〈Sprint 1〉 |
-| 〈#n〉 | 〈feature/enhancement/bug/task/sub-task〉 | 〈…〉 | 〈#story〉 | 〈…〉 | 〈…〉 |
+| #22 | task | Put the submitted proposal into proposal/proposal.md and link the board from §2 and §4 | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
+| #23 | task | Make the README describe BridgeWatch (title, sponsor SNX-3, summary) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
+| #26 | task | Write the development plan (charter, QA owner rotation, AI rules, risk register) | Writing task (own points) | Acuna, Isaac | Sprint 1 |
+| #27 | task | Homework #5 — Topic and Survey (due Sun Oct 11) | Writing task (own points) | Bowen, Jake | Sprint 1 |
+| #28 | task | Send the first questions to the SonarX mentor | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
+| #29 | task | Set up the GitHub Projects board and link it from the README | Writing task (own points) | Jaglan, Avni | Sprint 1 |
+| #30 | task | Write the Sprint 1 review (docs/sprint-reviews/sprint-1.md) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
 
-〈Replace these rows with your own, and keep the table current as you file new
-issues — with §2 it gives a reader every planned activity in one place, each
-traceable to the objective it serves.〉
+Tasks for Sprint 2 will be added here as they are filed on our board.
+
+![Figure 1. System design: SonarX data, public Ethereum nodes and saved hack history feed ingest; ingest writes common event records to the store; the baseline and the detector read from the store; alerts go through the alert manager to Slack and the web dashboard.](figures/figure-1-system-design.png)
+
+*Figure 1. System design. The detector reads only common event records, so
+changing the data source touches nothing downstream of ingest.*
+
+![Figure 2. System context: SonarX, public Ethereum nodes and a Chainlink price feed send data to BridgeWatch; BridgeWatch sends alerts to Slack and a dashboard to the operator, who acknowledges alerts and acts through the bridge team's own tools.](figures/figure-2-system-context.png)
+
+*Figure 2. System context: SonarX, the operator and Slack around
+BridgeWatch.*
 
 ## 5. Project Outcomes
 
-> Describe the outcomes or deliverables, e.g., final project report, user
-> manuals, source code, data or database files, etc.
->
-> Note: the deliverables always include the team GitHub repository, which
-> must already contain prototype v0 (a thin end-to-end proof-of-concept,
-> however small, running when this proposal is submitted). Briefly describe
-> what your v0 demonstrates and how to run it.
+By the end of CPSC 491, we will deliver: a working alert dashboard for the
+major bridges, using SonarX data; results from replaying past hacks, showing
+how fast BridgeWatch alerted and how much money was already gone; the
+measured false-alarm rate on normal days; results from testing the dashboard
+with users; and the source code, tests, a short user guide and the final
+report. The deliverables also include the team GitHub repository and its
+prototype in the prototype/ folder.
 
-〈**One or two paragraphs** explaining the project outcome overall — what will
-exist when the project is finished, and what it will let someone do. Keep it
-prose, not a checklist; name the deliverables inside the paragraphs, and say
-briefly what prototype v0 demonstrates today and how to run it.〉
+**Prototype.** No prototype exists yet. Prototype work begins in Sprint 2,
+and the first prototype demonstration is at the end of Sprint 2. The
+prototype will live in the prototype/ folder of our repository, with a
+README that explains how to run it.
+
+**How someone will use BridgeWatch.**
+
+The operator is someone who responds to attacks, such as a bridge’s security
+team. First, the operator starts BridgeWatch once. It learns from the past
+seven days, then checks for new activity every 15 seconds on its own.
+Second, the operator gets alerted. The operator does not need to watch the
+screen, because alerts arrive in Slack, for example: “$10.0M left Orbit
+bridge vault in the last 10 minutes; normally nothing leaves at this hour.”
+
+Third, the operator checks the dashboard. It shows each bridge’s status, a
+chart of money leaving compared with normal, and the list of alerts. The
+operator decides whether it is an attack or just a large honest withdrawal.
+Fourth, the operator marks the alert as seen, so the team knows someone is
+on it. Finally, if it is an attack, the team pauses the bridge or asks for
+the stolen funds to be frozen, using their own tools.
 
 ## 6. Project Timeline
 
-> Identifies tasks (project objectives) to be performed, milestones to be
-> met, and the estimated number of hours for each task.
+We will build in this order: collect the data, then build the baselines and
+rules, then test on past hacks and tune false alarms, and finally finish the
+dashboard and user test. If SonarX access is late, we will use public
+Ethereum data in the meantime. Table 11 shows the schedule for CPSC 491,
+with milestones M1 to M3. M1 marks a working baseline on real data, M2 a
+tuned detector tested on past hacks, and M3 the finished dashboard and user
+test. Owners will be assigned when the tasks are filed, and the hour
+estimates will be revised after the fall prototype.
 
-〈**This is the plan for CPSC 491 next semester — the implementation timeline,
-not this semester's proposal work.** Identify the tasks (your objectives from
-§2), the milestones, and the estimated hours for each, in the order they will
-be built. State the assumptions it rests on (sponsor availability, data
-access, hardware).〉
+*Table 11. Schedule for CPSC 491 (Spring 2027).*
 
-| Task (objective) | Milestone | Owner | Est. hours | Spring phase |
+| Task (objective) | Done when | Owner | Est. hours | Weeks (milestone) |
 |---|---|---|---|---|
-| 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 |
-| 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 | 〈…〉 |
-
-〈Do **not** put this fall's four proposal sprints here — those live on the
-project board and in `docs/sprint-reviews/`. This section answers "how does
-the system actually get built next semester?"〉
+| 1.1 Collect SonarX data | Real data flowing for the first bridge | To be assigned | 40 | 1–4 |
+| 1.2 Baselines on real data | Normal range checked on a normal week | To be assigned | 30 | 3–5 (M1) |
+| 2.1 Alert rules on real data | Explained alerts on live data | To be assigned | 40 | 5–8 |
+| 2.2 Replay past hacks | Time to alert reported for each hack | To be assigned | 35 | 7–10 |
+| 2.3 Tune false alarms | Alert level meets the agreed target | To be assigned | 25 | 9–11 (M2) |
+| 3.1 Dashboard on real data | User view live | To be assigned | 40 | 10–14 |
+| 3.2 User test | Results written up | To be assigned | 20 | 13–15 (M3) |
 
 ## 7. AI Usage
 
-> Per the course AI policy (see the syllabus, Use of AI Tools), disclose the
-> AI tools used in preparing this proposal and the prototype: which tools,
-> for what tasks (e.g., code generation, test writing, debugging,
-> diagramming), and approximately what fraction of each artifact was
-> AI-assisted.
->
-> Reminder: the prose of this proposal must be your own writing. You remain
-> fully responsible for the correctness of all AI-assisted work, including
-> the prototype code.
-
-〈Your disclosure. Naming the tool is not disclosure — name what it drafted,
-what fraction of each artifact was AI-assisted, and how you verified it.〉
+We used Claude AI, an assistant made by Anthropic, during the early planning
+and research stages of this project. When we started, we weren't sure how
+best to approach the problem, so we used Claude to brainstorm the different
+ways we could carry it out. We asked about possible methods, what each one
+would involve, and what problems we might run into along the way. Some of
+its suggestions were helpful, while others didn't fit our goals or our
+timeline, so we talked through the options as a team and chose the final
+plan ourselves. We also used Claude to research background on the topic and
+to help us find references. Its short summaries made it easier to decide
+which papers and reports to read first, but we didn't rely on them in our
+writing. A team member read every source we cite and checked that what we
+say about it is accurate, and we left out any references we couldn't
+confirm. The proposal itself was written by our team in our own words. We
+haven't started coding, so no AI was used for any prototype work. We take
+full responsibility for the accuracy and content of this proposal.
 
 ## 8. References
 
-> [1] Burges, C. J. C. Tutorial on Support Vector Machines for Pattern
-> Recognition. Kluwer Academic Publishers, 1998.
-> [2] Chen, P., Fan, R., and Lin, C. A study on SMO-type decomposition
-> methods for support vector machines. IEEE Transactions on Neural Networks,
-> 2006.
-> [3] For Wikipedia, specify the URL here
-> [4] For a web source, specify the URL here plus date accessed
+[1] Chainalysis, “Vulnerabilities in Cross-chain Bridge Protocols Emerge as
+Top Security Risk,” Chainalysis blog, 2 August 2022.
+https://www.chainalysis.com/blog/cross-chain-bridge-hacks-2022/ (accessed
+28 September 2026).
 
-〈Number references in the order first cited and cite them in the text as
-[1], [2]. Every entry must be a source a team member has actually read and
-can produce on request.〉
+[2] R. Behnke, “Explained: The Orbit Bridge Hack (December 2023),” Halborn
+blog, 8 January 2024.
+https://www.halborn.com/blog/post/explained-the-orbit-bridge-hack-december-2023
+(accessed 28 September 2026).
+
+[3] SonarX, “SonarX — Blockchain Data,” company website.
+https://www.sonarx.com/ (accessed 30 September 2026).
+
+[4] SonarX, “Real-Time Streams” and “Data Freshness,” SonarX documentation.
+https://docs.sonarx.com/datasets/RTS/overview.md and
+https://docs.sonarx.com/datasets/datafreshness.md (accessed
+30 September 2026).
+
+[5] M. Zhang, X. Zhang, J. Barbee, Y. Zhang, and Z. Lin, “SoK: Security of
+Cross-chain Bridges: Attack Surfaces, Defenses, and Open Problems,”
+arXiv:2312.12573, December 2023. https://arxiv.org/abs/2312.12573 (accessed
+28 September 2026).
+
+[6] DefiLlama, “Bridges,” DefiLlama dashboard. https://defillama.com/bridges
+(accessed 28 September 2026).
+
+[7] Halborn, “Explained: The Ronin Hack (March 2022),” Halborn blog.
+https://www.halborn.com/blog/post/explained-the-ronin-hack-march-2022
+(accessed 28 September 2026).
+
+[8] CertiK, “Wormhole Bridge Exploit Incident Analysis,” CertiK blog,
+February 2022.
+https://www.certik.com/blog/wormhole-bridge-exploit-incident-analysis
+(accessed 28 September 2026).
+
+[9] Immunefi, “Hack Analysis: Nomad Bridge, August 2022,” Immunefi blog.
+https://immunefi.com/blog/bug-fix-reviews/hack-analysis-nomad-bridge-august-2022/
+(accessed 28 September 2026).
+
+[10] Harmony, “Harmony’s Horizon Bridge Hack,” Harmony blog (Medium), June
+2022. https://medium.com/harmony-one/harmonys-horizon-bridge-hack-1e8d283b6d66
+(accessed 28 September 2026).
+
+[11] Elliptic, “Attack Mints $569 Million Worth of BNB Tokens in BSC Bridge
+Exploit,” Elliptic blog, October 2022.
+https://www.elliptic.co/blog/analysis/attack-mints-569-million-worth-of-bnb-tokens-in-bsc-bridge-exploit
+(accessed 28 September 2026).
+
+[12] CoinDesk, “Multichain Bridges Exploited for Nearly $130M Across Fantom,
+Moonriver and Dogechain,” CoinDesk, 6 July 2023.
+https://www.coindesk.com/business/2023/07/06/multichain-bridges-experience-unannounced-outflows-of-over-130m-in-crypto
+(accessed 28 September 2026).
+
+[13] Chainalysis, “Inside the KelpDAO Bridge Exploit: How ~$292 Million in
+rsETH Was Released Against a Non-Existent Burn,” Chainalysis blog, 23 April
+2026. https://www.chainalysis.com/blog/kelpdao-bridge-exploit-april-2026/
+(accessed 28 September 2026).
+
+[14] Forta Network, “Bridge Threat Detection Kit,” Forta documentation.
+https://docs.forta.network/en/latest/bridge-starter-kit/ (accessed
+28 September 2026).
+
+[15] Hypernative, “Hypernative Platform,” product page.
+https://www.hypernative.io/products/hypernative-platform (accessed
+28 September 2026).
+
+[16] Chainalysis, “Hexagate,” product page.
+https://www.chainalysis.com/product/hexagate/ (accessed 28 September 2026).
+
+[17] J. Zhang, J. Gao, Y. Li, Z. Chen, Z. Guan, and Z. Chen, “Xscope:
+Hunting for Cross-Chain Bridge Attacks,” in Proc. 37th IEEE/ACM
+International Conference on Automated Software Engineering (ASE ’22), Tool
+Demonstration Track, 2022. arXiv:2208.07119. https://arxiv.org/abs/2208.07119
+(accessed 28 September 2026).
+
+[18] E. Liu, E. Luo, J. C. Yan, K. Izhikevich, S. Grant, D. Stefan, G. M.
+Voelker, and S. Savage, “Count of Monte Crypto: Accounting-based Defenses
+for Cross-Chain Bridges,” arXiv:2410.01107, October 2024 (revised April
+2026). https://arxiv.org/abs/2410.01107 (accessed 28 September 2026).
+
+[19] A. Augusto, R. Belchior, J. Pfannschmidt, A. Vasconcelos, and M.
+Correia, “XChainWatcher: Monitoring and Identifying Attacks in Cross-Chain
+Bridges,” arXiv:2410.02029, October 2024. https://arxiv.org/abs/2410.02029
+(accessed 28 September 2026).
+
+[20] C. Leys, C. Ley, O. Klein, P. Bernard, and L. Licata, “Detecting
+outliers: Do not use standard deviation around the mean, use absolute
+deviation around the median,” Journal of Experimental Social Psychology,
+vol. 49, no. 4, pp. 764–766, 2013. doi:10.1016/j.jesp.2013.03.013
+
+[21] Chainlink, “Price Feeds,” Chainlink documentation.
+https://docs.chain.link/data-feeds/price-feeds (accessed 28 September 2026).
