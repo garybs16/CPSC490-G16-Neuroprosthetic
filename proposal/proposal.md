@@ -17,10 +17,10 @@
 
 > **This file is the proposal document, not a README.** It is the Markdown
 > copy of the proposal the team submitted on 4 October 2026, with the course
-> template's section numbering. The only additions are the issue links in
-> Section 2 and the filed tasks in Section 4 (Table 10), which tie the
-> document to the project board. Keep this copy current: it is what peer
-> review and CI can read.
+> template's section numbering. The only changes are the issue references in
+> Section 2 and the planned tasks in Section 4, which tie the document to the
+> project board, and Group 16's own sprint dates in Table 7. Keep this copy
+> current: it is what peer review and CI can read.
 
 ---
 
@@ -246,47 +246,47 @@ if they change. Throughout, *real time* means that BridgeWatch evaluates a
 withdrawal within one minute of the block that contains it being confirmed
 six blocks deep, which protects against short chain reorganizations.
 
-**Goal 1: Learn what normal bridge activity looks like (P1).** Epic [#11](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/11).
+**Goal 1: Learn what normal bridge activity looks like (P1).** [[epic:#11]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/11)
 
 - **Objective 1.1.** Collect every deposit and withdrawal for three major
   bridges from SonarX’s real-time stream, no more than five minutes behind
-  the latest block. ([#14](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/14))
+  the latest block. [[story:#14]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/14)
 - **Objective 1.2.** Compute the normal outflow range for each bridge and
   each hour of the day from the past seven days, and show that at least 95%
   of normal 10-minute periods fall inside this range. This objective
   measures how well the baseline describes normal days and allows alerts to
-  fire only far above this range, so it does not set the alert rate. ([#15](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/15))
+  fire only far above this range, so it does not set the alert rate. [[story:#15]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/15)
 
-**Goal 2: Catch hacks early with few false alarms (P2, P3).** Epic [#12](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/12).
+**Goal 2: Catch hacks early with few false alarms (P2, P3).** [[epic:#12]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/12)
 
 - **Objective 2.0.** Build a first prototype and demonstrate it on live
   Ethereum data and on one real past hack, making sure all results are
-  valid. ([#5](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/5))
+  valid. [[story:#5]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/5)
 - **Objective 2.1.** Build three alert rules: a sudden jump in money
   leaving, an unusual burst of withdrawals, and the vault losing more than a
   set share of its money in one hour. Each alert explains itself in plain
-  words. ([#16](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/16))
+  words. [[story:#16]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/16)
 - **Objective 2.2.** Replay five past hacks in which tokens left an Ethereum
   vault (for example, Orbit, Multichain and Harmony). For each, report the
   minutes from the first theft to the first alert and how much money was
   already gone, with the proposed target of alerting before half of the
-  stolen funds had left in at least four of the five replays. ([#17](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/17))
+  stolen funds had left in at least four of the five replays. [[story:#17]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/17)
 - **Objective 2.3.** Count false alarms per bridge over at least 30 normal
   days, and set the alert level to meet a proposed target of no more than
   one false alarm per bridge per week, to be confirmed with the
-  mentor. ([#18](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/18))
+  mentor. [[story:#18]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/18)
 - **Objective 2.4 (stretch).** Where SonarX provides data from both sides of
   a bridge, add the cross-chain accounting check and report how many
-  replayed hacks it detects. ([#19](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/19))
+  replayed hacks it detects. [[story:#19]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/19)
 
-**Goal 3: Give the operator a dashboard they can act on (P4).** Epic [#13](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/13).
+**Goal 3: Give the operator a dashboard they can act on (P4).** [[epic:#13]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/13)
 
 - **Objective 3.1.** Build a live dashboard showing each bridge’s status,
   its money flow compared with normal, and a list of alerts the operator
-  can mark as seen, which is useful for seeing activity at a glance. ([#20](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/20))
+  can mark as seen, which is useful for seeing activity at a glance. [[story:#20]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/20)
 - **Objective 3.2.** Test the dashboard with four users on a replayed hack,
   and record whether they notice and understand the alert within five
-  minutes. ([#21](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/21))
+  minutes. [[story:#21]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/21)
 
 These objectives map directly onto the sponsor’s two difficulties.
 Objectives 1.2 and 2.3 turn “a baseline of normal” and “a false-alarm rate
@@ -425,10 +425,10 @@ activities for this semester.
 
 | Sprint | Dates | Main activities |
 |---|---|---|
-| 1 | Sep 28 – Oct 11 | Brief proposal and survey of related work; goals and objectives filed as epics and stories; first questions to the SonarX mentor |
-| 2 | Oct 12 – Oct 25 | Specification document per epic; first prototype (Objective 2.0) and first prototype demo |
-| 3 | Oct 26 – Nov 8 | Design documents with diagrams; prototype tests the riskiest choice, the baseline and alert rules |
-| 4 | Nov 9 – Nov 22 | Proposal finalized; prototype stable and ready to demonstrate |
+| 1 | Oct 8 – Oct 21 | Brief proposal and survey of related work; goals and objectives filed as epics and stories; first questions to the SonarX mentor |
+| 2 | Oct 22 – Nov 4 | Specification document per epic; first prototype (Objective 2.0) and first prototype demo |
+| 3 | Nov 5 – Nov 18 | Design documents with diagrams; prototype tests the riskiest choice, the baseline and alert rules |
+| 4 | Nov 19 – Dec 2 | Proposal finalized; prototype stable and ready to demonstrate |
 
 **Risks.** Table 8 lists the main risks and how we will respond to them.
 
@@ -441,8 +441,7 @@ activities for this semester.
 | Too few labeled hacks for testing | Use the hacks in Table 1 and simulated attacks |
 | Team is new to blockchain data | Schedule learning tasks early and review each other’s work |
 
-Design documents will be listed in Table 9 as they are written, and the
-tasks under each objective in Table 10 as they are filed on our board.
+Design documents will be listed in Table 9 as they are written.
 
 *Table 9. Design documents.*
 
@@ -450,20 +449,36 @@ tasks under each objective in Table 10 as they are filed on our board.
 |---|---|---|
 | docs/design/architecture.md | System design (Figures 1 and 2) | To be filed |
 
-*Table 10. Planned tasks.*
+**Planned tasks.** Sprint 1 is mostly writing and setup, so its tasks stand
+on their own rather than under an objective, and each carries its own story
+points on our board. Tasks for later sprints will be described here as they
+are filed.
 
-| Issue | Type | Task | Parent | Owner | Sprint |
-|---|---|---|---|---|---|
-| [#22](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/22) | task | Put the submitted proposal into proposal/proposal.md and link the board from §2 and §4 | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
-| [#23](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/23) | task | Make the README describe BridgeWatch (title, sponsor SNX-3, summary) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
-| [#26](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/26) | task | Write the development plan (charter, QA owner rotation, AI rules, risk register) | Writing task (own points) | Acuna, Isaac | Sprint 1 |
-| [#27](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/27) | task | Homework #5 — Topic and Survey (due Sun Oct 11) | Writing task (own points) | Bowen, Jake | Sprint 1 |
-| [#28](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/28) | task | Send the first questions to the SonarX mentor | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
-| [#29](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/29) | task | Set up the GitHub Projects board and link it from the README | Writing task (own points) | Jaglan, Avni | Sprint 1 |
-| [#30](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/30) | task | Write the Sprint 1 review (docs/sprint-reviews/sprint-1.md) | Writing task (own points) | Samuel, Gary Bennet | Sprint 1 |
-| [#34](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/34) | task | Start the Goal 2 specification (docs/specs/goal-2-detection.md) | Writing task (own points) | Acuna, Isaac | Sprint 1 |
+The first group of tasks ties this document to the project board. The
+submitted proposal was moved into the repository, with every goal and
+objective in Section 2 linked to its issue; the README was rewritten to
+describe BridgeWatch, its sponsor project SNX-3 and a short summary; the
+project board was set up and linked from the README; and the issue
+references in this document were brought into the course's citation form,
+with the sprint dates in Table 7 corrected. [[task:#22]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/22) [[task:#23]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/23) [[task:#29]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/29) [[task:#45]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/45)
 
-Tasks for Sprint 2 will be added here as they are filed on our board.
+The second group keeps the team's process visible. The development plan
+sets out the team charter, the rotation of the quality-assurance owner, our
+rules for AI use and the risk register. At the start of Sprint 1 we saved its
+starting story points, and at its end we write the Sprint 1 review, which
+records velocity, carried-over work and the feedback we received.
+[[task:#26]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/26) [[task:#39]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/39) [[task:#30]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/30)
+
+The third group connects the project to the course and to the sponsor:
+Homework 5, the topic and survey of related work, and the first questions to
+our SonarX mentor about data access, which bridges count as major, which past
+hacks to replay, and the targets in Section 2 that are still to be confirmed.
+[[task:#27]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/27) [[task:#28]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/28)
+
+Finally, the specification for Goal 2 is started in
+docs/specs/goal-2-detection.md. It will give each of the Goal 2 objectives
+acceptance criteria that someone else can check, beginning with the inputs
+and outputs of the three alert rules. [[task:#34]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/34)
 
 ![Figure 1. System design: SonarX data, public Ethereum nodes and saved hack history feed ingest; ingest writes common event records to the store; the baseline and the detector read from the store; alerts go through the alert manager to Slack and the web dashboard.](figures/figure-1-system-design.png)
 

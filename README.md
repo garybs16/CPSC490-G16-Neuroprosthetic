@@ -18,6 +18,7 @@
 ## Links
 
 - **Proposal:** [`proposal/proposal.md`](proposal/proposal.md)
+- **Sprint Board (GitHub Project):** <https://github.com/users/garybs16/projects/2>
 - **Issue board:** <https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues>
 - **Goals (epics):** [#11](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/11) learn normal bridge activity ·
   [#12](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/12) catch hacks early with few false alarms ·
