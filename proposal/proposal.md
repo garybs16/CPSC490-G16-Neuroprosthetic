@@ -17,10 +17,12 @@
 
 > **This file is the proposal document, not a README.** It is the Markdown
 > copy of the proposal the team submitted on 4 October 2026, with the course
-> template's section numbering. The only changes are the issue references in
-> Section 2 and the planned tasks in Section 4, which tie the document to the
-> project board, and Group 16's own sprint dates in Table 7. Keep this copy
-> current: it is what peer review and CI can read.
+> template's section numbering. Sections 0–2 and 7 match Homework #5 as
+> submitted on 11 October 2026 (Related Work narrowed to three existing
+> systems, references renumbered to match). The other changes are the issue
+> references in Section 2 and the planned tasks in Section 4, which tie the
+> document to the project board, and Group 16's own sprint dates in Table 7.
+> Keep this copy current: it is what peer review and CI can read.
 
 ---
 
@@ -35,29 +37,26 @@ bridge lost about $82 million on 31 December 2023 [2], a sign of a much
 deeper problem in cryptocurrency security.
 
 Every blockchain transaction is public, so a hack can be seen while it
-happens, which is beneficial. The problem is spotting a hack/breach quickly
-without raising a false alarm every time someone makes a large, honest
-withdrawal. This is non-trivial because normal activity varies widely by
-bridge and by hour, and a detector that raises alarms too often is ignored
-while one that waits too long is useless. Our sponsor, SonarX, which indexes
-data from more than 130 blockchains [3], asked for a tool that does this
-efficiently.
+happens. The problem is spotting a hack/breach quickly without raising a
+false alarm every time someone makes a large, honest withdrawal. This is
+non-trivial because normal activity varies widely by bridge and by hour, and
+a detector that raises alarms too often is ignored while one that waits too
+long is useless. Our sponsor, SonarX, which indexes data from more than 130
+blockchains [3], asked for a tool that does this efficiently.
 
 We propose BridgeWatch, an alarm system for bridge vaults to protect against
 these types of vulnerabilities. Our application will learn how much money
 normally leaves each vault at each hour of the day. It will then notice when
 withdrawals jump far above normal, and will send an alert that explains the
-problem in one sentence so that it stays uncluttered and gets straight to
-the point.
+problem in one sentence.
 
 Our goals are to learn what normal activity looks like for each major
 bridge, to catch hacks early with few false alarms, and to give the operator
-a dashboard they can act on, while making sure the system works correctly
-with few bugs. We will test BridgeWatch by replaying real past hacks, such
-as the Orbit Chain hack, and measure how quickly it alerts and how often it
-raises false alarms on normal days. By the end of CPSC 491, we will deliver
-a working alert dashboard for the major bridges, tested on past hacks, with
-a measured false-alarm rate for the application.
+a dashboard they can act on. We will test BridgeWatch by replaying real past
+hacks, such as the Orbit Chain hack, and measure how quickly it alerts and
+how often it raises false alarms on normal days. By the end of CPSC 491, we
+will deliver a working alert dashboard for the major bridges, tested on past
+hacks, with a measured false-alarm rate.
 
 The rest of this proposal explains how bridges work and why they are
 attacked, reviews existing work, states the problems we address, and then
@@ -132,13 +131,19 @@ difficulties as the heart of the project: deciding what counts as normal,
 and keeping the false-alarm rate low enough that a person will keep paying
 attention.
 
-**What BridgeWatch does differently.** Unlike volunteer-written Forta
-monitoring bots [14] or closed commercial services such as Hypernative [15]
-and Hexagate [16], BridgeWatch will combine four properties. It will learn
-each bridge’s own normal pattern for each hour of the day. It will check
-every withdrawal as soon as it is confirmed. It will explain every alert in
-one plain sentence. Finally, it will measure and report how often it raises
-false alarms, so an operator can judge whether to trust it.
+**What BridgeWatch does differently.** Unlike volunteer-written Forta monitoring
+bots [14] or closed commercial services such as Hypernative [15],
+BridgeWatch will combine four properties. It will learn each bridge’s own
+normal pattern for each hour of the day. It will check every withdrawal as
+soon as it is confirmed. It will explain every alert in one plain sentence.
+Finally, it will measure and report how often it raises false alarms, so an
+operator can judge whether to trust it.
+
+This matters because billions have been lost to bridge hacks [1]; this
+directly impacts users’ savings in minutes. A vast amount of someone’s money
+can be lost due to not catching these hacks early. For example, Ronin’s hack
+was noticed nearly a week later [7]. A trustworthy alarm system to protect
+users, exchanges and currency transactions is good for all.
 
 Table 2 defines the key terms used throughout this proposal.
 
@@ -162,17 +167,7 @@ Table 2 defines the key terms used throughout this proposal.
 
 ### 1.1 Related Work
 
-**Research.** A survey by Zhang et al. lists 12 ways bridges can be attacked
-and 10 types of real attacks [5]. We use it to choose which attacks to test.
-Xscope [17] scans bridge transactions for three known types of bugs and
-found all known attacks on four bridges. It is a tool for finding known bug
-patterns rather than a live alarm, and it does not report a false-alarm
-rate. Liu et al. [18] showed that checking whether money in on one chain
-equals money out on the other would have identified every known attack in
-their dataset. This check needs data from both chains, and using it live
-requires bridges to change their code.
-
-XChainWatcher [19] is the closest research to our project. It matches each
+XChainWatcher [16] is the closest research to our project. It matches each
 deposit on one chain with the corresponding withdrawal on the other and
 applies a set of rules to the matched pairs. When run on historical data
 from the Ronin and Nomad bridges, it flagged the attack transactions. Its
@@ -185,32 +180,27 @@ watch for draining and unusual activity, including a bot that compares the
 balances on the two sides of a bridge. Users must choose and adjust the bots
 themselves, and false-alarm rates are not reported.
 
-**Paid services.** Hypernative [15] and Hexagate [16] use machine learning
-and can spot an attack before its transactions are confirmed. They will
-likely perform better than a student project. However, they cost money,
-their methods are secret, and their accuracy claims cannot be checked by
-outsiders.
+**Paid services.** Hypernative [15] uses machine learning and can spot an attack
+before its transactions are confirmed. It will likely perform better than a
+student project. However, it costs money, its methods are secret, and its
+accuracy claims cannot be checked by outsiders.
 
 *Table 3. Existing approaches compared with BridgeWatch.*
 
 | Approach | What it does | Pros | Cons | How BridgeWatch differs |
 |---|---|---|---|---|
-| Bridge security survey [5] | Lists bridge attack types | Broad, organized view of attacks | Not a tool | We use it to pick attacks to test |
-| Xscope [17] | Scans for three known bug types | Found all known attacks on four bridges | Only finds bugs it knows; no live alerts | Watches money flow, so no bug list is needed; live alerts |
-| Accounting check [18] | Checks money in equals money out | Would have identified every attack in its dataset | Needs both chains’ data; bridges must change code | Uses this check where possible; otherwise watches one vault |
-| XChainWatcher [19] | Matches deposits to withdrawals across chains | Very precise; flagged Ronin and Nomad attacks | Heavy per-bridge decoding on both chains | Starts with one-sided vault monitoring that works for any vault |
+| XChainWatcher [16] | Matches deposits to withdrawals across chains | Very precise; flagged Ronin and Nomad attacks | Heavy per-bridge decoding on both chains | Starts with one-sided vault monitoring that works for any vault |
 | Forta [14] | Volunteer-written monitoring bots | Free and open | User must set up bots; no false-alarm rates | Ready to use; measured false-alarm rate |
 | Hypernative [15] | Paid, machine learning, warns before funds move | Earliest warning | Paid, secret, unverifiable claims | Free, open, results anyone can check |
-| Hexagate [16] | Paid, machine learning, warns before funds move | Earliest warning | Paid, secret, unverifiable claims | Free, open, results anyone can check |
 
-Taken together, these approaches either find known bugs, require heavy
-per-bridge engineering, leave tuning to the user, or keep their methods and
-accuracy private. We did not find a free, open tool that combines learning
-each bridge’s normal activity, live plain-language alerts, and a published
+Taken together, these approaches either require heavy per-bridge
+engineering, leave tuning to the user, or keep their methods and accuracy
+private. We did not find a free, open tool that combines learning each
+bridge’s normal activity, live plain-language alerts, and a published
 false-alarm rate. BridgeWatch aims to fill that gap. It will not warn
 earlier than paid services that check transactions before they are
-confirmed, and it borrows the cross-chain accounting idea from Liu et al.
-and XChainWatcher wherever data from both chains is available.
+confirmed, and it borrows the cross-chain accounting idea from XChainWatcher
+wherever data from both chains is available.
 
 ### 1.2 Problem Statements
 
@@ -237,6 +227,14 @@ problems, summarized in Table 4.
 | P3. Too many false alarms get the tool ignored | Large honest withdrawals look like attacks. If the alarm rings too often, people stop listening. | Goal 2 |
 | P4. A warning only helps if someone understands it | The alert must reach a person who can act and say clearly what happened. | Goal 3 |
 
+All of these problems are important to our mission. Learning what normal
+traffic looks like helps us determine the difference between honest
+withdrawals and hacks. Lowering the number of false alarms is huge, as
+sending too many alerts to someone makes the program untrustworthy. Lastly,
+sending simple warnings and signals helps people watching understand what is
+going on. This project also helps us learn more about the crypto world and
+how it connects to a career in technology.
+
 ## 2. Goals and Objectives
 
 Each goal is tracked on the team’s GitHub board as an epic, and each
@@ -260,8 +258,7 @@ six blocks deep, which protects against short chain reorganizations.
 **Goal 2: Catch hacks early with few false alarms (P2, P3).** [[epic:#12]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/12)
 
 - **Objective 2.0.** Build a first prototype and demonstrate it on live
-  Ethereum data and on one real past hack, making sure all results are
-  valid. [[story:#5]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/5)
+  Ethereum data and on one real past hack. [[story:#5]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/5)
 - **Objective 2.1.** Build three alert rules: a sudden jump in money
   leaving, an unusual burst of withdrawals, and the vault losing more than a
   set share of its money in one hour. Each alert explains itself in plain
@@ -283,7 +280,7 @@ six blocks deep, which protects against short chain reorganizations.
 
 - **Objective 3.1.** Build a live dashboard showing each bridge’s status,
   its money flow compared with normal, and a list of alerts the operator
-  can mark as seen, which is useful for seeing activity at a glance. [[story:#20]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/20)
+  can mark as seen. [[story:#20]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/20)
 - **Objective 3.2.** Test the dashboard with four users on a replayed hack,
   and record whether they notice and understand the alert within five
   minutes. [[story:#21]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/21)
@@ -302,7 +299,7 @@ approach has three steps.
 **Step 1: Learn what is normal.** For each hour of the day, BridgeWatch will
 record how much money left each vault over the past week. It will use the
 median (the middle value) instead of the average, because one huge
-withdrawal can pull the average up but barely moves the median [20]. To
+withdrawal can pull the average up but barely moves the median [17]. To
 measure how much activity normally varies, it will use the median absolute
 deviation, which is the median distance of each value from the median. A
 new 10-minute period is then scored by how many of these typical deviations
@@ -321,7 +318,7 @@ pattern of copycat drains such as Nomad [9]. The third rule, *vault drain*,
 fires when the vault lost more than a set share of its money within one
 hour, whatever the time of day. When data from both blockchains is
 available, a fourth rule can check that money leaving one side matches money
-entering the other [18] [19], which is the signal that would have exposed
+entering the other [18] [16], which is the signal that would have exposed
 the Ronin, Wormhole and KelpDAO thefts [7] [8] [13].
 
 **Step 3: Explain the alert.** Every alert will name the bridge, the amount,
@@ -342,7 +339,7 @@ we can tune on purpose. Table 5 summarizes the alternatives we considered.
 |---|---|
 | Machine-learning model trained on past hacks | Too few hacks to learn from; alerts hard to explain |
 | Machine learning without examples (anomaly detection) | Harder to explain; may test later as an extra layer |
-| Average-based “normal” | Easily thrown off by one large withdrawal [20] |
+| Average-based “normal” | Easily thrown off by one large withdrawal [17] |
 | Checking transactions before they are confirmed | Needs data SonarX does not provide; out of scope |
 
 **How we will test it.** To show that BridgeWatch could have caught real
@@ -382,7 +379,7 @@ Table 6 lists the resources we need and their current status.
 |---|---|---|
 | Bridge data | SonarX transfer, balance and price data; real-time stream for live data [4] | To request from mentor |
 | Temporary data | Public Ethereum nodes anyone can query | Planned |
-| Prices and balances | SonarX USD prices and vault balances; stablecoins at $1 and a Chainlink feed for WBTC as a fallback [21] | Planned |
+| Prices and balances | SonarX USD prices and vault balances; stablecoins at $1 and a Chainlink feed for WBTC as a fallback [19] | Planned |
 | Software | Python 3.12, FastAPI, SQLite database (enough for a dozen vault-token pairs; a data warehouse if we scale beyond one chain) | Planned |
 | Dashboard | A web page with charts | Planned |
 | Alerts | Messages sent to Slack or similar apps | Planned |
@@ -559,8 +556,12 @@ which papers and reports to read first, but we didn't rely on them in our
 writing. A team member read every source we cite and checked that what we
 say about it is accurate, and we left out any references we couldn't
 confirm. The proposal itself was written by our team in our own words. We
-haven't started coding, so no AI was used for any prototype work. We take
-full responsibility for the accuracy and content of this proposal.
+have started an early prototype though (in the prototype/ folder of our
+repo), and we used Claude Code to help write parts of that code. Every
+commit that used AI has an “Assisted-by” line, and one of us reviews and
+tests the code before it gets merged. We also used Claude for grammar
+feedback on this draft. We take full responsibility for the accuracy and
+content of this proposal.
 
 ## 8. References
 
@@ -630,29 +631,20 @@ https://docs.forta.network/en/latest/bridge-starter-kit/ (accessed
 https://www.hypernative.io/products/hypernative-platform (accessed
 28 September 2026).
 
-[16] Chainalysis, “Hexagate,” product page.
-https://www.chainalysis.com/product/hexagate/ (accessed 28 September 2026).
-
-[17] J. Zhang, J. Gao, Y. Li, Z. Chen, Z. Guan, and Z. Chen, “Xscope:
-Hunting for Cross-Chain Bridge Attacks,” in Proc. 37th IEEE/ACM
-International Conference on Automated Software Engineering (ASE ’22), Tool
-Demonstration Track, 2022. arXiv:2208.07119. https://arxiv.org/abs/2208.07119
+[16] A. Augusto, R. Belchior, J. Pfannschmidt, A. Vasconcelos, and M.
+Correia, “XChainWatcher: Monitoring and Identifying Attacks in Cross-Chain
+Bridges,” arXiv:2410.02029, October 2024. https://arxiv.org/abs/2410.02029
 (accessed 28 September 2026).
+
+[17] C. Leys, C. Ley, O. Klein, P. Bernard, and L. Licata, “Detecting
+outliers: Do not use standard deviation around the mean, use absolute
+deviation around the median,” Journal of Experimental Social Psychology,
+vol. 49, no. 4, pp. 764–766, 2013. doi:10.1016/j.jesp.2013.03.013
 
 [18] E. Liu, E. Luo, J. C. Yan, K. Izhikevich, S. Grant, D. Stefan, G. M.
 Voelker, and S. Savage, “Count of Monte Crypto: Accounting-based Defenses
 for Cross-Chain Bridges,” arXiv:2410.01107, October 2024 (revised April
 2026). https://arxiv.org/abs/2410.01107 (accessed 28 September 2026).
 
-[19] A. Augusto, R. Belchior, J. Pfannschmidt, A. Vasconcelos, and M.
-Correia, “XChainWatcher: Monitoring and Identifying Attacks in Cross-Chain
-Bridges,” arXiv:2410.02029, October 2024. https://arxiv.org/abs/2410.02029
-(accessed 28 September 2026).
-
-[20] C. Leys, C. Ley, O. Klein, P. Bernard, and L. Licata, “Detecting
-outliers: Do not use standard deviation around the mean, use absolute
-deviation around the median,” Journal of Experimental Social Psychology,
-vol. 49, no. 4, pp. 764–766, 2013. doi:10.1016/j.jesp.2013.03.013
-
-[21] Chainlink, “Price Feeds,” Chainlink documentation.
+[19] Chainlink, “Price Feeds,” Chainlink documentation.
 https://docs.chain.link/data-feeds/price-feeds (accessed 28 September 2026).
