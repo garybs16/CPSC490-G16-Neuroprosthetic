@@ -24,7 +24,7 @@
 | `README.md` | Describes BridgeWatch, sponsor project SNX-3 and a summary | PR #25 (released in PR #32) |
 | `docs/development-plan.md` | Team charter with quantified triggers, QA owner rotation, AI rules, risk register | PR #31 |
 | `docs/sprint-reviews/sprint-1-start.md` | Sprint 1 starting story points | PR #40 (released in PR #48) |
-| `docs/specs/goal-3-dashboard.md` | Goal 3 specification: functional and non-functional requirements, acceptance criteria for Objectives 3.1 and 3.2, open questions | PR #53, opened Oct 21 |
+| `docs/specs/goal-3-dashboard.md` | Goal 3 specification, our first: functional and non-functional requirements, acceptance criteria for Objectives 3.1 and 3.2, open questions | PR #53, merged Oct 21 |
 | `docs/specs/goal-2-detection.md` | Not started; carried over (see below) | task #34 |
 
 **Prototype moved:** at the start of Sprint 1, `prototype/` on `develop` held
@@ -39,10 +39,11 @@ Orbit), and a false-alarm evaluation. Evidence: the CI job *Prototype build &
 tests* is green on PR #36, and `python -m bridgewatch.replay` writes
 `prototype/results/replay.json`.
 
-Two further prototype changes were opened on Oct 21, each with a new test:
+Two further prototype changes were merged on Oct 21, each with a new test:
 every alert message now names the bridge, the amount, the time window and
-the comparison with normal (PR #54, Objective 2.1), and the dashboard uses
-the objective's words, "mark as seen" (PR #55, under Objective 3.1).
+the comparison with normal (PR #54, completing Objective 2.1), and the
+dashboard uses the objective's words, "mark as seen" (PR #55, under
+Objective 3.1).
 
 This is ahead of the course plan, which starts prototype work in Sprint 2.
 It runs on public Ethereum nodes, not SonarX data. The first questions to
@@ -53,17 +54,20 @@ access is the first risk in proposal §4 Table 8.
 
 | | Story points | Stories |
 |---|---|---|
-| Planned | 25 | 12 |
-| Completed (closed by Oct 21) | 16 | 7 |
+| Planned | 30 | 13 |
+| Completed, work merged by Oct 21 | 27 | 11 |
 
 *Planned* is the 14 points set at planning on Oct 8, plus task #45 (1) added
-Oct 13, task #50 (2) added Oct 19, and story #5 (8), which the team moved
-into Sprint 1 on Oct 21 because it was finished on Oct 9, inside this sprint.
-Task #56 sits under story #20 and carries no points of its own.
+Oct 13, task #50 (2) added Oct 19, and two stories the team moved into
+Sprint 1 on Oct 21 because they were finished inside this sprint: #5 (8),
+done on Oct 9, and #16 (5), done by PR #54 on Oct 21. Task #56 sits under
+story #20 and carries no points of its own.
 
-Three more items are merged into `develop` and close when the Oct 21 release
-reaches `main`: #27 (3) through PR #52, #30 (1) through this review, and #50
-(2) if PR #53 is merged. With them, Sprint 1 completes 22 of 25 points.
+`sprint_report.py` counts an issue as completed when it closes, and issues
+close when the release reaches `main`. On Oct 21, before that release, it
+reports 16 points closed. The release closes #16, #27, #30 and #50 (11
+points), which makes 27 of 30 (90%). The 3 points left are #28 and #34
+(see *Carried over*).
 
 ## Completed (merged PRs)
 
@@ -76,16 +80,22 @@ reaches `main`: #27 (3) through PR #52, #30 (1) through this review, and #50
 | #29 Set up the GitHub Projects board and link it from the README | @Avnijaglan19 | 1 | #41 (authored by @JakeBowen2005) |
 | #39 Save the Sprint 1 starting story points | @garybs16 | 1 | #40 |
 | #45 Typed issue references and sprint dates in the proposal | @garybs16 | 1 | #46 |
+| #16 Objective 2.1: three alert rules that explain themselves (closes with the Oct 21 release) | @Avnijaglan19 | 5 | #54 |
+| #27 Homework 5, Topic and Survey: on Canvas, and the proposal matches it (closes with the release) | @JakeBowen2005 | 3 | #52 |
+| #50 Start the Goal 3 specification (closes with the release) | @Avnijaglan19 | 2 | #53 |
+| #30 Write the Sprint 1 review (closes with the release) | @garybs16 | 1 | #47, #51, this PR |
+| #56 "Mark as seen" wording on the dashboard, under story #20 (closes with the release) | @Avnijaglan19 | – | #55 |
+
+Story #20 (Objective 3.1) stays open on purpose. PR #55 delivered one task
+under it, and the Goal 3 specification sets stricter acceptance criteria for
+3.1 than the issue's original two.
 
 ## Carried over — and why
 
 | Story | Owner | Why not finished | Decision |
 |---|---|---|---|
-| #27 Homework 5, Topic and Survey | @JakeBowen2005 | Done: HW5 is on Canvas and PR #52 brought the proposal in line with it. The issue closes when PR #52 reaches `main` | Closes with the Oct 21 release |
 | #28 First questions to the SonarX mentor | @garybs16 | Sent; the mentor's reply has not arrived yet (the course guide says to allow 3–5 business days) | Moved to Sprint 2; answers are recorded on #28 with dates |
-| #30 This review | @garybs16 | Merged with the Oct 21 release | Closes with the Oct 21 release |
 | #34 Start the Goal 2 specification | @1600isad | Not started; no PR by the boundary | Moved to Sprint 2, still owned by @1600isad, paired with a teammate under our charter |
-| #50 Start the Goal 3 specification | @Avnijaglan19 | PR #53 opened Oct 21, in review at the boundary | Closes when PR #53 merges; moved to Sprint 2 if it does not merge by the end of Oct 21 |
 
 ## Loop health (docs/aidlc/loop-engineering.md §8)
 
@@ -113,7 +123,7 @@ board; the prototype demo follows at the Sprint 3 meeting (Nov 5).
 
 | Feedback (source) | What we changed | Issue / PR |
 |---|---|---|
-| Instructor, Sprint 1 meeting (Oct 8) | FEEDBACK-TO-ADD | |
+| Instructor, Sprint 1 meeting (Oct 8) | Not written down at the time, and the team could not recall specific points at the boundary, so nothing traceable changed because of it. From Sprint 2 on, we open an issue from `.github/ISSUE_TEMPLATE/advisor-meeting.md` during each instructor meeting and record the feedback there | |
 | Instructor, PR #8: the sprint report should flag writing tasks without story points | Merged. Every standalone writing task carries its own `sp:` and a `Sprint 1` milestone | PR #8 |
 | Instructor, PR #10: the harness G10 should let a writing task stand without a parent | Merged | PR #10 |
 | Instructor, #42 and PR #43: one-command Word export; PR #43 was closed and teams asked to pull course files themselves | Pulled the latest course files, including `proposal/reference.docx` and `proposal/to-word.lua` | #42 / PR #44 |
@@ -128,6 +138,7 @@ board; the prototype demo follows at the Sprint 3 meeting (Nov 5).
 | Same card (Oct 20): start Objective 1.1 data collection against the SonarX stream | Planned for Sprint 2; it depends on SonarX access, which we asked the mentor about | #14, #28 |
 | Our own check against the course setup guide (Oct 13): §2 and §4 cited issues untyped, §4 listed issues in a table, Table 7 showed another group's sprint dates | Fixed | #45 / PR #46 |
 | Our own check (Oct 21): after PR #52 reworded Objectives 2.0 and 3.1 as submitted in Homework 5, the titles of #5 and #20 no longer matched proposal §2 | Retitled both issues to the §2 wording on Oct 21 | #5, #20 |
+| Our own check (Oct 21): the Goal 3 specification's word-for-word quote of Objective 3.1 still carried the wording PR #52 removed | Aligned the quote with §2 in this PR | #50 |
 
 ## Contribution snapshot
 
@@ -136,28 +147,29 @@ count the PRs a member reviewed (approved or commented).
 
 | Member | Meetings attended | Merged PRs | Issues closed | Reviews given |
 |---|---|---|---|---|
-| @garybs16 | All | 11 (#24, #25, #31, #32, #33, #40, #44, #46, #47, #48, #51) | 5 (#22, #23, #26, #39, #45) | 5 (#36, #37, #38, #41, #52) |
-| @JakeBowen2005 | All | 5 (#36, #37, #38, #41, #52) | 1 (#5) | 10 (#24, #25, #31, #32, #40, #44, #46, #47, #48, #51) |
-| @Avnijaglan19 | All | 0 merged; 3 opened Oct 21 (#53, #54, #55) | 1 (#29, through a PR authored by @JakeBowen2005) | 3 (#24, #25, #51) |
+| @garybs16 | All | 11 (#24, #25, #31, #32, #33, #40, #44, #46, #47, #48, #51) | 5 (#22, #23, #26, #39, #45); #30 with the release | 8 (#36, #37, #38, #41, #52, #53, #54, #55) |
+| @JakeBowen2005 | All | 5 (#36, #37, #38, #41, #52) | 1 (#5); #27 with the release | 10 (#24, #25, #31, #32, #40, #44, #46, #47, #48, #51) |
+| @Avnijaglan19 | All | 3 (#53, #54, #55) | 1 (#29, through a PR authored by @JakeBowen2005); #16, #50 and #56 with the release | 3 (#24, #25, #51) |
 | @1600isad | All | 0 | 0 | 3 (#24, #32, #33) |
 
 Everyone attended every meeting, but the work is uneven, and two members
 were below our charter's trigger, "fewer than 2 merged pull requests in a
 sprint" (`docs/development-plan.md` §1), for most of the sprint.
-@Avnijaglan19 opened three PRs on the last day: the Goal 3 specification and
-two prototype changes, each with a test. If they merge, @Avnijaglan19 is
-above the trigger. @1600isad has no PR this sprint, so the charter's
-consequence applies in Sprint 2: @1600isad pairs with a teammate on a story
-and owns at least one story's PR. The team names the partner at the Oct 22
-meeting. Pairing
-shows up when commits carry `Co-authored-by:`.
+@Avnijaglan19 merged three PRs on the last day: our first specification
+(Goal 3) and two prototype changes, each with a test, which completed
+Objective 2.1. That puts @Avnijaglan19 above the trigger. @1600isad has no PR
+this sprint, so the charter's consequence applies in Sprint 2: @1600isad
+pairs with a teammate on a story and owns at least one story's PR. The team
+names the partner at the Oct 22 meeting. Pairing shows up when commits carry
+`Co-authored-by:`.
 
 ## What we change next sprint
 
 - **Re-approve after every push.** On PR #25, @JakeBowen2005 approved and
-  then pushed a commit to the branch, which dismissed the approval. The PR was merged with comments from @Avnijaglan19 but no
-  current approval. From now on, nothing merges without a current approval
-  from someone who did not commit to the branch.
+  then pushed a commit to the branch, which dismissed the approval. The PR
+  was merged with comments from @Avnijaglan19 but no current approval. From
+  now on, nothing merges without a current approval from someone who did not
+  commit to the branch.
 - **Keep PRs reviewable.** PR #36 was 153 files and about 735,000 added
   lines, about 711,000 of them saved datasets (`research/bridge-hacks/` and
   `prototype/bridgewatch/data/`). That is far over our agreement of under 10
@@ -168,3 +180,6 @@ shows up when commits carry `Co-authored-by:`.
 - **Open PRs early.** Three PRs arrived on the boundary day, which leaves no
   time for review if something needs changing. Next sprint, open each PR as
   soon as there is something to review, as a draft if it is not finished.
+- **Write instructor feedback down during the meeting.** The Oct 8 feedback
+  was lost. At every instructor meeting, one person opens an issue from the
+  advisor-meeting template and records what was said before the meeting ends.
