@@ -1,5 +1,6 @@
 """Tests for the BridgeWatch prototype (SNX-3 draft): the synthetic source, the
 detector's baseline and rules, the evaluation, and the API. All offline."""
+import re
 import sys
 from pathlib import Path
 
@@ -118,6 +119,25 @@ def test_large_single_withdrawal_rule_and_per_bridge_override():
     small = Detector((Bridge("s", "Small", ("A",), 10e6),), FAST)
     small.observe(FlowEvent(T0, "s", "out", 900_000.0, "y"))  # 9% of escrow but under the $1M floor
     assert [a.rule for a in small.alerts] == ["escrow_drain"]
+
+
+def test_each_alert_names_bridge_amount_window_and_normal():
+    """#16: every alert says in plain words the bridge, the amount, the time window and the comparison with normal."""
+    det = Detector((BRIDGE,), FAST)
+    t = steady(det, 3)
+    for i in range(30):                                    # many small releases: a burst, not a big outflow
+        det.observe(FlowEvent(t + 5 + i, "t", "out", 1_000.0, f"b{i}"))
+    det.observe(FlowEvent(t + 60, "t", "out", 2e6, "s"))   # 2% of escrow in one go: an outflow spike
+    for i in range(3):                                     # then 6% more within the hour: a drain
+        det.observe(FlowEvent(t + 120 + i, "t", "out", 2e6, f"d{i}"))
+    msg = {a.rule: a.message for a in det.alerts}
+    assert {"withdrawal_burst", "outflow_spike", "escrow_drain"} <= set(msg)
+    assert re.fullmatch(r"\d+ releases \(\$[\d.]+K\) from Test Bridge in the last 10 minutes; "
+                        r"about 5 is normal at this hour\.", msg["withdrawal_burst"])
+    assert "left Test Bridge in the last 10 minutes" in msg["outflow_spike"] and "normal at this hour" in msg["outflow_spike"]
+    assert "in the last hour" in msg["escrow_drain"] and "more than 5% in an hour is never normal" in msg["escrow_drain"]
+    for rule in ("withdrawal_burst", "outflow_spike", "escrow_drain"):
+        assert "Test Bridge" in msg[rule] and "$" in msg[rule] and "normal" in msg[rule]
 
 
 def test_alerts_carry_confirmation_and_detection_times():
