@@ -1,5 +1,6 @@
 """Tests for the BridgeWatch prototype (SNX-3 draft): the synthetic source, the
 detector's baseline and rules, the evaluation, and the API. All offline."""
+import re
 import sys
 from pathlib import Path
 
@@ -120,6 +121,25 @@ def test_large_single_withdrawal_rule_and_per_bridge_override():
     assert [a.rule for a in small.alerts] == ["escrow_drain"]
 
 
+def test_each_alert_names_bridge_amount_window_and_normal():
+    """#16: every alert says in plain words the bridge, the amount, the time window and the comparison with normal."""
+    det = Detector((BRIDGE,), FAST)
+    t = steady(det, 3)
+    for i in range(30):                                    # many small releases: a burst, not a big outflow
+        det.observe(FlowEvent(t + 5 + i, "t", "out", 1_000.0, f"b{i}"))
+    det.observe(FlowEvent(t + 60, "t", "out", 2e6, "s"))   # 2% of escrow in one go: an outflow spike
+    for i in range(3):                                     # then 6% more within the hour: a drain
+        det.observe(FlowEvent(t + 120 + i, "t", "out", 2e6, f"d{i}"))
+    msg = {a.rule: a.message for a in det.alerts}
+    assert {"withdrawal_burst", "outflow_spike", "escrow_drain"} <= set(msg)
+    assert re.fullmatch(r"\d+ releases \(\$[\d.]+K\) from Test Bridge in the last 10 minutes; "
+                        r"about 5 is normal at this hour\.", msg["withdrawal_burst"])
+    assert "left Test Bridge in the last 10 minutes" in msg["outflow_spike"] and "normal at this hour" in msg["outflow_spike"]
+    assert "in the last hour" in msg["escrow_drain"] and "more than 5% in an hour is never normal" in msg["escrow_drain"]
+    for rule in ("withdrawal_burst", "outflow_spike", "escrow_drain"):
+        assert "Test Bridge" in msg[rule] and "$" in msg[rule] and "normal" in msg[rule]
+
+
 def test_alerts_carry_confirmation_and_detection_times():
     clock = {"now": T0 + 100}
     det = Detector((BRIDGE,), FAST, clock=lambda: clock["now"])
@@ -186,6 +206,23 @@ def test_api_simulated_exploit_is_detected_live(api):
     series = client.get("/api/series/beta?hours=2").json()
     assert series["buckets"] and any(a["bridge"] == "beta" for a in series["alerts"])
     assert series["buckets"][-1]["partial"] is True   # the bucket still filling is included
+
+
+def test_marking_alerts_as_seen_shows_on_the_dashboard(api):
+    """#20: when the operator marks an alert as seen, the dashboard shows it as seen."""
+    client, bw = api
+    client.post("/api/simulate", json={"bridge": "gamma", "kind": "mass_drain"})
+    bw.service.sim.step(900)
+    gamma = lambda: next(b for b in client.get("/api/state").json()["bridges"] if b["id"] == "gamma")  # noqa: E731
+    assert gamma()["status"] == "alert"
+    live = [a for a in client.get("/api/alerts?bridge=gamma").json() if not a["acknowledged"]]
+    for a in live:
+        assert client.post(f"/api/alerts/{a['id']}/ack").json()["acknowledged"] is True
+    seen = {a["id"]: a["acknowledged"] for a in client.get("/api/alerts?bridge=gamma").json()}
+    assert all(seen[a["id"]] for a in live)            # the list shows them as seen ...
+    assert gamma()["status"] != "alert"                # ... and the bridge no longer shows an alert
+    html = client.get("/").text
+    assert "Mark as seen" in html and '"Seen"' in html
 
 
 def test_api_rejects_bad_input(api):
