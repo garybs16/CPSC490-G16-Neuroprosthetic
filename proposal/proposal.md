@@ -445,6 +445,7 @@ Design documents will be listed in Table 9 as they are written.
 | Document | Covers | Issue |
 |---|---|---|
 | docs/design/architecture.md | System design (Figures 1 and 2) | To be filed |
+| docs/specs/goal-3-dashboard.md | Goal 3 specification: the operator dashboard and its user test | [[task:#50]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/50) |
 
 **Planned tasks.** Sprint 1 is mostly writing and setup, so its tasks stand
 on their own rather than under an objective, and each carries its own story
@@ -476,6 +477,10 @@ Finally, the specification for Goal 2 is started in
 docs/specs/goal-2-detection.md. It will give each of the Goal 2 objectives
 acceptance criteria that someone else can check, beginning with the inputs
 and outputs of the three alert rules. [[task:#34]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/34)
+
+The specification for Goal 3 is started in docs/specs/goal-3-dashboard.md.
+It will give the dashboard and its user test acceptance criteria that
+someone else can check. [[task:#50]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/50)
 
 ![Figure 1. System design: SonarX data, public Ethereum nodes and saved hack history feed ingest; ingest writes common event records to the store; the baseline and the detector read from the store; alerts go through the alert manager to Slack and the web dashboard.](figures/figure-1-system-design.png)
 
