@@ -226,7 +226,7 @@ class BridgeMonitor:
             share = self.net_hour / escrow_ref
             fire("escrow_drain", "critical", share, cfg.drain_share,
                  f"{name} lost {_fmt_usd(self.net_hour)} net in the last hour: {share:.0%} of its "
-                 f"{_fmt_usd(escrow_ref)} escrow.")
+                 f"{_fmt_usd(escrow_ref)} escrow; losing more than {cfg.drain_share:.0%} in an hour is never normal.")
 
         base = self.baseline(e.ts)
         if base:
@@ -242,7 +242,8 @@ class BridgeMonitor:
                      f"{_fmt_usd(self.win_usd)} left {name} in the last 10 minutes; {normal}.")
             if z_c >= cfg.z_threshold and count >= cfg.burst_min_count:
                 fire("withdrawal_burst", "warning", count, med_c,
-                     f"{count} releases from {name} in the last 10 minutes; about {med_c:.0f} is normal at this hour.")
+                     f"{count} releases ({_fmt_usd(self.win_usd)}) from {name} in the last 10 minutes; "
+                     f"about {med_c:.0f} is normal at this hour.")
 
         escrow_before = max(self.escrow + e.amount_usd, 1.0)
         if e.amount_usd >= max(cfg.large_withdrawal_share * escrow_before, cfg.large_withdrawal_min_usd):
