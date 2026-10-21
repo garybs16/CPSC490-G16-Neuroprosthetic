@@ -472,6 +472,11 @@ our SonarX mentor about data access, which bridges count as major, which past
 hacks to replay, and the targets in Section 2 that are still to be confirmed.
 [[task:#27]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/27) [[task:#28]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/28)
 
+Work under the objectives has also begun. Under Objective 3.1, one task
+changes the prototype dashboard to use the objective's own words, so the
+operator marks an alert as seen, and adds a test that the alert then shows
+as seen and no longer counts toward the bridge's status. [[task:#56]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/56)
+
 Finally, the specification for Goal 2 is started in
 docs/specs/goal-2-detection.md. It will give each of the Goal 2 objectives
 acceptance criteria that someone else can check, beginning with the inputs
