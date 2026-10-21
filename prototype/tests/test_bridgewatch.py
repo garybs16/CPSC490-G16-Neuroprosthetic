@@ -208,6 +208,23 @@ def test_api_simulated_exploit_is_detected_live(api):
     assert series["buckets"][-1]["partial"] is True   # the bucket still filling is included
 
 
+def test_marking_alerts_as_seen_shows_on_the_dashboard(api):
+    """#20: when the operator marks an alert as seen, the dashboard shows it as seen."""
+    client, bw = api
+    client.post("/api/simulate", json={"bridge": "gamma", "kind": "mass_drain"})
+    bw.service.sim.step(900)
+    gamma = lambda: next(b for b in client.get("/api/state").json()["bridges"] if b["id"] == "gamma")  # noqa: E731
+    assert gamma()["status"] == "alert"
+    live = [a for a in client.get("/api/alerts?bridge=gamma").json() if not a["acknowledged"]]
+    for a in live:
+        assert client.post(f"/api/alerts/{a['id']}/ack").json()["acknowledged"] is True
+    seen = {a["id"]: a["acknowledged"] for a in client.get("/api/alerts?bridge=gamma").json()}
+    assert all(seen[a["id"]] for a in live)            # the list shows them as seen ...
+    assert gamma()["status"] != "alert"                # ... and the bridge no longer shows an alert
+    html = client.get("/").text
+    assert "Mark as seen" in html and '"Seen"' in html
+
+
 def test_api_rejects_bad_input(api):
     client, _ = api
     assert client.post("/api/simulate", json={"bridge": "nope", "kind": "mass_drain"}).status_code == 404
