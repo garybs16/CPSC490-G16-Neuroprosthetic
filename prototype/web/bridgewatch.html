@@ -215,7 +215,7 @@ footer{font-size:12px;color:var(--muted);max-width:90ch;border-top:1px solid var
 
     <section aria-labelledby="alerts-h">
       <h2 id="alerts-h">Alerts</h2>
-      <p class="sub">Newest first. Acknowledge once someone has looked into it.</p>
+      <p class="sub">Newest first. Mark an alert as seen once someone is looking into it, so the team knows.</p>
       <div class="token" id="token-box" hidden role="status"></div>
       <ul class="feed" id="feed" tabindex="0" aria-label="Alerts, newest first"></ul>
       <button class="btn small more" id="older" type="button" hidden>Show older alerts</button>
@@ -430,7 +430,7 @@ function renderFeed(){
     <span class="sev st-${a.severity}">${STATUS[a.severity]||a.severity}</span><span class="when">${fmtTime(a.started)}</span>
     <span class="what">${esc(names[a.bridge]||a.bridge)}: ${esc(rule(a.rule))}</span>
     <p>${esc(a.message)}</p>${a.worst?`<p class="worst">Worst so far: ${esc(a.worst)}</p>`:""}
-    <div class="act">${a.acknowledged?"Acknowledged":`<button class="btn small" type="button" data-ack="${a.id}">Acknowledge</button>`}</div></li>`).join("")
+    <div class="act">${a.acknowledged?"Seen":`<button class="btn small" type="button" data-ack="${a.id}">Mark as seen</button>`}</div></li>`).join("")
     :`<li><p class="empty" style="padding:12px 0">No alerts. Bridges are within their normal range.</p></li>`,"data-ack");
   $("older").hidden=noMore||TOP.length<30;
 }
@@ -445,9 +445,9 @@ function setToken(t){try{t?sessionStorage.setItem("bw-token",t):sessionStorage.r
 let pendingAck=null;
 function showToken(kind,detail){
   const box=$("token-box");box.hidden=false;
-  if(kind==="disabled"){box.innerHTML=`<b>Acknowledging is turned off on this server.</b> ${esc(detail||"")} An operator has to set <code>BRIDGEWATCH_API_TOKEN</code> and restart BridgeWatch.`;return;}
-  box.innerHTML=`<b>${kind==="wrong"?"That token was not accepted.":"Acknowledging needs the BridgeWatch API token."}</b> It is kept in this browser tab only.
-    <form id="token-form"><label for="token-in">API token</label><input type="password" id="token-in" autocomplete="off" required><button class="btn small" type="submit">Save and acknowledge</button><button class="btn small" type="button" id="token-cancel">Cancel</button></form>`;
+  if(kind==="disabled"){box.innerHTML=`<b>Marking alerts as seen is turned off on this server.</b> ${esc(detail||"")} An operator has to set <code>BRIDGEWATCH_API_TOKEN</code> and restart BridgeWatch.`;return;}
+  box.innerHTML=`<b>${kind==="wrong"?"That token was not accepted.":"Marking alerts as seen needs the BridgeWatch API token."}</b> It is kept in this browser tab only.
+    <form id="token-form"><label for="token-in">API token</label><input type="password" id="token-in" autocomplete="off" required><button class="btn small" type="submit">Save and mark as seen</button><button class="btn small" type="button" id="token-cancel">Cancel</button></form>`;
   $("token-in").focus();
   $("token-form").addEventListener("submit",async e=>{e.preventDefault();setToken($("token-in").value.trim());box.hidden=true;if(pendingAck)await ack(pendingAck);});
   $("token-cancel").addEventListener("click",()=>{box.hidden=true;pendingAck=null;});
@@ -459,10 +459,10 @@ async function ack(id){
   pendingAck=id;
   if(r.status===403)showToken("disabled",r.body&&r.body.detail);
   else if(r.status===401){const had=!!t;setToken("");showToken(had?"wrong":"needed");}
-  else{$("token-box").hidden=false;$("token-box").textContent=`Couldn't acknowledge alert ${id}: ${(r.body&&r.body.detail)||"server error "+r.status}.`;}
+  else{$("token-box").hidden=false;$("token-box").textContent=`Couldn't mark alert ${id} as seen: ${(r.body&&r.body.detail)||"server error "+r.status}.`;}
   $("feed").__html=null;renderFeed();
 }
-$("feed").addEventListener("click",async e=>{const b=e.target.closest("[data-ack]");if(!b)return;b.disabled=true;b.textContent="Acknowledging…";
+$("feed").addEventListener("click",async e=>{const b=e.target.closest("[data-ack]");if(!b)return;b.disabled=true;b.textContent="Marking as seen…";
   try{await ack(+b.dataset.ack);}catch{$("token-box").hidden=false;$("token-box").textContent="Couldn't reach the BridgeWatch server.";$("feed").__html=null;renderFeed();}});
 
 // ---- simulate (demo) -------------------------------------------------------
