@@ -507,10 +507,18 @@ with users; and the source code, tests, a short user guide and the final
 report. The deliverables also include the team GitHub repository and its
 prototype in the prototype/ folder.
 
-**Prototype.** No prototype exists yet. Prototype work begins in Sprint 2,
-and the first prototype demonstration is at the end of Sprint 2. The
-prototype will live in the prototype/ folder of our repository, with a
-README that explains how to run it.
+**Prototype.** A first prototype is in the prototype/ folder of our
+repository (Objective 2.0). It reads the vaults of real bridges from public
+Ethereum nodes, learns each bridge's normal outflow for each hour of the day,
+and raises the three alerts of Objective 2.1, each explained in one sentence
+that names the bridge, the amount, the time window and the comparison with
+normal. It can also replay five past hacks (Ronin, Harmony, Nomad,
+Multichain and Orbit) and count false alarms on normal days. Its web
+dashboard shows each bridge's status, its money flow compared with normal,
+and the alerts, which the operator can mark as seen. It does not use SonarX
+data yet. The prototype's README explains how to run it; for example, running
+`python run_bridgewatch.py --demo` in the prototype/ folder starts the
+dashboard with simulated bridges and a button that simulates an attack.
 
 **How someone will use BridgeWatch.**
 

@@ -18,6 +18,7 @@
 |---|---|---|
 | Whole proposal, §0–§8 | The proposal submitted on Oct 4 is now `proposal/proposal.md`, in the course template's numbering, with every goal and objective in §2 linked to its issue | PR #24 (released to `main` in PR #33) |
 | §0–§2 and §7 | Brought in line with Homework 5 as submitted on Oct 11: Related Work narrowed to three existing systems, references renumbered, two objectives worded as submitted, AI Usage updated for the prototype | PR #52 |
+| §5 Project Outcomes | The *Prototype* paragraph still said no prototype existed; it now says what the prototype does and how to run it, as the course asks once a prototype exists | this PR |
 | Cover page | Cover-page table and clickable links to every filed issue | PR #37 |
 | §2, §4, Table 7 | Typed issue references for the Word export; §4 tasks written as prose; Table 7 corrected to Group 16's sprint dates | PR #46 (released in PR #48) |
 | Word export | `proposal/reference.docx` and `proposal/to-word.lua` from the course repository: one command turns `proposal.md` into the course Word template | PR #44 (released in PR #48) |
@@ -139,6 +140,8 @@ board; the prototype demo follows at the Sprint 3 meeting (Nov 5).
 | Our own check against the course setup guide (Oct 13): §2 and §4 cited issues untyped, §4 listed issues in a table, Table 7 showed another group's sprint dates | Fixed | #45 / PR #46 |
 | Our own check (Oct 21): after PR #52 reworded Objectives 2.0 and 3.1 as submitted in Homework 5, the titles of #5 and #20 no longer matched proposal §2 | Retitled both issues to the §2 wording on Oct 21 | #5, #20 |
 | Our own check (Oct 21): the Goal 3 specification's word-for-word quote of Objective 3.1 still carried the wording PR #52 removed | Aligned the quote with §2 in this PR | #50 |
+| Our own check (Oct 21) against the course README §3: proposal §5 said "No prototype exists yet", which contradicted the merged prototype and §7 | Rewrote the *Prototype* paragraph of §5 in this PR: what the prototype does, that it does not use SonarX data yet, and how to run it | #5 |
+| Our own check (Oct 21) against the course README §5, "every story links its document": stories #16–#21 said their deliverable was "to be set at sprint planning" | Set the deliverable of #16–#21 to the specification and code that serve each one. #14 and #15 wait for a Goal 1 specification task at Sprint 2 planning | #16–#21 |
 
 ## Contribution snapshot
 
