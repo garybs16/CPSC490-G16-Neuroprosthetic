@@ -17,8 +17,7 @@ The two objectives, verbatim from proposal §2:
 
 - **Objective 3.1** ([#20](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/20)).
   Build a live dashboard showing each bridge's status, its money flow
-  compared with normal, and a list of alerts the operator can mark as seen,
-  which is useful for seeing activity at a glance.
+  compared with normal, and a list of alerts the operator can mark as seen.
 - **Objective 3.2** ([#21](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/21)).
   Test the dashboard with four users on a replayed hack, and record whether
   they notice and understand the alert within five minutes.
