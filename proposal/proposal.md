@@ -487,6 +487,18 @@ The specification for Goal 3 is started in docs/specs/goal-3-dashboard.md.
 It will give the dashboard and its user test acceptance criteria that
 someone else can check. [[task:#50]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/50)
 
+Sprint 2 (Oct 22 – Nov 4) completes the specifications and starts the
+design. A specification for Goal 1 joins those for Goals 2 and 3, so that
+each goal has one, and a first design document redraws Figures 1 and 2 with
+editable sources and adds a data model of the prototype's store. [[task:#61]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/61) [[task:#62]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/62)
+
+The remaining Sprint 2 tasks keep the team's process visible. We add the
+team's first rule to the harness log, taken from the failure behind every
+red check in Sprint 1; we record the story points Sprint 2 started with; we
+state in Section 7 which repository text was drafted with an AI assistant;
+and we write the Sprint 2 review after releasing the sprint's work to the
+main branch a day before the sprint ends. [[task:#63]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/63) [[task:#65]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/65) [[task:#66]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/66) [[task:#64]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/64)
+
 ![Figure 1. System design: SonarX data, public Ethereum nodes and saved hack history feed ingest; ingest writes common event records to the store; the baseline and the detector read from the store; alerts go through the alert manager to Slack and the web dashboard.](figures/figure-1-system-design.png)
 
 *Figure 1. System design. The detector reads only common event records, so
