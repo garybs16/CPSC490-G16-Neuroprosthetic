@@ -72,7 +72,7 @@ Newest first by `id`; `limit` 1-500. Next page: `before_id` = the last `id` rece
  "started": 1791410000,           // block time of the transfer that tripped the rule
  "last_seen": 1791410300,         // repeats within the cooldown (1 h) update the same alert
  "observed": 0.13, "expected": 0.05,   // USD, a count, or an escrow share, depending on the rule
- "message": "OP Mainnet bridge lost $40.0M net in the last hour: 13% of its $300.0M escrow.",
+ "message": "OP Mainnet bridge lost $40.0M net in the last hour: 13% of its $300.0M escrow; losing more than 5% in an hour is never normal.",
  "worst": "",                     // the same measure at its worst so far, if it got worse
  "acknowledged": false,
  "confirmed_at": 1791410072,      // block time + confirmations x block time
