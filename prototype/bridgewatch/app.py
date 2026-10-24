@@ -187,9 +187,9 @@ class LiveService:
 
     def state(self) -> dict:
         s = self.m.status
-        lag = (s.head - s.cursor) if s.head is not None and s.cursor is not None else None
+        lag, lag_s = self.m.lag()
         return {**self.snapshot, "explorer_tx": self.m.explorer_tx, "chain": self.m.chain.id,
-                "head": s.head, "cursor": s.cursor, "lag_blocks": lag, "phase": s.phase,
+                "head": s.head, "cursor": s.cursor, "lag_blocks": lag, "lag_seconds": lag_s, "phase": s.phase,
                 "health": self.m.status_word(), "transfers_stored": sum(self.m.transfer_counts.values())}
 
     def health(self) -> dict:
@@ -390,6 +390,7 @@ def metrics():
         m = svc.m
         lat = h["last_detection_latency_s"]
         lines += [f"bridgewatch_ingest_lag_blocks {h['lag_blocks'] if h['lag_blocks'] is not None else -1}",
+                  f"bridgewatch_ingest_lag_seconds {h['lag_seconds'] if h['lag_seconds'] is not None else -1}",
                   f"bridgewatch_rpc_calls_total {h['rpc_calls']}",
                   f"bridgewatch_rpc_errors_total {h['rpc_errors']}",
                   f"bridgewatch_consecutive_failures {h['consecutive_failures']}",

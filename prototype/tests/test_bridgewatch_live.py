@@ -282,6 +282,20 @@ def test_health_reports_lag_and_goes_degraded_when_stale(setup):
     assert m.health()["status"] == "degraded"
 
 
+def test_health_reports_lag_in_seconds_and_degrades_past_five_minutes(setup):
+    """#69 (Objective 1.1): no more than five minutes behind the latest block, and say how far behind."""
+    chain, make, _ = setup
+    m = make()
+    m.start()
+    h = m.health()
+    assert h["lag_blocks"] == 6 and h["lag_seconds"] == 72 and h["max_lag_seconds"] == 300
+    m.status.head = m.status.cursor + 25                 # 25 blocks x 12 s = exactly five minutes: still ok
+    assert m.health()["status"] == "ok"
+    m.status.head = m.status.cursor + 30                 # six minutes behind, while polls still succeed
+    h = m.health()
+    assert h["lag_seconds"] == 360 and h["status"] == "degraded"
+
+
 def test_historical_alerts_are_stored_but_never_sent(setup):
     chain, make, sent = setup
     drain(chain, chain.head_block - 3 * BPD, to=555)     # three days ago, found while backfilling

@@ -313,7 +313,7 @@ function renderHeader(st,health){
   const ct=$("chain-time");
   if(live){
     ct.hidden=!st.clock;ct.innerHTML=st.clock?`Data to <b>${esc(hms(st.clock))}</b>`:"";
-    $("fresh").textContent=st.phase==="live"&&st.lag_blocks!=null?`${st.lag_blocks} blocks behind head`:(st.phase||"");
+    $("fresh").textContent=st.phase==="live"&&st.lag_blocks!=null?`${st.lag_blocks} blocks (${(st.lag_seconds/60).toFixed(1)} min) behind the latest block`:(st.phase||"");
   }else{
     ct.hidden=true;
     $("fresh").textContent=`${st.speed}× speed`;
