@@ -44,6 +44,7 @@ python run_bridgewatch.py --demo   # demo: synthetic bridges, "Simulate exploit"
 python -m bridgewatch.replay               # replay every saved hack case -> results/replay.json
 python -m bridgewatch.replay bridgewatch/data/orbit-2023.json   # one case
 python -m bridgewatch.evaluate --real      # false alarms per bridge per week on real data -> results/evaluation-real.json
+python -m bridgewatch.baseline_check       # Objective 1.2: share of normal 10-minute periods inside the normal range -> results/baseline-check.json
 python -m bridgewatch.evaluate             # synthetic scorecard (~15 s) -> results/evaluation.json
 python -m bridgewatch.load_data            # import every dataset into bridgewatch-datasets.db (idempotent; never the live DB)
 python scripts/fetch_datasets.py --list    # the datasets, and how to re-download them from public RPCs
@@ -161,6 +162,48 @@ the original prototype; adding it to the script is a to-do).
 Native ETH is not visible in token logs and is not tracked (WETH is, where it
 was used). Five cases are evidence, not a benchmark.
 
+## Baseline of normal on real data (Objective 1.2)
+
+`python -m bridgewatch.baseline_check` asks how well the baseline describes
+normal days ([#15](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/15)).
+The normal outflow range for a bridge and hour of day is the detector's own
+baseline over the past 7 days, **median ± 3 spreads** (never below $0), with
+K = 3 fixed before any result was looked at. Every 10-minute period after day 7
+is compared with the range built from the 7 days before it, and the share
+inside is reported two ways: over **all periods**, and over **periods with at
+least one withdrawal**. On quiet vaults almost every period is empty, and an
+empty period is inside any range that starts at $0, so the second number is the
+honest one there. It reads `bridgewatch/data/normal/` and
+`research/bridge-hacks/03-onchain-data/normal/` (public Ethereum data fetched
+on 2026-10-07, not SonarX). Results on 2026-10-23, target 95%:
+
+| Dataset | All periods | Withdrawal periods |
+|---|---|---|
+| Arbitrum One gateway | 99.7% of 3,312 | 65.6% of 32 |
+| Base bridge | 99.9% of 3,312 | 81.8% of 11 |
+| OP Mainnet bridge | 99.8% of 3,312 | 75.0% of 24 |
+| Orbit vault, Oct 2023 | 100.0% of 3,312 | 99.4% of 155 |
+| Multichain MPC address, Mar 2023 | 98.8% of 3,312 | 94.5% of 749 |
+| Celer cBridge | 100.0% of 3,312 | 100.0% of 65 |
+| Kelp rsETH adapter, Mar 2026 | 99.4% of 3,312 | 73.0% of 74 |
+| Polygon PoS ERC20 bridge | 97.0% of 3,312 | 81.3% of 525 |
+| Ronin gateway | 100.0% of 3,312 | 100.0% of 11 |
+| Stargate v2 USDC pool | 96.0% of 3,312 | 92.0% of 1,673 |
+| USDT0 OFT adapter | **91.5%** of 3,312 | 88.4% of 2,427 |
+| Wormhole Portal | 100.0% of 3,312 | 100.0% of 395 |
+| **Pooled, 12 normal windows** | **98.5%** (target met) | **90.3%** (target not met) |
+| *Stress: Polygon PoS, USDC depeg 2023* | *96.6%* | *88.7%* |
+| *Stress: Wormhole Portal, FTX 2022* | *96.0%* | *92.2%* |
+
+Stress windows are not pooled. Across (7 days only) is skipped: nothing is left
+to check after 7 days of history. Every period outside the range is a large
+withdrawal ($0.4M–$45M) in an hour where usually little or nothing leaves, so
+the range tops out near the $300K floor (3 × `min_spread_usd`). These are the
+honest whales of problem P3, which is why the alert rules also require a share
+of escrow. The target is met over all periods but not over withdrawal periods,
+and not on USDT0 even over all periods; the team decides what to do with that
+(see #15), the check does not tune itself to pass.
+
 ## False alarms on real normal data (Objective 2.3)
 
 `python -m bridgewatch.evaluate --real` runs the detector over 30-day windows
@@ -233,11 +276,11 @@ token; SonarX sources (they would implement `Source`).
 | `bridgewatch/config.py`, `bridgewatch/bridges.json` | Settings from the environment; monitored chains, tokens, bridges |
 | `bridgewatch/onchain.py` | Ethereum JSON-RPC client (retries, endpoint fallback), Chainlink prices |
 | `bridgewatch/app.py`, `API.md` | FastAPI server and its endpoint reference |
-| `bridgewatch/replay.py`, `bridgewatch/evaluate.py`, `bridgewatch/load_data.py` | Command-line tools |
+| `bridgewatch/replay.py`, `bridgewatch/evaluate.py`, `bridgewatch/baseline_check.py`, `bridgewatch/load_data.py` | Command-line tools |
 | `bridgewatch/synthetic.py` | Synthetic traffic and injectable exploits (demo mode, synthetic scorecard) |
 | `bridgewatch/data/` | Saved datasets: hack cases, and `normal/` 30-day windows |
 | `scripts/fetch_datasets.py` | Re-downloads the datasets from public RPCs |
 | `results/` | JSON written by replay / evaluate, read by the dashboard |
 | `web/bridgewatch.html` | Alerting dashboard |
-| `tests/` | 48 offline tests: detector, replay, live mode against a fake node, store migration, notifier, CLIs |
+| `tests/` | 57 offline tests: detector, replay, Objective 1.2 baseline check, live mode against a fake node, store migration, notifier, CLIs |
 | `run_bridgewatch.py` | One-click launcher |

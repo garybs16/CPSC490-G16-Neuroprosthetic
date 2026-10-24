@@ -69,6 +69,17 @@ def with_overrides(cfg: DetectorConfig, overrides: dict | None) -> DetectorConfi
     return replace(cfg, **{k: v for k, v in overrides.items() if k in known})
 
 
+def robust_baseline(values, floor: float) -> tuple[float, float]:
+    """(median, spread) of one hour's 10-minute values: the baseline every rule and the
+    Objective 1.2 check (baseline_check.py) share. The spread is the MAD scaled to a
+    standard deviation (1.4826), but never below half the median or `floor`, so an hour
+    where usually nothing moves (MAD = 0) doesn't turn every ordinary release into a
+    50-sigma event."""
+    med = statistics.median(values)
+    mad = statistics.median(abs(v - med) for v in values)
+    return med, max(1.4826 * mad, 0.5 * med, floor)
+
+
 def _fmt_usd(x: float) -> str:
     for div, unit in ((1e9, "B"), (1e6, "M"), (1e3, "K")):
         if abs(x) >= div:
@@ -114,12 +125,6 @@ class BridgeMonitor:
     def _hour(ts: float) -> int:
         return int((ts % 86_400) // 3_600)
 
-    @staticmethod
-    def _robust(values) -> tuple[float, float]:
-        med = statistics.median(values)
-        mad = statistics.median(abs(v - med) for v in values)
-        return med, mad
-
     def baseline(self, ts: float) -> tuple[float, float, float, float] | None:
         """(median usd, spread usd, median count, spread count) for this hour, or None while learning."""
         h = self._hour(ts)
@@ -128,11 +133,9 @@ class BridgeMonitor:
         cached = self._base_cache.get(h)
         if cached and cached[0] == self._closed:     # history unchanged since last time: reuse
             return cached[1]
-        med_u, mad_u = self._robust(self.hist_usd[h])
-        med_c, mad_c = self._robust(self.hist_cnt[h])
-        # Spread floors: a quiet hour with MAD ~0 must not turn every release into a 50-sigma event
-        base = (med_u, max(1.4826 * mad_u, 0.5 * med_u, self.cfg.min_spread_usd),
-                med_c, max(1.4826 * mad_c, 0.5 * med_c, 1.0))
+        med_u, spread_u = robust_baseline(self.hist_usd[h], self.cfg.min_spread_usd)
+        med_c, spread_c = robust_baseline(self.hist_cnt[h], 1.0)
+        base = (med_u, spread_u, med_c, spread_c)
         self._base_cache[h] = (self._closed, base)
         return base
 

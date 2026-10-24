@@ -1,0 +1,3753 @@
+{
+ "generated_at": 1792806365.9154189,
+ "objective": "1.2 (#15): at least 95% of normal 10-minute periods fall inside the normal outflow range",
+ "range": "[max(0, median - 3 x spread), median + 3 x spread] of the same hour over the past 7 days; median and spread from detector.robust_baseline (min_spread_usd = 100000)",
+ "k": 3.0,
+ "target": 0.95,
+ "normal": {
+  "datasets": 12,
+  "all_periods": {
+   "inside": 39150,
+   "checked": 39744,
+   "share": 0.9851,
+   "meets_target": true
+  },
+  "withdrawal_periods": {
+   "inside": 5547,
+   "checked": 6141,
+   "share": 0.9033,
+   "meets_target": false
+  },
+  "below_target_withdrawal_periods": [
+   "arbitrum-30d",
+   "base-30d",
+   "multichain-2023-normal-30d",
+   "optimism-30d",
+   "kelp-rseth-adapter-prehack-30d",
+   "polygon-pos-erc20-30d",
+   "stargate-v2-usdc-30d",
+   "usdt0-oft-adapter-30d"
+  ]
+ },
+ "datasets": [
+  {
+   "key": "arbitrum-30d",
+   "title": "Arbitrum One bridge (L1 ERC20 Gateway), 30 believed-normal days",
+   "vault": "0xa3a7b6f88361f48403514059f1f16c8e78d60eec",
+   "dataset": "arbitrum-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3301,
+    "checked": 3312,
+    "share": 0.9967,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 21,
+    "checked": 32,
+    "share": 0.6562,
+    "meets_target": false
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3296,
+      "checked": 3312,
+      "share": 0.9952
+     },
+     "withdrawal_periods": {
+      "inside": 16,
+      "checked": 32,
+      "share": 0.5
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3299,
+      "checked": 3312,
+      "share": 0.9961
+     },
+     "withdrawal_periods": {
+      "inside": 19,
+      "checked": 32,
+      "share": 0.5938
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3301,
+      "checked": 3312,
+      "share": 0.9967
+     },
+     "withdrawal_periods": {
+      "inside": 21,
+      "checked": 32,
+      "share": 0.6562
+     }
+    }
+   },
+   "outside_count": 11,
+   "outside_examples": [
+    {
+     "start": 1791341400.0,
+     "hour_utc": 2,
+     "outflow_usd": 2093734.13,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790244000.0,
+     "hour_utc": 10,
+     "outflow_usd": 412811.31,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1791028200.0,
+     "hour_utc": 11,
+     "outflow_usd": 391913.53,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790440200.0,
+     "hour_utc": 16,
+     "outflow_usd": 366566.91,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790008200.0,
+     "hour_utc": 16,
+     "outflow_usd": 366477.31,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "base-30d",
+   "title": "Base bridge (L1StandardBridge), 30 believed-normal days",
+   "vault": "0x3154cf16ccdb4c6d922629664174b904d80f2c35",
+   "dataset": "base-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3310,
+    "checked": 3312,
+    "share": 0.9994,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 9,
+    "checked": 11,
+    "share": 0.8182,
+    "meets_target": false
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3308,
+      "checked": 3312,
+      "share": 0.9988
+     },
+     "withdrawal_periods": {
+      "inside": 7,
+      "checked": 11,
+      "share": 0.6364
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3310,
+      "checked": 3312,
+      "share": 0.9994
+     },
+     "withdrawal_periods": {
+      "inside": 9,
+      "checked": 11,
+      "share": 0.8182
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3310,
+      "checked": 3312,
+      "share": 0.9994
+     },
+     "withdrawal_periods": {
+      "inside": 9,
+      "checked": 11,
+      "share": 0.8182
+     }
+    }
+   },
+   "outside_count": 2,
+   "outside_examples": [
+    {
+     "start": 1789753800.0,
+     "hour_utc": 17,
+     "outflow_usd": 540039.25,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1791334800.0,
+     "hour_utc": 1,
+     "outflow_usd": 370156.27,
+     "withdrawals": 4,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "multichain-2023-normal-30d",
+   "title": "Multichain Fantom bridge MPC address, 30 believed-normal days (Mar 2023, before the Jul 2023 drain)",
+   "vault": "0xc564ee9f21ed8a2d8e7e76c085740d5e4c5fafbe",
+   "dataset": "multichain-2023-normal-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3271,
+    "checked": 3312,
+    "share": 0.9876,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 708,
+    "checked": 749,
+    "share": 0.9453,
+    "meets_target": false
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3226,
+      "checked": 3312,
+      "share": 0.974
+     },
+     "withdrawal_periods": {
+      "inside": 663,
+      "checked": 749,
+      "share": 0.8852
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3248,
+      "checked": 3312,
+      "share": 0.9807
+     },
+     "withdrawal_periods": {
+      "inside": 685,
+      "checked": 749,
+      "share": 0.9146
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3271,
+      "checked": 3312,
+      "share": 0.9876
+     },
+     "withdrawal_periods": {
+      "inside": 708,
+      "checked": 749,
+      "share": 0.9453
+     }
+    }
+   },
+   "outside_count": 41,
+   "outside_examples": [
+    {
+     "start": 1678579200.0,
+     "hour_utc": 0,
+     "outflow_usd": 8118240.0,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1678530600.0,
+     "hour_utc": 10,
+     "outflow_usd": 5164510.0,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1678529400.0,
+     "hour_utc": 10,
+     "outflow_usd": 3564589.5,
+     "withdrawals": 2,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1678581600.0,
+     "hour_utc": 0,
+     "outflow_usd": 3307389.59,
+     "withdrawals": 2,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1679812200.0,
+     "hour_utc": 6,
+     "outflow_usd": 2708591.46,
+     "withdrawals": 2,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "optimism-30d",
+   "title": "OP Mainnet bridge (L1StandardBridgeProxy), 30 believed-normal days",
+   "vault": "0x99c9fc46f92e8a1c0dec1b1747d010903e884be1",
+   "dataset": "optimism-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3306,
+    "checked": 3312,
+    "share": 0.9982,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 18,
+    "checked": 24,
+    "share": 0.75,
+    "meets_target": false
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3301,
+      "checked": 3312,
+      "share": 0.9967
+     },
+     "withdrawal_periods": {
+      "inside": 13,
+      "checked": 24,
+      "share": 0.5417
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3302,
+      "checked": 3312,
+      "share": 0.997
+     },
+     "withdrawal_periods": {
+      "inside": 14,
+      "checked": 24,
+      "share": 0.5833
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3306,
+      "checked": 3312,
+      "share": 0.9982
+     },
+     "withdrawal_periods": {
+      "inside": 18,
+      "checked": 24,
+      "share": 0.75
+     }
+    }
+   },
+   "outside_count": 6,
+   "outside_examples": [
+    {
+     "start": 1790694000.0,
+     "hour_utc": 15,
+     "outflow_usd": 1438766.43,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790075400.0,
+     "hour_utc": 11,
+     "outflow_usd": 1020996.02,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790610000.0,
+     "hour_utc": 15,
+     "outflow_usd": 456403.0,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1789840800.0,
+     "hour_utc": 18,
+     "outflow_usd": 382321.48,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790514000.0,
+     "hour_utc": 13,
+     "outflow_usd": 356514.64,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "orbit-2023-normal-30d",
+   "title": "Orbit Chain bridge vault, 30 believed-normal days (Oct 2023, before the Dec 2023 hack)",
+   "vault": "0x1bf68a9d1eaee7826b3593c20a0ca93293cb489a",
+   "dataset": "orbit-2023-normal-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3311,
+    "checked": 3312,
+    "share": 0.9997,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 154,
+    "checked": 155,
+    "share": 0.9935,
+    "meets_target": true
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3302,
+      "checked": 3312,
+      "share": 0.997
+     },
+     "withdrawal_periods": {
+      "inside": 145,
+      "checked": 155,
+      "share": 0.9355
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3308,
+      "checked": 3312,
+      "share": 0.9988
+     },
+     "withdrawal_periods": {
+      "inside": 151,
+      "checked": 155,
+      "share": 0.9742
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3311,
+      "checked": 3312,
+      "share": 0.9997
+     },
+     "withdrawal_periods": {
+      "inside": 154,
+      "checked": 155,
+      "share": 0.9935
+     }
+    }
+   },
+   "outside_count": 1,
+   "outside_examples": [
+    {
+     "start": 1697583600.0,
+     "hour_utc": 23,
+     "outflow_usd": 1316206.59,
+     "withdrawals": 2,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "celer-cbridge-30d",
+   "title": "Celer cBridge pool-based Bridge, 30 believed-normal days",
+   "vault": "0x5427fefa711eff984124bfbb1ab6fbf5e3da1820",
+   "dataset": "celer-cbridge-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3312,
+    "checked": 3312,
+    "share": 1.0,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 65,
+    "checked": 65,
+    "share": 1.0,
+    "meets_target": true
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3307,
+      "checked": 3312,
+      "share": 0.9985
+     },
+     "withdrawal_periods": {
+      "inside": 60,
+      "checked": 65,
+      "share": 0.9231
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3310,
+      "checked": 3312,
+      "share": 0.9994
+     },
+     "withdrawal_periods": {
+      "inside": 63,
+      "checked": 65,
+      "share": 0.9692
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3312,
+      "checked": 3312,
+      "share": 1.0
+     },
+     "withdrawal_periods": {
+      "inside": 65,
+      "checked": 65,
+      "share": 1.0
+     }
+    }
+   },
+   "outside_count": 0,
+   "outside_examples": [],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "kelp-rseth-adapter-prehack-30d",
+   "title": "KelpDAO rsETH OFT adapter, 30 believed-normal days (Mar 2026, before the Apr 2026 hack)",
+   "vault": "0x85d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+   "dataset": "kelp-rseth-adapter-prehack-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3292,
+    "checked": 3312,
+    "share": 0.994,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 54,
+    "checked": 74,
+    "share": 0.7297,
+    "meets_target": false
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3285,
+      "checked": 3312,
+      "share": 0.9918
+     },
+     "withdrawal_periods": {
+      "inside": 47,
+      "checked": 74,
+      "share": 0.6351
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3291,
+      "checked": 3312,
+      "share": 0.9937
+     },
+     "withdrawal_periods": {
+      "inside": 53,
+      "checked": 74,
+      "share": 0.7162
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3292,
+      "checked": 3312,
+      "share": 0.994
+     },
+     "withdrawal_periods": {
+      "inside": 54,
+      "checked": 74,
+      "share": 0.7297
+     }
+    }
+   },
+   "outside_count": 20,
+   "outside_examples": [
+    {
+     "start": 1773048000.0,
+     "hour_utc": 9,
+     "outflow_usd": 4499221.95,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1773995400.0,
+     "hour_utc": 8,
+     "outflow_usd": 3486897.01,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1773999000.0,
+     "hour_utc": 9,
+     "outflow_usd": 3486897.01,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1773997800.0,
+     "hour_utc": 9,
+     "outflow_usd": 3374416.46,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1773239400.0,
+     "hour_utc": 14,
+     "outflow_usd": 2362091.52,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "polygon-pos-erc20-30d",
+   "title": "Polygon PoS ERC20PredicateProxy, 30 believed-normal days",
+   "vault": "0x40ec5b33f54e0e8a33a975908c5ba1c14e5bbbdf",
+   "dataset": "polygon-pos-erc20-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3214,
+    "checked": 3312,
+    "share": 0.9704,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 427,
+    "checked": 525,
+    "share": 0.8133,
+    "meets_target": false
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3102,
+      "checked": 3312,
+      "share": 0.9366
+     },
+     "withdrawal_periods": {
+      "inside": 315,
+      "checked": 525,
+      "share": 0.6
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3195,
+      "checked": 3312,
+      "share": 0.9647
+     },
+     "withdrawal_periods": {
+      "inside": 408,
+      "checked": 525,
+      "share": 0.7771
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3214,
+      "checked": 3312,
+      "share": 0.9704
+     },
+     "withdrawal_periods": {
+      "inside": 427,
+      "checked": 525,
+      "share": 0.8133
+     }
+    }
+   },
+   "outside_count": 98,
+   "outside_examples": [
+    {
+     "start": 1790431800.0,
+     "hour_utc": 14,
+     "outflow_usd": 8000000.0,
+     "withdrawals": 4,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1789578600.0,
+     "hour_utc": 17,
+     "outflow_usd": 7788905.0,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790608800.0,
+     "hour_utc": 15,
+     "outflow_usd": 7600000.0,
+     "withdrawals": 3,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790350800.0,
+     "hour_utc": 15,
+     "outflow_usd": 6000001.0,
+     "withdrawals": 3,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1791288000.0,
+     "hour_utc": 12,
+     "outflow_usd": 4868135.0,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "polygon-pos-erc20-usdc-depeg-2023",
+   "title": "Polygon PoS ERC20PredicateProxy, 30 days around the USDC depeg (24 Feb - 26 Mar 2023; SVB weekend 10-13 Mar)",
+   "vault": "0x40ec5b33f54e0e8a33a975908c5ba1c14e5bbbdf",
+   "dataset": "polygon-pos-erc20-usdc-depeg-2023.json",
+   "group": "stress",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3200,
+    "checked": 3312,
+    "share": 0.9662,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 881,
+    "checked": 993,
+    "share": 0.8872,
+    "meets_target": false
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3131,
+      "checked": 3312,
+      "share": 0.9454
+     },
+     "withdrawal_periods": {
+      "inside": 812,
+      "checked": 993,
+      "share": 0.8177
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3176,
+      "checked": 3312,
+      "share": 0.9589
+     },
+     "withdrawal_periods": {
+      "inside": 857,
+      "checked": 993,
+      "share": 0.863
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3200,
+      "checked": 3312,
+      "share": 0.9662
+     },
+     "withdrawal_periods": {
+      "inside": 881,
+      "checked": 993,
+      "share": 0.8872
+     }
+    }
+   },
+   "outside_count": 112,
+   "outside_examples": [
+    {
+     "start": 1678562400.0,
+     "hour_utc": 19,
+     "outflow_usd": 10011632.29,
+     "withdrawals": 2,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1678809600.0,
+     "hour_utc": 16,
+     "outflow_usd": 8783064.47,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1678831800.0,
+     "hour_utc": 22,
+     "outflow_usd": 7022569.51,
+     "withdrawals": 2,
+     "range_usd": [
+      0.0,
+      300000.5
+     ]
+    },
+    {
+     "start": 1678744200.0,
+     "hour_utc": 21,
+     "outflow_usd": 6389753.09,
+     "withdrawals": 3,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1678503600.0,
+     "hour_utc": 3,
+     "outflow_usd": 6211446.91,
+     "withdrawals": 2,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 19.3,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300019.3
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "ronin-gateway-30d",
+   "title": "Ronin bridge MainchainGatewayV3 proxy, 30 believed-normal days (2026)",
+   "vault": "0x64192819ac13ef72bf6b5ae239ac672b43a9af08",
+   "dataset": "ronin-gateway-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3312,
+    "checked": 3312,
+    "share": 1.0,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 11,
+    "checked": 11,
+    "share": 1.0,
+    "meets_target": true
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3312,
+      "checked": 3312,
+      "share": 1.0
+     },
+     "withdrawal_periods": {
+      "inside": 11,
+      "checked": 11,
+      "share": 1.0
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3312,
+      "checked": 3312,
+      "share": 1.0
+     },
+     "withdrawal_periods": {
+      "inside": 11,
+      "checked": 11,
+      "share": 1.0
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3312,
+      "checked": 3312,
+      "share": 1.0
+     },
+     "withdrawal_periods": {
+      "inside": 11,
+      "checked": 11,
+      "share": 1.0
+     }
+    }
+   },
+   "outside_count": 0,
+   "outside_examples": [],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "stargate-v2-usdc-30d",
+   "title": "Stargate V2 USDC pool (StargatePoolUSDC), 30 believed-normal days",
+   "vault": "0xc026395860db2d07ee33e05fe50ed7bd583189c7",
+   "dataset": "stargate-v2-usdc-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3178,
+    "checked": 3312,
+    "share": 0.9595,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 1539,
+    "checked": 1673,
+    "share": 0.9199,
+    "meets_target": false
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3102,
+      "checked": 3312,
+      "share": 0.9366
+     },
+     "withdrawal_periods": {
+      "inside": 1463,
+      "checked": 1673,
+      "share": 0.8745
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3158,
+      "checked": 3312,
+      "share": 0.9535
+     },
+     "withdrawal_periods": {
+      "inside": 1519,
+      "checked": 1673,
+      "share": 0.9079
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3178,
+      "checked": 3312,
+      "share": 0.9595
+     },
+     "withdrawal_periods": {
+      "inside": 1539,
+      "checked": 1673,
+      "share": 0.9199
+     }
+    }
+   },
+   "outside_count": 134,
+   "outside_examples": [
+    {
+     "start": 1790659200.0,
+     "hour_utc": 5,
+     "outflow_usd": 15499845.01,
+     "withdrawals": 31,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790841600.0,
+     "hour_utc": 8,
+     "outflow_usd": 14499855.01,
+     "withdrawals": 29,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790658600.0,
+     "hour_utc": 5,
+     "outflow_usd": 12999870.01,
+     "withdrawals": 26,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790660400.0,
+     "hour_utc": 5,
+     "outflow_usd": 11499885.01,
+     "withdrawals": 23,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1790658000.0,
+     "hour_utc": 5,
+     "outflow_usd": 10508339.51,
+     "withdrawals": 22,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.68,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.68
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "usdt0-oft-adapter-30d",
+   "title": "USDT0 OFT adapter (LayerZero lockbox for USDT), 30 believed-normal days",
+   "vault": "0x6c96de32cea08842dcc4058c14d3aaad7fa41dee",
+   "dataset": "usdt0-oft-adapter-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3031,
+    "checked": 3312,
+    "share": 0.9152,
+    "meets_target": false
+   },
+   "withdrawal_periods": {
+    "inside": 2146,
+    "checked": 2427,
+    "share": 0.8842,
+    "meets_target": false
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 2843,
+      "checked": 3312,
+      "share": 0.8584
+     },
+     "withdrawal_periods": {
+      "inside": 1958,
+      "checked": 2427,
+      "share": 0.8068
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 2980,
+      "checked": 3312,
+      "share": 0.8998
+     },
+     "withdrawal_periods": {
+      "inside": 2095,
+      "checked": 2427,
+      "share": 0.8632
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3031,
+      "checked": 3312,
+      "share": 0.9152
+     },
+     "withdrawal_periods": {
+      "inside": 2146,
+      "checked": 2427,
+      "share": 0.8842
+     }
+    }
+   },
+   "outside_count": 281,
+   "outside_examples": [
+    {
+     "start": 1790751600.0,
+     "hour_utc": 7,
+     "outflow_usd": 45000000.0,
+     "withdrawals": 1,
+     "range_usd": [
+      0.0,
+      310665.95
+     ]
+    },
+    {
+     "start": 1790345400.0,
+     "hour_utc": 14,
+     "outflow_usd": 40100596.06,
+     "withdrawals": 5,
+     "range_usd": [
+      0.0,
+      313019.62
+     ]
+    },
+    {
+     "start": 1789417800.0,
+     "hour_utc": 20,
+     "outflow_usd": 23465129.85,
+     "withdrawals": 14,
+     "range_usd": [
+      0.0,
+      300538.23
+     ]
+    },
+    {
+     "start": 1790859000.0,
+     "hour_utc": 12,
+     "outflow_usd": 20682754.43,
+     "withdrawals": 5,
+     "range_usd": [
+      0.0,
+      304107.26
+     ]
+    },
+    {
+     "start": 1791277200.0,
+     "hour_utc": 9,
+     "outflow_usd": 20177791.84,
+     "withdrawals": 4,
+     "range_usd": [
+      0.0,
+      327522.43
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 2034.81,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 302034.81
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 600.33,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300600.33
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 6174.75,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 306174.75
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 1161.04,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 301161.04
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 1088.92,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 301088.92
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 3147.38,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 303147.38
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 11294.82,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 311294.82
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 11132.66,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 311132.66
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 29847.62,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 329847.62
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 24612.27,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 324612.27
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 14600.69,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 314600.69
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 7645.66,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 307645.66
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 8370.84,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 308370.84
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 4937.49,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 304937.49
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 9651.86,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 309651.86
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 6861.77,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 306861.77
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 6926.99,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 306926.99
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 929.23,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300929.23
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 10170.84,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 310170.84
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 4363.16,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 304363.16
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 7578.73,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 307578.73
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 1251.44,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 301251.44
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 1011.47,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 301011.47
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 1.18,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300001.18
+    }
+   ]
+  },
+  {
+   "key": "wormhole-portal-30d",
+   "title": "Wormhole Portal token bridge, 30 believed-normal days",
+   "vault": "0x3ee18b2214aff97000d974cf647e7c347e8fa585",
+   "dataset": "wormhole-portal-30d.json",
+   "group": "normal",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3312,
+    "checked": 3312,
+    "share": 1.0,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 395,
+    "checked": 395,
+    "share": 1.0,
+    "meets_target": true
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3290,
+      "checked": 3312,
+      "share": 0.9934
+     },
+     "withdrawal_periods": {
+      "inside": 373,
+      "checked": 395,
+      "share": 0.9443
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3311,
+      "checked": 3312,
+      "share": 0.9997
+     },
+     "withdrawal_periods": {
+      "inside": 394,
+      "checked": 395,
+      "share": 0.9975
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3312,
+      "checked": 3312,
+      "share": 1.0
+     },
+     "withdrawal_periods": {
+      "inside": 395,
+      "checked": 395,
+      "share": 1.0
+     }
+    }
+   },
+   "outside_count": 0,
+   "outside_examples": [],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  },
+  {
+   "key": "wormhole-portal-ftx-2022",
+   "title": "Wormhole Portal token bridge, 30 days around the FTX collapse (25 Oct - 24 Nov 2022)",
+   "vault": "0x3ee18b2214aff97000d974cf647e7c347e8fa585",
+   "dataset": "wormhole-portal-ftx-2022.json",
+   "group": "stress",
+   "days": 30.0,
+   "all_periods": {
+    "inside": 3180,
+    "checked": 3312,
+    "share": 0.9601,
+    "meets_target": true
+   },
+   "withdrawal_periods": {
+    "inside": 1556,
+    "checked": 1688,
+    "share": 0.9218,
+    "meets_target": false
+   },
+   "context_k": {
+    "1": {
+     "all_periods": {
+      "inside": 3025,
+      "checked": 3312,
+      "share": 0.9133
+     },
+     "withdrawal_periods": {
+      "inside": 1401,
+      "checked": 1688,
+      "share": 0.83
+     }
+    },
+    "2": {
+     "all_periods": {
+      "inside": 3133,
+      "checked": 3312,
+      "share": 0.946
+     },
+     "withdrawal_periods": {
+      "inside": 1509,
+      "checked": 1688,
+      "share": 0.894
+     }
+    },
+    "3": {
+     "all_periods": {
+      "inside": 3180,
+      "checked": 3312,
+      "share": 0.9601
+     },
+     "withdrawal_periods": {
+      "inside": 1556,
+      "checked": 1688,
+      "share": 0.9218
+     }
+    }
+   },
+   "outside_count": 132,
+   "outside_examples": [
+    {
+     "start": 1668224400.0,
+     "hour_utc": 3,
+     "outflow_usd": 9424909.22,
+     "withdrawals": 7,
+     "range_usd": [
+      0.0,
+      306358.59
+     ]
+    },
+    {
+     "start": 1667938800.0,
+     "hour_utc": 20,
+     "outflow_usd": 4208487.72,
+     "withdrawals": 4,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    },
+    {
+     "start": 1668012000.0,
+     "hour_utc": 16,
+     "outflow_usd": 4051208.12,
+     "withdrawals": 7,
+     "range_usd": [
+      0.0,
+      300024.58
+     ]
+    },
+    {
+     "start": 1668502200.0,
+     "hour_utc": 8,
+     "outflow_usd": 3001091.63,
+     "withdrawals": 5,
+     "range_usd": [
+      0.0,
+      308000.03
+     ]
+    },
+    {
+     "start": 1667788200.0,
+     "hour_utc": 2,
+     "outflow_usd": 2514265.36,
+     "withdrawals": 2,
+     "range_usd": [
+      0.0,
+      300000.0
+     ]
+    }
+   ],
+   "ranges_by_hour": [
+    {
+     "hour_utc": 0,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 1,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 2,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 3,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 4,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 5,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 6,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 7,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 8,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 9,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 10,
+     "median_usd": 27.36,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300027.36
+    },
+    {
+     "hour_utc": 11,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 12,
+     "median_usd": 2.5,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300002.5
+    },
+    {
+     "hour_utc": 13,
+     "median_usd": 181.74,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300181.74
+    },
+    {
+     "hour_utc": 14,
+     "median_usd": 380.77,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300380.77
+    },
+    {
+     "hour_utc": 15,
+     "median_usd": 716.81,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300716.81
+    },
+    {
+     "hour_utc": 16,
+     "median_usd": 422.56,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300422.56
+    },
+    {
+     "hour_utc": 17,
+     "median_usd": 44.24,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300044.24
+    },
+    {
+     "hour_utc": 18,
+     "median_usd": 2.5,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300002.5
+    },
+    {
+     "hour_utc": 19,
+     "median_usd": 116.98,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300116.98
+    },
+    {
+     "hour_utc": 20,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 21,
+     "median_usd": 149.46,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300149.46
+    },
+    {
+     "hour_utc": 22,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    },
+    {
+     "hour_utc": 23,
+     "median_usd": 0.0,
+     "spread_usd": 100000.0,
+     "low_usd": 0.0,
+     "high_usd": 300000.0
+    }
+   ]
+  }
+ ],
+ "skipped": [
+  {
+   "dataset": "across-spokepool-7d.json.gz",
+   "days": 7.0,
+   "reason": "shorter than 7 days of history plus 1 day to check"
+  }
+ ],
+ "note": "Public Ethereum data (key-less JSON-RPC, fetched 2026-10-07), not SonarX. 'Believed normal' means no known incident on the vault in the window. Stress windows are reported but not pooled."
+}
