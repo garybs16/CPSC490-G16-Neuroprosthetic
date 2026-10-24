@@ -499,6 +499,12 @@ state in Section 7 which repository text was drafted with an AI assistant;
 and we write the Sprint 2 review after releasing the sprint's work to the
 main branch a day before the sprint ends. [[task:#63]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/63) [[task:#65]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/65) [[task:#66]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/66) [[task:#64]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/64)
 
+Under Objective 1.1, one task makes the prototype report how far it is
+behind the latest block, in minutes as well as blocks, and mark itself
+unhealthy when it falls more than five minutes behind. Collecting from
+SonarX's real-time stream, the rest of that objective, waits for data
+access from the sponsor. [[task:#69]](https://github.com/garybs16/CPSC490-G16-Neuroprosthetic/issues/69)
+
 ![Figure 1. System design: SonarX data, public Ethereum nodes and saved hack history feed ingest; ingest writes common event records to the store; the baseline and the detector read from the store; alerts go through the alert manager to Slack and the web dashboard.](figures/figure-1-system-design.png)
 
 *Figure 1. System design. The detector reads only common event records, so

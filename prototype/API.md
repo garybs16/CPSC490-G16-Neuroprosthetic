@@ -44,7 +44,7 @@ Every bridge's status.
   }],
   // live only:
   "snapshot_at": 1791410648.7, "explorer_tx": "https://etherscan.io/tx/", "chain": "ethereum",
-  "head": 26143371, "cursor": 26143365, "lag_blocks": 6, "phase": "live",   // phase: starting | backfilling | live | error
+  "head": 26143371, "cursor": 26143365, "lag_blocks": 6, "lag_seconds": 72, "phase": "live",   // phase: starting | backfilling | live | error
   "health": "ok", "transfers_stored": 1009,
   // demo only:
   "speed": 60, "events_processed": 123456
@@ -144,11 +144,13 @@ Objective 2.3 on real believed-normal datasets, saved by `python -m bridgewatch.
 
 ### `GET /api/health`
 200 when `status` is `ok` or `starting`, 503 when `degraded` (no successful poll for 90 s / 3 polls, or more than
-confirmations + 50 blocks behind). Demo: `{"status": "ok", "mode": "demo", "clock"}`. Live:
+`max_lag_seconds`, five minutes, behind the latest block: Objective 1.1). `lag_seconds` is the lag in blocks times
+the chain's block time (12 s on Ethereum), so it is an estimate. Demo: `{"status": "ok", "mode": "demo", "clock"}`. Live:
 
 ```json
 {"mode": "live", "status": "ok", "phase": "live", "chain": "ethereum", "head": 26143371, "cursor": 26143365,
- "lag_blocks": 6, "confirmations": 6, "last_ok_at": 1791410648.7, "last_error": null, "consecutive_failures": 0,
+ "lag_blocks": 6, "lag_seconds": 72, "max_lag_seconds": 300,
+ "confirmations": 6, "last_ok_at": 1791410648.7, "last_error": null, "consecutive_failures": 0,
  "rpc_calls": 96, "rpc_errors": 1,
  "notifications": {"enabled": false, "sent": 0, "failed": 0, "gave_up": 0, "pending": 0},
  "prices_usd": {"USDT": 1.0, "WBTC": 83158.11},

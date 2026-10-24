@@ -66,6 +66,7 @@ class LiveSettings:
     price_refresh_seconds: float = 600
     price_stale_seconds: float = 2 * 3_600     # Chainlink BTC/USD updates at least hourly
     prune_every_seconds: float = 3_600
+    max_lag_seconds: float = 300               # Objective 1.1: at most five minutes behind the latest block
 
 
 @dataclass
@@ -321,20 +322,29 @@ class LiveMonitor:
             behind = (self.status.safe_head or 0) - (self.status.cursor or 0)
             stop.wait(0 if behind > 0 and self.status.consecutive_failures == 0 else self.s.poll_seconds)
 
+    def lag(self) -> tuple[int | None, float | None]:
+        """How far the processed data trails the chain head: blocks, and seconds estimated at the chain's block time."""
+        s = self.status
+        if s.head is None or s.cursor is None:
+            return None, None
+        blocks = s.head - s.cursor
+        return blocks, blocks * self.chain.block_time_s
+
     def status_word(self) -> str:
         """ok | starting | degraded (no database access: cheap enough for every request)."""
         s = self.status
-        lag = (s.head - s.cursor) if s.head is not None and s.cursor is not None else None
+        _, lag_s = self.lag()
         stale = s.last_ok_at is None or self.clock() - s.last_ok_at > max(3 * self.s.poll_seconds, 90)
-        ok = s.phase == "live" and not stale and lag is not None and lag <= self.confirmations + 50
+        ok = s.phase == "live" and not stale and lag_s is not None and lag_s <= self.s.max_lag_seconds
         return "ok" if ok else ("starting" if s.phase in ("starting", "backfilling") else "degraded")
 
     def health(self) -> dict:
         s = self.status
-        lag = (s.head - s.cursor) if s.head is not None and s.cursor is not None else None
+        lag, lag_s = self.lag()
         n = self.store.notification_counts()
         return {"status": self.status_word(),
                 "phase": s.phase, "chain": self.chain.id, "head": s.head, "cursor": s.cursor, "lag_blocks": lag,
+                "lag_seconds": lag_s, "max_lag_seconds": self.s.max_lag_seconds,
                 "confirmations": self.confirmations, "last_ok_at": s.last_ok_at, "last_error": s.last_error,
                 "consecutive_failures": s.consecutive_failures, "rpc_calls": self.rpc.calls, "rpc_errors": self.rpc.errors,
                 "notifications": {"enabled": self.notifier.enabled, "sent": self.notifier.sent,
